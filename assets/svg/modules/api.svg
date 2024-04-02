@@ -1,0 +1,24 @@
+<svg width="57px" height="58px" viewBox="0 0 57 58" xmlns="http://www.w3.org/2000/svg">
+    <g id="1440px" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Technical-features" transform="translate(-992.000000, -664.000000)">
+            <g id="Group" transform="translate(993.000000, 665.000000)">
+                <g id="currency-exchange" transform="translate(3.000000, 6.248847)" stroke="#5391FF">
+                    <path d="M28.5,8.5 L40.5,8.5 C44.918,8.5 48.5,12.082 48.5,16.5 L48.5,22.5" id="Shape"></path>
+                    <path d="M20.5,40.5 L8.5,40.5 C4.082,40.5 0.5,36.918 0.5,32.5 L0.5,26.5" id="Shape"></path>
+                    <polyline id="Shape" stroke-linecap="square" points="36.5 0.5 28.5 8.5 36.5 16.5"></polyline>
+                    <polyline id="Shape" stroke-linecap="square" points="12.5 32.5 20.5 40.5 12.5 48.5"></polyline>
+                </g>
+                <g id="database" transform="translate(0.000000, 0.248847)" stroke="#FFBD00">
+                    <path d="M0,3 L0,18.2307692 C0,19.8230769 4.18846154,21 9,21 C13.8115385,21 18,19.8230769 18,18.2307692 L18,3" id="Shape"></path>
+                    <path d="M18,2.5 C18,3.9375 13.8115385,5 9,5 C4.18846154,5 0,3.9375 0,2.5 C0,1.0625 4.18846154,0 9,0 C13.8115385,0 18,1.0625 18,2.5 Z" id="Shape" stroke-linecap="square"></path>
+                    <path d="M18,11 C18,12.725 13.8115385,14 9,14 C4.18846154,14 0,12.725 0,11" id="Shape" stroke-linecap="square"></path>
+                </g>
+                <g id="database-copy" transform="translate(37.000000, 35.248847)" stroke="#FFBD00">
+                    <path d="M0,3 L0,18.2307692 C0,19.8230769 4.18846154,21 9,21 C13.8115385,21 18,19.8230769 18,18.2307692 L18,3" id="Shape"></path>
+                    <path d="M18,2.5 C18,3.9375 13.8115385,5 9,5 C4.18846154,5 0,3.9375 0,2.5 C0,1.0625 4.18846154,0 9,0 C13.8115385,0 18,1.0625 18,2.5 Z" id="Shape" stroke-linecap="square"></path>
+                    <path d="M18,11 C18,12.725 13.8115385,14 9,14 C4.18846154,14 0,12.725 0,11" id="Shape" stroke-linecap="square"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

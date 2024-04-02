@@ -1,0 +1,28 @@
+$displays: (
+	'mobile',
+	'tablet',
+	'tablet-sm',
+	'desktop'
+); // add as needed
+
+.hide {
+	display: none;
+}
+
+@each $key in $displays {
+	@include media($key) {
+		.hide--#{$key} {
+			display: none;
+		}
+	}
+}
+
+@each $key in $displays {
+	.show--#{$key} {
+		display: none;
+
+		@include media($key) {
+			display: block;
+		}
+	}
+}

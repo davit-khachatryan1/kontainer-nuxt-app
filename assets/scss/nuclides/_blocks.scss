@@ -1,0 +1,9 @@
+// For blocks
+$shadow-block: 0 11px 55px 0 rgba($black, .20);
+// For media such as images, buttons, Jespers and such
+$shadow-media: 0 2px 4px 0 rgba($black, .20);
+
+$shadow-vars: (
+	shadow-block: $shadow-block,
+	shadow-media: $shadow-media,
+);

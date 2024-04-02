@@ -1,0 +1,259 @@
+$type-extralight: 200;
+$type-light: 300;
+$type-regular: 400;
+$type-medium: 500;
+
+$typography-vars: (
+	top-header: (
+		fw: $type-light,
+		size: 45px,
+		lh: 60px,
+		mobile: (
+			size: 25px,
+			lh: 35px,
+		),
+	),
+	hero: (
+		fw: $type-extralight,
+		size: 55px,
+		lh: 60px,
+		mobile: (
+			size: 30px,
+			lh: 40px,
+		),
+	),
+	manchet: (
+		fw: $type-light,
+		size: 20px,
+		lh: 34px,
+		mobile: (
+			size: 18px,
+			lh: 32px,
+		),
+	),
+	detail: (
+		fw: $type-medium,
+		size: 13px,
+		lh: 13px,
+		ls: 3px,
+		tt: uppercase,
+		mobile: (
+			size: 10px,
+			lh: 20px,
+		),
+	),
+	h1: (
+		fw: $type-extralight,
+		size: 50px,
+		lh: 60px,
+		mobile: (
+			size: 30px,
+			lh: 36px,
+		),
+	),
+	h2: (
+		fw: $type-extralight,
+		size: 34px,
+		lh: 48px,
+		mobile: (
+			size: 26px,
+			lh: 34px,
+		),
+	),
+	h3: (
+		fw: $type-light,
+		size: 24px,
+		lh: 34px,
+		mobile: (
+			size: 20px,
+		),
+	),
+	h4: (
+		fw: $type-light,
+		size: 22px,
+		lh: 30px,
+		mobile: (
+			size: 16px,
+			lh: 24px,
+		),
+	),
+	paragraph1: (
+		fw: $type-light,
+		size: 18px,
+		lh: 32px,
+		mobile: (
+			size: 14px,
+			lh: 24px,
+		),
+	),
+	paragraph2: (
+		fw: $type-light,
+		size: 16px,
+		lh: 30px,
+		mobile: (
+			size: 16px,
+			lh: 30px,
+		),
+	),
+	paragraph3: (
+		fw: $type-light,
+		size: 14px,
+		lh: 26px,
+	),
+	footer-legal: (
+		fw: $type-light,
+		size: 12px,
+		lh: 26px,
+	),
+	footer-title: (
+		fw: $type-medium,
+		size: 14px,
+		lh: 30px,
+	),
+	footer-link: (
+		fw: $type-light,
+		size: 14px,
+		lh: 30px,
+	),
+	quote: (
+		fw: $type-extralight,
+		size: 45px,
+		lh: 65px,
+		mobile: (
+			size: 26px,
+			lh: 36px,
+		),
+	),
+	button-large: (
+		fw: $type-medium,
+		size: 19px,
+		lh: 19px,
+		ls: 3px,
+		tt: uppercase,
+		desktop-1400: (
+			size: 16px,
+			lh: 16px,
+		),
+		mobile: (
+			size: 12px,
+			lh: 12px,
+		),
+	),
+	button: (
+		fw: $type-medium,
+		size: 14px,
+		lh: 14px,
+		ls: 3px,
+		tt: uppercase,
+	),
+	navigation: (
+		fw: $type-medium,
+		size: 13px,
+		ls: 1px,
+		lh: 13px,
+		tt: uppercase,
+	),
+	date: (
+		fw: $type-medium,
+		size: 11px,
+		lh: 11px,
+		tt: uppercase,
+	),
+	link: (
+		fw: $type-medium,
+		size: 12px,
+		lh: 22px,
+		tt: uppercase,
+	),
+	input: (
+		fw: $type-light,
+		size: 17px,
+		lh: 22px,
+	),
+	input-placeholder: (
+		fw: $type-light,
+		size: 17px,
+		lh: 1,
+	),
+	textarea: (
+		fw: $type-light,
+		size: 17px,
+		lh: 22px,
+	),
+	checklist: (
+		fw: $type-light,
+		size: 13px,
+		lh: 23px,
+	),
+	// not in textstyles
+	navigation-offcanvas: (
+		fw: $type-light,
+		size: 25px,
+		lh: 50px,
+	),
+	pin-label: (
+		fw: $type-medium,
+		size: 12px,
+		lh: 14px,
+		ls: 2px,
+		tt: uppercase,
+	),
+	feature-desc: (
+		size: 14px,
+		fw: $type-light,
+		lh: 22px,
+	),
+	alternative-h1: (
+		fw: $type-regular,
+		size: 40px,
+		lh: 45px,
+		mobile: (
+			size: 30px,
+			lh: 36px,
+		),
+	),
+	alternate-h4: (
+		fw: $type-regular,
+		size: 26px,
+		lh: 34px,
+		mobile: (
+			size: 16px,
+			lh: 24px,
+		),
+	),
+);
+
+@each $name, $typeSettings in $typography-vars {
+	%text-#{$name} {
+		font-weight: map-get($typeSettings, fw);
+		font-size: map-get($typeSettings, size);
+		font-style: map-get($typeSettings, fs);
+		line-height: map-get($typeSettings, lh);
+		letter-spacing: map-get($typeSettings, ls);
+		text-transform: map-get($typeSettings, tt);
+
+		$desktop1400: map-get($typeSettings, desktop-1400);
+		@if $desktop1400 != null {
+			@include media('desktop-1400') {
+				font-weight: map-get($desktop1400, fw);
+				font-size: map-get($desktop1400, size);
+				font-style: map-get($desktop1400, fs);
+				line-height: map-get($desktop1400, lh);
+				letter-spacing: map-get($desktop1400, ls);
+				text-transform: map-get($desktop1400, tt);
+			}
+		}
+
+		$mobile: map-get($typeSettings, mobile);
+		@if $mobile != null {
+			@include media('mobile') {
+				font-weight: map-get($mobile, fw);
+				font-size: map-get($mobile, size);
+				font-style: map-get($mobile, fs);
+				line-height: map-get($mobile, lh);
+				letter-spacing: map-get($mobile, ls);
+				text-transform: map-get($mobile, tt);
+			}
+		}
+	}
+}

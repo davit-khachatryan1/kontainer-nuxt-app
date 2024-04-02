@@ -1,0 +1,55 @@
+$section-angle-height: 5.492vw;
+
+$pinLength: 100px;
+$pinLengthMobile: 60px;
+$pinLabelDistance: 36px;
+
+$section-padding-top: calc(#{$pinLength} - #{calc(calc($section-angle-height / 2))});
+$section-padding-bottom: calc(
+	#{calc(calc($section-angle-height / 2))} + #{$pinLength} + #{$pinLabelDistance}
+);
+
+$section-padding-bottom-pin: calc(
+	#{calc(calc($section-angle-height / 2))} + #{$pinLength} + #{$pinLabelDistance} + 50px
+);
+
+$section-padding-top-mobile: calc(
+	#{$pinLengthMobile} - #{calc(calc($section-angle-height / 2))}
+);
+$section-padding-bottom-mobile: calc(
+	#{calc(calc($section-angle-height / 2))} + #{$pinLengthMobile} + #{$pinLabelDistance}
+);
+
+$section-padding-top-negative: calc(
+	#{-$pinLength} + #{calc($section-angle-height / -2)}
+);
+$section-padding-bottom-negative: calc(
+	#{calc($section-angle-height / -2)} + #{-$pinLength} + #{-$pinLabelDistance}
+);
+
+$section-padding-top-mobile-negative: calc(
+	#{-$pinLengthMobile} + #{calc($section-angle-height / -2)}
+);
+$section-padding-bottom-mobile-negative: calc(
+	#{calc($section-angle-height / -2)} + #{-$pinLengthMobile} + #{-$pinLabelDistance}
+);
+
+$section-inner-padding: 5vw;
+$section-inner-padding-mobile: 100px;
+
+$desktopWidth: 80.555555556vw;
+$desktopMargin: 9.722222222vw; //9.722222222vw;
+$desktopSpanWidth: 4.4vw;
+$desktopSpanMargin: 2.013888889vw;
+$desktopHeight: 120px;
+$tabletWidth: 85.3515625vw;
+$tabletMargin: 7.32421875vw;
+$tabletSpanWidth: 5.76171875vw;
+$tabletSpanMargin: 1.46484375vw;
+$mobileWidth: 81.25vw;
+$mobileMargin: 9.375vw;
+$mobileSpanWidth: 17.96875vw;
+$mobileSpanMargin: 3.125vw;
+$mobileHeight: 60px;
+
+$transformAnimationDistance: 20px;

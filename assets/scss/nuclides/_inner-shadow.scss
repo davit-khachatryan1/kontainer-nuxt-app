@@ -1,0 +1,38 @@
+@mixin inner-shadow-defaults() {
+	position: absolute;
+	content: '';
+	border-radius: inherit;
+	transition: box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease, opacity .5s .5s ease;
+	z-index: z('inner-shadow');
+}
+
+@mixin inner-shadow($side: 'bottom') {
+	&::before {
+		@if $side == 'bottom' {
+			@include inner-shadow-defaults;
+			box-shadow: 0 11px 55px 12px rgba(0, 0, 0, 0.16);
+			height: calc(100% - 12px);
+			width: calc(100% - 50px);
+			left: 25px;
+			bottom: 0;
+		}
+
+		@if $side == 'right' {
+			@include inner-shadow-defaults;
+			box-shadow: 0 11px 90px 42px rgba(0, 0, 0, 0.16);
+			height: calc(100% - 87px);
+			width: calc(100% - 50px);
+			right: 0;
+			bottom: 47px;
+		}
+
+		@if $side == 'left' {
+			@include inner-shadow-defaults;
+			box-shadow: 0 11px 90px 42px rgba(0, 0, 0, 0.16);
+			height: calc(100% - 87px);
+			width: calc(100% - 42px);
+			left: 0;
+			bottom: 47px;
+		}
+	}
+}

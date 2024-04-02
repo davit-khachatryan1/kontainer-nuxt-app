@@ -1,0 +1,138 @@
+$icon-vars: (
+	// Form icons
+	address: (
+		bg: 'address.svg',
+		color: $black,
+		height: 20px,
+		width: 21px,
+	),
+	caret: (
+		bg: 'caret.svg',
+		color: $yellow-dark,
+		height: 13px,
+		width: 8px,
+	),
+	caret-input: (
+		bg: 'caret-input.svg',
+		color: $gray-dusty,
+		height: 13px,
+		width: 8px,
+	),
+	caret-select: (
+		bg: 'caret-select.svg',
+		color: $black,
+		height: 7px,
+		width: 11px,
+	),
+	company: (
+		bg: 'company.svg',
+		color: $black,
+		height: 16px,
+		width: 15px,
+	),
+	email: (
+		bg: 'email.svg',
+		color: $black,
+		height: 13px,
+		width: 17px,
+	),
+	home: (
+		bg: 'home.svg',
+		color: $black,
+		height: 21px,
+		width: 20px,
+	),
+	password: (
+		bg: 'password.svg',
+		color: $black,
+		height: 22px,
+		width: 14px,
+	),
+	phone: (
+		bg: 'phone.svg',
+		color: $black,
+		height: 21px,
+		width: 16px,
+	),
+	tick: (
+		bg: 'tick.svg',
+		color: $black,
+		height: 10px,
+		width: 12px,
+	),
+	tick-thin: (
+		bg: 'tick-thin.svg',
+		color: $black,
+		height: 8px,
+		width: 12px,
+	),
+	user: (
+		bg: 'user.svg',
+		color: $black,
+		height: 16px,
+		width: 14px,
+	),
+	bookmarkl: (
+		bg: 'bookmark.svg',
+		height: 38px,
+		width: 43px,
+	),
+
+	// Button icons
+	arrow: (
+		bg: 'arrow.svg',
+		color: $black,
+		height: 9px,
+		width: 18px,
+	),
+	create: (
+		bg: 'create.svg',
+		color: $black,
+		height: 19px,
+		width: 23px,
+	),
+
+	// Social media
+	facebook: (
+		bg: 'facebook.svg',
+		color: $yellow-dark,
+		height: 16px,
+		width: 10px,
+	),
+	linkedin: (
+		bg: 'linkedin.svg',
+		color: $yellow-dark,
+		height: 16px,
+		width: 16px,
+	),
+	twitter: (
+		bg: 'twitter.svg',
+		color: $yellow-dark,
+		height: 14px,
+		width: 16px,
+	),
+);
+
+@each $name, $iconSettings in $icon-vars {
+	.icon--#{$name} {
+		color: map-get($iconSettings, color);
+		height: map-get($iconSettings, height);
+		width: map-get($iconSettings, width);
+	}
+}
+
+svg {
+	.fill {
+		fill: currentColor;
+		transition: fill .3s ease;
+	}
+
+	.stroke {
+		stroke: currentColor;
+		transition: stroke .3s ease;
+	}
+}
+
+.icon {
+	display: block;
+}

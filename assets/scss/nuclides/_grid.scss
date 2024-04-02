@@ -1,0 +1,104 @@
+$gridSystem: (
+	desktop: (
+		width: $desktopSpanWidth,
+		margin: $desktopSpanMargin,
+		columns: 12,
+		suffix: '',
+		breakpoint: 'desktop'
+	),
+	tablet: (
+		width: $tabletSpanWidth,
+		margin: $tabletSpanMargin,
+		columns: 12,
+		suffix: '--tablet',
+		breakpoint: 'tablet'
+	),
+	mobile: (
+		width: $mobileSpanWidth,
+		margin: $mobileSpanMargin,
+		columns: 4,
+		suffix: '--mobile',
+		breakpoint: 'mobile'
+	)
+);
+
+.grid {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 -15px;
+
+	$column: '';
+
+	&__column {
+		background: $white;
+		margin: 0 15px 30px;
+
+		$column: &;
+	}
+
+	&--1 {
+		#{$column} {
+			width: 100%;
+		}
+	}
+
+	&--2 {
+		#{$column} {
+			width: calc(50% - 30px);
+		}
+	}
+
+	&--3 {
+		#{$column} {
+			width: calc(33.3% - 30px);
+		}
+	}
+
+	&--4 {
+		#{$column} {
+			width: calc(25% - 30px);
+		}
+	}
+}
+
+.content-grid-container {
+	width: $desktopWidth;
+	max-width: 1800px;
+	margin: 0 auto;
+
+	@include media('tablet') {
+		width: $tabletWidth;
+		margin: 0 $tabletMargin;
+	}
+
+	@include media('mobile') {
+		width: $mobileWidth;
+		margin: 0 $mobileMargin;
+	}
+}
+
+@each $name, $list in $gridSystem {
+	$width: map-get($list, width);
+	$margin: map-get($list, margin);
+	$columns: map-get($list, columns);
+	$suffix: map-get($list, suffix);
+	$breakpoint: map-get($list, breakpoint);
+
+	@include media($breakpoint) {
+		$halfMargin: calc($margin / 2);
+
+		@for $i from 1 through $columns {
+			.span#{$i}#{$suffix} {
+				width: ($i * $width + (($i - 1) * $margin));
+				max-width: (calc($i / 12)) * 1800px - 50px;
+			}
+		}
+
+		.span-container {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+
+	}
+}

@@ -1,0 +1,42 @@
+@import 'import';
+@import 'nuclides/reset';
+@import 'nuclides/fonts';
+@import 'nuclides/grid';
+@import 'nuclides/icons';
+
+body {
+	@extend %text-paragraph1;
+	font-family: 'Graphik', sans-serif;
+	overflow-x: hidden;
+	color: $text-color;
+}
+
+strong {
+	font-weight: bold;
+}
+em {
+	font-style: italic;
+}
+
+@each $name, $typeSettings in $typography-vars {
+	.text-#{$name} {
+		font-weight: map-get($typeSettings, fw);
+		font-size: map-get($typeSettings, size);
+		font-style: map-get($typeSettings, fs);
+		line-height: map-get($typeSettings, lh);
+		letter-spacing: map-get($typeSettings, ls);
+		text-transform: map-get($typeSettings, tt);
+
+		$mobile: map-get($typeSettings, mobile);
+		@if $mobile != null {
+			@include media('mobile') {
+				font-weight: map-get($mobile, fw);
+				font-size: map-get($mobile, size);
+				font-style: map-get($mobile, fs);
+				line-height: map-get($mobile, lh);
+				letter-spacing: map-get($mobile, ls);
+				text-transform: map-get($mobile, tt);
+			}
+		}
+	}
+}

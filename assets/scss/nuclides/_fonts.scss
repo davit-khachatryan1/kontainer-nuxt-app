@@ -1,0 +1,28 @@
+@include font-face(
+	Graphik,
+	'~/assets/fonts/Graphik-Extralight-Web',
+	200,
+	regular,
+	eot woff2 woff
+);
+@include font-face(
+	Graphik,
+	'~/assets/fonts/Graphik-Light-Web',
+	300,
+	regular,
+	eot woff2 woff
+);
+@include font-face(
+	Graphik,
+	'~/assets/fonts/Graphik-Regular-Web',
+	400,
+	regular,
+	eot woff2 woff
+);
+@include font-face(
+	Graphik,
+	'~/assets/fonts/Graphik-Medium-Web',
+	500,
+	regular,
+	eot woff2 woff
+);

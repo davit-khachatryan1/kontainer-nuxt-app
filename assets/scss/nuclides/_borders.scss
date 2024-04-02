@@ -1,0 +1,61 @@
+$angle1: 2.6;
+$angle2: 3.3;
+$angle3: 4.6;
+$angle4: 2.6;
+
+$pricebox-borderwidth: '10px';
+
+@mixin border-angle(
+	$angle,
+	$bg-color,
+	$direction: 'positive',
+	$bg: 'none',
+	$bgColorPrevious: 'transparent'
+) {
+	// maybe remove $bg ang $bgPrev abnd move to seprate component, ex. https://codepen.io/anon/pen/vrxJMq
+	position: relative;
+	background-color: $bg-color;
+	$degressToRadian: ($angle * 0.0174533 * 100);
+	$borderHeight: $degressToRadian * 1vw;
+	@if $angle > 4 {
+		// approximate height of next section angle height
+		// suggestion: only use one angle for consistency
+		padding-bottom: $borderHeight * 0.8;
+	} @else {
+		padding-bottom: $borderHeight * 1.5;
+	}
+
+	@if $bg != 'none' {
+		padding-top: $borderHeight;
+		margin-top: -#{$borderHeight};
+		background: url($bg) center center no-repeat;
+		background-size: cover;
+	}
+
+	&::before {
+		content: '';
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 0;
+		transform: translateY(-100%) translateY(1px); //prevent gap
+		border-top: $borderHeight solid transparent;
+		border-bottom: 0 solid transparent;
+
+		@if $bg == 'none' {
+			@if $direction == 'positive' {
+				border-left: 100vw solid $bg-color;
+			} @else {
+				border-right: 100vw solid $bg-color;
+			}
+		} @else {
+			transform: rotate(180deg) translateY(1px);
+
+			@if $direction == 'positive' {
+				border-left: 100vw solid #{$bgColorPrevious};
+			} @else {
+				border-right: 100vw solid #{$bgColorPrevious};
+			}
+		}
+	}
+}

@@ -1,0 +1,37 @@
+$black: #000;
+$white: #fff;
+
+$gray-concrete: #e2e6e5;
+$gray-alto: #d8d8d8;
+$gray-alto2: #cfcfcf;
+$gray-dusty: #949494;
+$gray-gunpowder: #424354;
+$gray-box-dark: #dadada;
+
+$blue: #5391ff;
+$blue-dark: #565761;
+
+$brown-light: #cac1b8;
+
+$yellow: #ffe200;
+$yellow-dark: #ffbd00;
+
+$errorColor: #dc1414;
+$text-color: #063937;
+$label-color: #c0a17c;
+$brand-green: #00f595;
+
+$color-vars: (
+	black: $black,
+	white: $white,
+	gray-concrete: $gray-concrete,
+	gray-alto: $gray-alto,
+	gray-alto2: $gray-alto2,
+	gray-dusty: $gray-dusty,
+	gray-gunpowder: $gray-gunpowder,
+	brown-light: $brown-light,
+	blue: $blue,
+	blue-dark: $blue-dark,
+	yellow: $yellow,
+	yellow-dark: $yellow-dark,
+);
