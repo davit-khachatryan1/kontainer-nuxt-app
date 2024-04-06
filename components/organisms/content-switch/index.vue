@@ -35,7 +35,7 @@
 						:positionOnPage="index"
 					/>
 					<Hero
-						v-else-if="block.layout === 'hero'"
+						v-if="block.layout === 'hero'"
 						:data="block.data"
 						:positionOnPage="index"
 					/>

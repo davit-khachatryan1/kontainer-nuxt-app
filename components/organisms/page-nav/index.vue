@@ -84,7 +84,8 @@ import LanguageIcon from '~/assets/svg/language.svg';
 import IconLogoText from '~/assets/svg/kontainer-logo-text.svg';
 import IconLogoMark from '~/assets/svg/kontainer-logo-mark.svg';
 import useStore from '@/store'
-import { useRoute} from 'vue-router'
+import {useNuxtApp} from '#app'
+
 export default {
 	components: {
 		SmartLink,
@@ -152,8 +153,8 @@ export default {
 			};
 		},
 		activeMenuParent() {
-			const route = useRoute();
-			const currentMenuSlug = route.params.slug;
+			const nuxtApp = useNuxtApp();
+			const currentMenuSlug = nuxtApp._route.slug;
 			let activeParent = '';
 
 			forEach(this.menuItems, (item) => {

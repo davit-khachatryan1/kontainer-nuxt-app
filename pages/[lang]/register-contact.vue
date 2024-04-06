@@ -8,7 +8,6 @@
 import meta from '~/plugins/meta';
 // import SignupContactAccount from '~/components/organisms/signup-contact-account/index.vue';
 import useStore from '@/store'
-import { useRoute } from 'vue-router';
 import { useNuxtApp } from '#app';
 export default {
 	layout: 'modal-like',
@@ -28,11 +27,9 @@ export default {
 	mixins: [meta],
 	async setup(context) {
 		const nuxtApp = useNuxtApp()
-		const route = useRoute()
-		console.log("ekel em");
-		return await nuxtApp.$myAppApi.getPage(route.params.slug || 'Register', context)
+		return await nuxtApp.$myAppApi.getPage(nuxtApp._route.params.slug || 'Register', context)
 			.catch((e) => {
-			console.log(e, "e");
+				console.log(e, "e");
 				// context.error({ statusCode: 404, message: 'Page not found' });
 			});
 	},

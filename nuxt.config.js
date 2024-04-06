@@ -146,6 +146,7 @@ export default defineNuxtConfig({
     '~/plugins/directives.js',
     '~/plugins/vee-validate.js',
     '~/plugins/api.js',
+    // '~/plugins/meta.js',
     '~/plugins/fonts.js',
     '~/plugins/vue-select.js',
     '~/plugins/googletagmanager.js',

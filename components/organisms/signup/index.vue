@@ -4,14 +4,14 @@
 			<div class="span-container">
 				<div class="span12 span4--mobile">
 					<div class="signup-block__inner">
-						<SignupForm type="inline" v-if="data.acf_fc_layout === 'signup'">
+						<!-- <SignupForm type="inline" v-if="data.acf_fc_layout === 'signup'">
 							<div slot="teaser">
 								<Teaser :data="{ heading: data.heading, text: data.subheading, alternate_headline: data.alternate_headline }" :class="'teaser--fluid'" :positionOnPage="positionOnPage" />
 							</div>
 							<div slot="terms" v-if="data.terms" class="signup-block__conditions" v-html="data.terms" />
-						</SignupForm>
+						</SignupForm> -->
 
-						<NewsletterSignup v-else-if="data.acf_fc_layout === 'newsletter'">
+						<NewsletterSignup v-if="data.acf_fc_layout === 'newsletter'">
 							<slot>
 								<Teaser :data="{ heading: data.heading, text: data.subheading }" :class="'teaser--fluid'" :positionOnPage="positionOnPage" />
 							</slot>

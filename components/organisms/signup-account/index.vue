@@ -217,7 +217,7 @@
 								<template v-else>
 									<h3 class="invoice-heading">Invoice info</h3>
 									<div class="form__group">
-										<Input :key="'company'" type="text" name="company"
+										<!-- <Input :key="'company'" type="text" name="company"
 											v-model="registration.company" v-validate="'required'"
 											:errorMessage="errors.first('company')"
 											:valid="fields.company && fields.company.valid"
@@ -226,7 +226,7 @@
 											:required="true" />
 										<Input v-if="store.locale !== 'da'" :key="'vat'" type="text" name="vat"
 											v-model="registration.vat" :placeholder="langString('_vat_no')"
-											iconName="vat" iconComponent="IconVat" :class="['form__element--gray']" />
+											iconName="vat" iconComponent="IconVat" :class="['form__element--gray']" /> -->
 									</div>
 									<div class="form__group">
 										<div class="form__group__inline">
@@ -242,16 +242,16 @@
 												</div>
 											</div>
 
-											<Input :key="'address'" type="text" name="address"
+											<!-- <Input :key="'address'" type="text" name="address"
 												v-model="registration.address" v-validate="'required'"
 												:valid="fields.address && fields.address.valid"
 												:errorMessage="errors.first('address')"
 												:placeholder="langString('_address')" iconName="address"
 												iconComponent="IconAddress" :class="['form__element--gray']"
-												:required="true" />
+												:required="true" /> -->
 										</div>
 										<div class="form__group__inline">
-											<Input :key="'zip'" type="text" name="zip" v-model="registration.zip"
+											<!-- <Input :key="'zip'" type="text" name="zip" v-model="registration.zip"
 												v-validate="'required'" :valid="fields.zip && fields.zip.valid"
 												:errorMessage="errors.first('zip')" :placeholder="langString('_zip')"
 												iconName="zip" iconComponent="IconZip" :class="['form__element--gray']"
@@ -260,15 +260,15 @@
 												v-validate="'required'" :valid="fields.city && fields.city.valid"
 												:errorMessage="errors.first('city')" :placeholder="langString('_city')"
 												iconName="city" iconComponent="IconCity"
-												:class="['form__element--gray']" :required="true" />
+												:class="['form__element--gray']" :required="true" /> -->
 										</div>
 									</div>
 									<div class="form__group">
-										<Input :key="'phone'" type="text" name="phone" v-model="registration.phone"
+										<!-- <Input :key="'phone'" type="text" name="phone" v-model="registration.phone"
 											:valid="fields.phone && fields.phone.valid"
 											:errorMessage="errors.first('phone')" :placeholder="langString('_phone')"
 											iconName="phone" iconComponent="IconPhone"
-											:class="['form__element--gray']" />
+											:class="['form__element--gray']" /> -->
 									</div>
 								</template>
 

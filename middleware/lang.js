@@ -1,29 +1,27 @@
 import acceptLanguage from 'accept-language';
 import useStore from '@/store'
 import Cookies from "js-cookie"
-import { useRoute , useRouter} from 'vue-router';
+import { useRouter} from 'vue-router';
 const SUPPORTED_LOCALES = ['en', 'da', 'de'];
 const DEFAULT_LOCALE = 'en';
-
-export default function() {
-	const route = useRoute();
+export default defineNuxtRouteMiddleware((to, from) => {
 	const router = useRouter();
 	let locale = DEFAULT_LOCALE;
 	const store = useStore()
-	
-	if (route.params.lang) {
-		if (SUPPORTED_LOCALES.indexOf(route.params.lang) !== -1) {
-			locale = route.params.lang;
+	if (to.params.lang) {
+		if (SUPPORTED_LOCALES.indexOf(to.params.lang) !== -1) {
+			locale = to.params.lang;
 		} else {
 			// eslint-disable-next-line no-console
 			// context.params.error = { message: 'Page not found', statusCode: 404 };
-			route.params.slug = route.params.lang;
+			to.params.slug = to.params.lang;
 		}
-	} else if (route.params.slug && SUPPORTED_LOCALES.indexOf(route.params.slug) !== -1) {
-		route.params.lang = route.params.slug;
-		locale = route.params.lang;
-		route.params.slug = 'home';
+	} else if (to.params.slug && SUPPORTED_LOCALES.indexOf(to.params.slug) !== -1) {
+		to.params.lang = to.params.slug;
+		locale = to.params.lang;
+		to.params.slug = 'home';
 	}
+
 
 	// eslint-disable-next-line no-console
 	// console.log(Object.keys(context));
@@ -38,26 +36,25 @@ export default function() {
 	if (cookieLang !== usedLang) {
 		Cookies.set('preferredLang', usedLang, { path: '/' });
 	}
-
+	
 	// if visiting homepage and a preferred language is saved redirect to language-home
-	if (route.fullPath === '/' && usedLang && locale !== usedLang) {
+	if (to.fullPath === '/' && usedLang && locale !== usedLang) {
 		return router.push(`/${usedLang}`, {replace: true})
 	}
-
+	
 	// override lang param
-	route.params.lang = locale;
-	store.setLang(route.params.lang);
-
-	if (locale === DEFAULT_LOCALE && route.fullPath.indexOf(`/${DEFAULT_LOCALE}`) === 0) {
+	to.params.lang = locale;
+	store.setLang(to.params.lang);
+	
+	if (locale === DEFAULT_LOCALE && to.fullPath.indexOf(`/${DEFAULT_LOCALE}`) === 0) {
 		const toReplace = `^/${DEFAULT_LOCALE}`;
 		const re = new RegExp(toReplace);
-		return router.push(route.fullPath.replace(re, ''), {replace: true})
+		return router.push(to.fullPath.replace(re, ''), {replace: true})
 	}
 
 	return null;
-}
+});
 
-export { SUPPORTED_LOCALES, DEFAULT_LOCALE };
 
 /* eslint-enable */
 
