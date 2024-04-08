@@ -5,6 +5,10 @@
 </template>
 
 <script setup>
+definePageMeta({
+  middleware: ['lang', 'global', 'cleanup'],
+  layout: false,
+})
 import { ref, onMounted } from 'vue';
 import { useNuxtApp } from '#app';
 import ContentSwitch from '~/components/organisms/content-switch/index.vue';

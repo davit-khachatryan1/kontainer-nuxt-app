@@ -9,9 +9,12 @@ import { ref, computed, onMounted } from "vue";
 import { useNuxtApp } from "#app";
 import ContentSwitch from "~/components/organisms/content-switch/index.vue";
 import useStore from "@/store";
-
+definePageMeta({
+  middleware: ['lang', 'global', 'cleanup'],
+  layout: false,
+})
 const nuxtApp = useNuxtApp();
-const api = nuxtApp.$api; // Assuming your plugin is made available globally through Nuxt 3 plugins
+const api = nuxtApp.$myAppApi; // Assuming your plugin is made available globally through Nuxt 3 plugins
 const flexible = ref([]); // Assuming flexible is a prop or needs to be fetched
 const posts = ref({ blog: [] });
 
