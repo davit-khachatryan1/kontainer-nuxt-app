@@ -4,23 +4,16 @@
 	</div>
 </template>
 
-<script>
-import api from '~/plugins/api';
-import meta from '~/plugins/meta';
-import ContentSwitch from '~/components/organisms/content-switch/index.vue';
-import useStore from '@/store'
+<script setup>
 import { useNuxtApp } from '#app';
+import ContentSwitch from '~/components/organisms/content-switch/index.vue';
+import { defineAsyncComponent } from 'vue';
 
-export default {
-	components: {
-		ContentSwitch,
-	},
-	mixins: [meta],
-	async setup(context) {
-		const nuxtApp = useNuxtApp()
-		return await nuxtApp.$myAppApi.getCollectionItem(context, 'blog');
-	},
-	computed: {
-	},
-};
+const { api } = useNuxtApp();
+const { meta } = useNuxtApp();
+
+const nuxtApp = useNuxtApp();
+const context = nuxtApp.vueContext;
+
+const data = await nuxtApp.$myAppApi.getCollectionItem(context, 'blog');
 </script>

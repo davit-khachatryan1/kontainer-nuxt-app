@@ -1,52 +1,55 @@
 <template>
-	<section>
-		<ContentSwitch :flexible="flexible" :kards="kards" />
-	</section>
+  <section>
+    <ContentSwitch :flexible="flexible" :kards="kards" />
+  </section>
 </template>
 
-<script>
-import find from 'lodash/find';
-import api from '~/plugins/api';
-import meta from '~/plugins/meta';
-import ContentSwitch from '~/components/organisms/content-switch/index.vue';
-import useStore from '@/store'
+<script setup>
+import { ref, computed, onMounted } from "vue";
+import { useNuxtApp } from "#app";
+import ContentSwitch from "~/components/organisms/content-switch/index.vue";
+import useStore from "@/store";
 
-export default {
-	mixins: [meta],
-	components: {
-		ContentSwitch,
-	},
-	async setup(context) {
-		return api.getCollection(context, 'blog');
-	},
-	computed: {
-		kards() {
-			find(this.flexible, (layout, index) => {
-				if (layout.acf_fc_layout === 'blog_list') {
-					const lastestNews = this.posts.blog.map((o) => {
-						// hack for different data structure
-						const newDataStructure = { resource: o };
-						newDataStructure.resource.custom = {
-							kard_info: newDataStructure.resource.kard_info,
-							kard_image: newDataStructure.resource.kard_image,
-						};
-						return newDataStructure;
-					});
+const nuxtApp = useNuxtApp();
+const api = nuxtApp.$api; // Assuming your plugin is made available globally through Nuxt 3 plugins
+const flexible = ref([]); // Assuming flexible is a prop or needs to be fetched
+const posts = ref({ blog: [] });
 
-					this.flexible[index] = { ...this.flexible[index], lastestNews };
-				}
-				return false;
-			});
-		},
-	},
-	transition: {
-		enter() {
-			const store = useStore();
-			store.menuHide(true);
-			setTimeout(() => {
-				store.menuHide(false);
-			}, 10);
-		},
-	},
-};
+// Simulating the async setup behavior with onMounted in Vue 3
+onMounted(async () => {
+  const context = {}; // Define or get your context
+  const data = await api.getCollection(context, "blog");
+  flexible.value = data?.flexible || [];
+  posts.value = data?.posts || { blog: [] };
+});
+
+const kards = computed(() => {
+  return flexible.value
+    .map((layout, index) => {
+      if (layout.acf_fc_layout === "blog_list") {
+        const lastestNews = posts.value.blog.map((o) => {
+          // Adaptation for different data structure
+          const newDataStructure = {
+            resource: {
+              ...o,
+              custom: { kard_info: o.kard_info, kard_image: o.kard_image },
+            },
+          };
+          return newDataStructure;
+        });
+        return { ...layout, lastestNews };
+      }
+      return layout;
+    })
+    .filter((layout) => layout.acf_fc_layout === "blog_list");
+});
+
+// Transition-related logic adapted for Vue 3
+const store = useStore();
+onMounted(() => {
+  store.menuHide(true);
+  setTimeout(() => {
+    store.menuHide(false);
+  }, 10);
+});
 </script>
