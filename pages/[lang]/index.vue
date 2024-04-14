@@ -1,6 +1,8 @@
 <template>
-    <Index />
-    <NuxtLayout name="default" />
+    <div>
+        <Index />
+        <NuxtLayout name="default" />
+    </div>
 </template>
 <script setup>
 import Index from './[slug].vue'

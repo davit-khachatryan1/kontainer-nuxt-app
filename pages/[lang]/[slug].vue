@@ -3,6 +3,10 @@
 </template>
 
 <script setup>
+definePageMeta({
+    middleware: ['lang', 'global', 'cleanup'],
+    layout: false,
+});
 import { onMounted, ref, watch } from 'vue';
 import { useNuxtApp } from '#app';
 import useStore from '@/store';
