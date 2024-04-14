@@ -93,7 +93,7 @@ import NewsletterSignup from '~/components/organisms/newsletter-footer/index.vue
 import ContentSection, {
 	SECTION_PADDING_BOTTOM_NONE,
 } from '~/components/atoms/section/index.vue';
-import langstring from '~/components/mixins/langstring';
+import { useLangString } from '~/components/composables/useLangString';
 import useStore from '@/store'
 
 export default {
@@ -108,7 +108,10 @@ export default {
 		PinElement,
 		NewsletterSignup,
 	},
-	mixins: [langstring],
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 	computed: {
 		consts() {
 			return {

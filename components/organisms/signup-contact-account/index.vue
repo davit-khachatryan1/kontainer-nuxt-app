@@ -64,14 +64,13 @@ import FormComponent from '~/components/molecules/form/index.vue';
 import Button from '~/components/atoms/button/index.vue';
 import Input from '~/components/atoms/input/index.vue';
 import axios from '~/plugins/axios';
-import langstring from '~/components/mixins/langstring.js';
+import { useLangString } from '~/components/composables/useLangString';
 import SmartImage from '~/components/helper/smartimage/index.vue';
 import Textarea from '~/components/atoms/textarea/index.vue';
 import useStore from '@/store'
 import { useRoute } from 'vue-router'
 
 export default {
-	mixins: [langstring],
 	components: {
 		FormComponent,
 		Button,
@@ -83,6 +82,10 @@ export default {
 		data: { type: Object },
 		type: { type: String },
 	},
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 	/* eslint-disable */
 	data() {
 		return {

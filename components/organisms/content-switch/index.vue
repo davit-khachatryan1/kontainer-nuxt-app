@@ -103,7 +103,7 @@ import Faq from '~/components/organisms/faq/index.vue';
 
 // Define props with defineProps
 const props = defineProps({
-	flexible: Array,
+	flexible: Array | Boolean,
 	type: String,
 });
 

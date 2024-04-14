@@ -24,6 +24,7 @@
 										><iconCaret class="has-dropdown__icon" />
 									</span>
 									<transition-expand>
+										<div>
 										<ol
 											v-if="index === openMenuItem"
 											:class="['dropdown', { active: index === openMenuItem }]"
@@ -52,6 +53,7 @@
 												</smart-link>
 											</li>
 										</ol>
+										</div>
 									</transition-expand>
 								</template>
 

@@ -58,11 +58,10 @@ import IconCity from '~/assets/svg/city.svg';
 import IconCountry from '~/assets/svg/country.svg';
 import IconVat from '~/assets/svg/vat.svg';
 import IconZip from '~/assets/svg/zip.svg';
-import inputLabels from '../../mixins/input-labels';
+import { useInputLabels } from '~/components/composables/useInputLabels';
 
 export default {
 	name: 'Input',
-	mixins: [inputLabels],
 	props: [
 		'type',
 		'name',
@@ -79,6 +78,10 @@ export default {
 		'pattern',
 		'required',
 	],
+	setup() {
+		const { focused, hasValue, focusCheck, valueCheck } = useInputLabels()
+		return { focused, hasValue, focusCheck, valueCheck };
+  	},
 	components: {
 		IconUser,
 		IconEmail,

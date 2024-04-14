@@ -28,11 +28,11 @@
   import { defineComponent, ref } from 'vue';
   import Teaser from '~/components/molecules/teaser/index.vue';
   import KardComponent from '~/components/molecules/kard-inverted/index.vue';
-  import langstring from '~/components/mixins/langstring.js';
   import ButtonComponent from '~/components/atoms/button/index.vue';
   import Arrow from '~/assets/svg/arrow-big.svg';
   import SmartLink from '~/components/helper/smartlink';
   import 'swiper/swiper-bundle.css';
+  import { useLangString } from '~/components/composables/useLangString';
   
   export default defineComponent({
 	name: 'LinksSwiper',
@@ -43,7 +43,6 @@
 	  SmartLink,
 	  Arrow,
 	},
-	mixins: [langstring],
 	props: {
 	  data: { type: Object },
 	  positionOnPage: { type: Number },
@@ -71,8 +70,9 @@
 		  },
 		},
 	  };
+	  const { langString } = useLangString()
   
-	  return { mySwiper, swiperOptions };
+	  return { mySwiper, swiperOptions, langString };
 	},
   });
   </script>

@@ -46,11 +46,13 @@
 							<div class="contact-section__info" v-if="data.signup_right.info"
 								v-html="data.signup_right.info" />
 							<transition name="form-container__feedback-fade">
-								<div class="form-container__feedback" v-if="isSent">
-									<slot name="feedback">
-										<h2>{{ data.signup_right.success_title }}</h2>
-										<p>{{ data.signup_right.success_message }}</p>
-									</slot>
+								<div>
+									<div class="form-container__feedback" v-if="isSent">
+										<slot name="feedback">
+											<h2>{{ data.signup_right.success_title }}</h2>
+											<p>{{ data.signup_right.success_message }}</p>
+										</slot>
+									</div>
 								</div>
 							</transition>
 						</template>
@@ -69,14 +71,13 @@ import InputComponent from '~/components/atoms/input/index.vue';
 import SellingpointComponent from '~/components/molecules/sellingpoint/index.vue';
 import Textarea from '~/components/atoms/textarea/index.vue';
 import InputSelect from '~/components/atoms/select/index.vue';
-import langstring from '~/components/mixins/langstring.js';
-import preplink from '~/components/mixins/preplink.js';
 import CodeInserter from '~/components/organisms/code-inserter/index.vue';
+import { useLangString } from '~/components/composables/useLangString';
+import { usePrepLink } from '~/components/composables/usePrepLink';
 
 
 export default {
 	name: 'ContactSection',
-	mixins: [langstring, preplink],
 	components: {
 		ButtonComponent,
 		FormComponent,
@@ -86,6 +87,11 @@ export default {
 		InputSelect,
 		CodeInserter,
 	},
+	setup() {
+		const { prepLink } = usePrepLink()
+		const { langString } = useLangString()
+		return { langString, prepLink };
+  	},
 	props: {
 		data: { type: Object },
 		positionOnPage: { type: Number },

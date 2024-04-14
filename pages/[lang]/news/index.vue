@@ -6,7 +6,7 @@
 
 <script setup>
 import { computed, ref } from 'vue';
-import { useStore } from '@/store';
+import useStore from '@/store';
 import { useAsyncData } from '#app';
 import ContentSwitch from '~/components/organisms/content-switch/index.vue';
 import { useNuxtApp } from '#app';

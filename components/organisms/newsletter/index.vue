@@ -39,18 +39,20 @@ import Teaser from '~/components/molecules/teaser/index.vue';
 import Form from '~/components/molecules/form/index.vue';
 import axios from '~/plugins/axios';
 import qs from 'qs';
-import langstring from '~/components/mixins/langstring.js';
-import { useNuxtApp } from '#app';
+import { useLangString } from '~/components/composables/useLangString';
 
 export default {
 	name: 'NewsletterSignup',
-	mixins: [langstring],
 	components: {
 		Button,
 		Input,
 		Teaser,
 		Form,
 	},
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 	props: {
 		data: { type: Object },
 		type: { type: String },
@@ -101,7 +103,6 @@ export default {
 							const responseJSON = JSON.parse(
 								response.data.slice(11).slice(0, -1),
 							);
-							console.warn(response);
 							if (responseJSON.Status === 200) {
 								this.step += 1;
 							}

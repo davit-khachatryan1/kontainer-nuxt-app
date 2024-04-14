@@ -8,12 +8,15 @@
 </template>
 
 <script>
-import inputLabels from '../../mixins/input-labels';
+import { useInputLabels } from '~/components/composables/useInputLabels';
 
 export default {
 	name: 'Textarea',
-	mixins: [inputLabels],
 	props: ['name', 'placeholder', 'value'],
+	setup() {
+		const { focused, hasValue, focusCheck, valueCheck } = useInputLabels()
+		return { focused, hasValue, focusCheck, valueCheck };
+  	},
 };
 </script>
 

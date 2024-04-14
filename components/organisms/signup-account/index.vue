@@ -8,7 +8,9 @@
 		</template>
 		<FormComponent :type="type" ref="form" :style="{ minHeight: height }">
 			<transition name="form-step-animation" mode="out-in">
-				<slot name="teaser" v-if="step < 3" />
+				<div>
+					<slot name="teaser" v-if="step < 3" />
+				</div>
 			</transition>
 			<slot>
 				<template v-if="type === 'standalone'">
@@ -297,7 +299,7 @@ import Button from '~/components/atoms/button/index.vue';
 import Input from '~/components/atoms/input/index.vue';
 import IconCountry from '~/assets/svg/country.svg';
 import axios from '~/plugins/axios';
-import langstring from '~/components/mixins/langstring.js';
+import { useLangString } from '~/components/composables/useLangString';
 import qs from 'qs';
 import SmartImage from '~/components/helper/smartimage/index.vue';
 import useStore from '@/store'
@@ -305,7 +307,6 @@ import { useRoute } from 'vue-router'
 
 export default {
 	name: 'SignupAccount',
-	mixins: [langstring],
 	components: {
 		FormComponent,
 		Button,
@@ -313,6 +314,10 @@ export default {
 		SmartImage,
 		IconCountry,
 	},
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 	props: {
 		data: { type: Object },
 		type: { type: String },

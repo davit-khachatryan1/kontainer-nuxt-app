@@ -3,10 +3,6 @@
 </template>
 
 <script setup>
-definePageMeta({
-  middleware: ['lang', 'global', 'cleanup'],
-  layout: false,
-})
 import { onMounted, ref, watch } from 'vue';
 import { useNuxtApp } from '#app';
 import useStore from '@/store';
@@ -46,13 +42,13 @@ watch(() => nuxtApp._route.params.slug, (newSlug, oldSlug) => {
     fetchPageData(newSlug);
   }
 });
-// watch(() => nuxtApp._route.params.lang, (newSlug, oldSlug) => {
-//   if (newSlug !== oldSlug) {
-//     fetchPageData(newSlug);
-//   }
-// });
 
-// Transition enter function
+watch(() => nuxtApp._route.params.lang, (newSlug, oldSlug) => {
+  if (newSlug !== oldSlug) {
+    fetchPageData(nuxtApp._route.params.slug);
+  }
+});
+
 const enterTransition = () => {
   const store = useStore();
   store.menuHide(true);
@@ -63,7 +59,3 @@ const enterTransition = () => {
 
 // Watchers, Computed, and other Composition API features can be directly used here.
 </script>
-
-<style lang="scss">
-/* Your styles here */
-</style>

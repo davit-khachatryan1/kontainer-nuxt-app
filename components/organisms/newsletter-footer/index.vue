@@ -21,10 +21,12 @@
 							iconComponent="IconUser" v-if="step === 1" :key="0" />
 					</transition> -->
 					<transition name="fade">
-						<div class="form__element" v-if="step === 1" :key="0">
-							<Button hasFunction="true" @func="submit" :class="['js-cm-submit-button', 'button']">
-								{{ langString('_sign_up') }}
-							</Button>
+						<div>
+							<div class="form__element" v-if="step === 1" :key="0">
+								<Button hasFunction="true" @func="submit" :class="['js-cm-submit-button', 'button']">
+									{{ langString('_sign_up') }}
+								</Button>
+							</div>
 						</div>
 					</transition>
 				</div>
@@ -45,11 +47,10 @@ import Teaser from '~/components/molecules/teaser/index.vue';
 import Form from '~/components/molecules/form/index.vue';
 import axios from '~/plugins/axios';
 import qs from 'qs';
-import langstring from '~/components/mixins/langstring';
+import { useLangString } from '~/components/composables/useLangString';
 
 export default {
 	name: 'NewsletterSignup',
-	mixins: [langstring],
 	components: {
 		Button,
 		Input,
@@ -60,6 +61,10 @@ export default {
 		data: { type: Object },
 		type: { type: String },
 	},
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 	computed: {},
 	data() {
 		return {
@@ -114,7 +119,6 @@ export default {
 								response.data.slice(11).slice(0, -1),
 							);
 							console.warn(responseJSON.Status);
-							console.warn(response);
 
 							if (responseJSON.Status === 200) {
 								this.incrementStep();
