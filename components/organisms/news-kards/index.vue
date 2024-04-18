@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import axios from '~/plugins/axios';
 import ButtonComponent from '~/components/atoms/button/index.vue';
 import Teaser from '~/components/molecules/teaser/index.vue';
 import KardComponent from '~/components/molecules/kard/index.vue';
@@ -31,6 +30,7 @@ import SmartLink, {
 } from '~/components/helper/smartlink/index.vue';
 import useStore from '@/store'
 import { useLangString } from '~/components/composables/useLangString';
+import { useNuxtApp } from '#app';
 
 export default {
 	name: 'NewsKards',
@@ -54,6 +54,8 @@ export default {
 		return { langString };
   	},
 	created() {
+		const { $api: axios } = useNuxtApp();
+		
 		const store = useStore();
 		if (this.data.fetch_resource_type === 'latest') {
 			axios

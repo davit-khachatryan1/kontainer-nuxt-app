@@ -3,56 +3,45 @@
 		<div class="content-grid-container">
 			<div class="span-container">
 				<div v-if="sellingpointsVisible" class="span6 span6--tablet span4--mobile sellingpoints">
-					<h2 v-if="data.signup_left.heading">{{ data.signup_left.heading }}</h2>
-					<SellingpointComponent v-for="(sellingpoint, index) in data.signup_left.sellingpoints" :key="index"
-						:sellingpoint="sellingpoint" />
+					<h2 v-if="data.signup_left.heading">{{data.signup_left.heading}}</h2>
+					<SellingpointComponent v-for="(sellingpoint, index) in data.signup_left.sellingpoints" :key="index" :sellingpoint="sellingpoint" />
 				</div>
 
-				<div
-					:class="[sellingpointsVisible ? 'span6 span6--tablet span4--mobile' : 'span12 span12--tablet span12--mobile']">
-					<div class="form-container" :class="{ 'form-container--sent': isSent }">
+				<div :class="[sellingpointsVisible ? 'span6 span6--tablet span4--mobile' : 'span12 span12--tablet span12--mobile']">
+					<div class="form-container" :class="{'form-container--sent': isSent}">
 						<template v-if="data.signup_right.content_type === 'html'">
 							<CodeInserter :data="data.signup_right" />
 						</template>
 						<template v-else>
-							<h1 v-if="data.signup_right.heading && positionOnPage === 0"
-								v-html="data.signup_right.heading" />
-							<h2 v-if="data.signup_right.heading && positionOnPage !== 0"
-								v-html="data.signup_right.heading" />
-							<div class="form-container__text" v-if="data.signup_right.text"
-								v-html="data.signup_right.text"></div>
-							<form @submit.stop.prevent="handleSubmit">
+							<h1 v-if="data.signup_right.heading && positionOnPage === 0" v-html="data.signup_right.heading" />
+							<h2 v-if="data.signup_right.heading && positionOnPage !== 0" v-html="data.signup_right.heading" />
+							<div class="form-container__text" v-if="data.signup_right.text" v-html="data.signup_right.text"></div>
+							<VForm>
 								<slot>
-									<InputComponent :key="'name'" type="text" name="name" v-model="contact.name"
-										@blur="validateField('name')" :valid="fields.name.valid"
-										:errorMessage="errors.name" :placeholder="langString('_name')"
+									<InputComponent :key="'name'" type="text" name="name"
+										:rules="'required|alpha_spaces_dash'"
+										v-model="contact.name" 
+										:placeholder="langString('_name')"
 										iconName="user" iconComponent="IconUser" />
-									<InputComponent :key="'email'" type="text" name="email" v-model="contact.email"
-										@blur="validateField('email')" :valid="fields.email.valid"
-										:errorMessage="errors.email" :placeholder="langString('_e-mail')"
+									<InputComponent :key="'email'" type="text" name="email"
+										v-model="contact.email" :rules="'required|email'"
+										:placeholder="langString('_e-mail')"
 										iconName="email" iconComponent="IconEmail" />
-									<InputSelect v-if="data.signup_right.wrapper.options_repeater.length" name="topic"
-										:options="contact.subjects"
-										v-on:change.native="contact.subjectSelected = $event.target.value"
-										:labelAria="contact.subjectSelected" />
-									<Textarea :key="'message'" name="message" v-model="contact.message"
-										@blur="validateField('message')" :valid="fields.message.valid"
-										:errorMessage="errors.message" :placeholder="langString('_message')"
-										class="contact-message" />
-									<ButtonComponent :submit="true" :class="'btn--cta'">
-										{{ data.signup_right.submit_button_text }}</ButtonComponent>
+									<InputSelect v-if="data.signup_right.wrapper.options_repeater.length" name="topic" :options="contact.subjects" v-on:change.native="contact.subjectSelected = $event.target.value" :labelAria="contact.subjectSelected" />
+									<Textarea :key="'message'" name="message"
+										v-model="contact.message" :rules="'required'"
+										:placeholder="langString('_message')"
+										class="contact-message"></Textarea>
+									<ButtonComponent :hasFunction="true" @func="handleSubmit" :class="'btn--cta'">{{data.signup_right.submit_button_text}}</ButtonComponent>
 								</slot>
-							</form>
-							<div class="contact-section__info" v-if="data.signup_right.info"
-								v-html="data.signup_right.info" />
+							</VForm>
+							<div class="contact-section__info" v-if="data.signup_right.info" v-html="data.signup_right.info" />
 							<transition name="form-container__feedback-fade">
-								<div>
-									<div class="form-container__feedback" v-if="isSent">
-										<slot name="feedback">
-											<h2>{{ data.signup_right.success_title }}</h2>
-											<p>{{ data.signup_right.success_message }}</p>
-										</slot>
-									</div>
+								<div class="form-container__feedback" v-if="isSent">
+									<slot name="feedback">
+										<h2>{{data.signup_right.success_title}}</h2>
+										<p>{{data.signup_right.success_message}}</p>
+									</slot>
 								</div>
 							</transition>
 						</template>
@@ -64,7 +53,6 @@
 </template>
 
 <script>
-import axios from '~/plugins/axios';
 import ButtonComponent from '~/components/atoms/button/index.vue';
 import FormComponent from '~/components/molecules/form/index.vue';
 import InputComponent from '~/components/atoms/input/index.vue';
@@ -74,7 +62,7 @@ import InputSelect from '~/components/atoms/select/index.vue';
 import CodeInserter from '~/components/organisms/code-inserter/index.vue';
 import { useLangString } from '~/components/composables/useLangString';
 import { usePrepLink } from '~/components/composables/usePrepLink';
-
+import { useNuxtApp } from '#app';
 
 export default {
 	name: 'ContactSection',
@@ -114,57 +102,28 @@ export default {
 				message: '',
 			},
 			isSent: false,
-			errors: {
-				name: null,
-				email: null,
-				message: null,
-			},
-			fields: {
-				name: { touched: false, valid: null },
-				email: { touched: false, valid: null },
-				message: { touched: false, valid: null },
-			},
 		};
 	},
 	methods: {
-		addError(field, message) {
-			this.errors[field] = message;
+		addError(key, val) {
+			this[`${key}Error`] = val;
 			setTimeout(() => {
-				this.errors[field] = null;
+				this[`${key}Error`] = '';
 			}, 5000);
 		},
-		validateField(fieldName) {
-			let isValid = true;
-
-			// Reset current error message
-			this.errors[fieldName] = '';
-
-			if (fieldName === 'name' && !this.contact.name.trim()) {
-				this.errors.name = 'Name is required.';
-				isValid = false;
-			} else if (fieldName === 'email') {
-				if (!this.contact.email.trim()) {
-					this.errors.email = 'Email is required.';
-					isValid = false;
-				} else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.contact.email)) {
-					// Simple regex for email validation; consider more robust validation for production
-					this.errors.email = 'Please enter a valid email address.';
-					isValid = false;
-				}
-			} else if (fieldName === 'message' && !this.contact.message.trim()) {
-				this.errors.message = 'Message is required.';
-				isValid = false;
-			}
-
-			// Update the valid state based on validation result
-			this.fields[fieldName].valid = isValid;
-		},
 		handleSubmit() {
-			Object.keys(this.fields).forEach(this.validateField);
-			// Check if all fields are valid before proceeding with submission
-			const allFieldsValid = Object.values(this.fields).every(field => field.valid);
-			if (!allFieldsValid) {
-				return; // Stop the form submission if any field is invalid
+			const { $api: axios } = useNuxtApp()
+			if (this.contact.name === '') {
+				this.addError('name', 'Dette felt skal udfyldes');
+				return;
+			}
+			if (this.contact.email === '') {
+				this.addError('email', 'Dette felt skal udfyldes');
+				return;
+			}
+			if (this.contact.message === '') {
+				this.addError('message', 'Dette felt skal udfyldes');
+				return;
 			}
 			axios
 				.post('/api/sendmessage', {
