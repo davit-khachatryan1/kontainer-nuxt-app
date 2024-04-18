@@ -1,52 +1,41 @@
 <template>
 	<div class="form__element" :key="keyName">
-	  <label>
-		<input
-		  :type="type"
-		  :name="name"
-		  :pattern="pattern"
-		  :value="value"
-		  @input="$emit('input', $event.target.value)"
-		  @focus="focusCheck(true)"
-		  @blur="focusCheck(false)"
-		  @keyup="valueCheck"
-		  :class="{
-			'form__element__input': true,
-			'form__element__input--no-icon': noIcon,
-			'form__element__input--hide': hidePlaceholder,
-			'focus': focused,
-			'filled': hasValue,
-			'error': errorMessage,
-			'valid': valid,
-		  }"
-		/>
-		<span
-		  class="form__element__placeholder"
-		  :class="{
-			'form__element__placeholder--no-icon': noIcon,
-			'form__element__placeholder--hide': hidePlaceholder
-		  }"
-		>
-		  {{ placeholder }}
-		</span>
-		<component v-if="iconName" :class="['icon', 'icon--' + iconName]" :is="iconComponent" />
-		<slot></slot>
-		<transition name="fade">
-		  <span
-			class="error-message"
-			:class="{'error-message--no-icon': noIcon}"
-			v-if="errorMessage"
-		  >
-			{{ errorMessage }}
-		  </span>
-		</transition>
-		<span v-if="required && !valid" class="form__element__required">*</span>
-		<transition name="fade">
-		  <span class="valid-input" v-if="domainAvailability || valid"></span>
-		</transition>
-	  </label>
+		<label>
+			<input 
+			:type="type"
+			 :name="name"
+			  :pattern="pattern"
+			   :value="value"
+				@input="$emit('input', $event.target.value)" 
+				@focus="focusCheck(true)" @blur="focusCheck(false)"
+				@keyup="valueCheck" 
+				:class="{
+					'form__element__input': true,
+					'form__element__input--no-icon': noIcon,
+					'form__element__input--hide': hidePlaceholder,
+					'focus': focused,
+					'filled': hasValue,
+					'error': errorMessage,
+					'valid': valid,
+				}"
+				 />
+			<span class="form__element__placeholder" :class="placeholderClasses">
+				{{ placeholder }}
+			</span>
+			<component v-if="iconName" :is="iconComponent" :class="['icon', `icon--${iconName}`]" />
+			<slot></slot>
+			<transition name="fade">
+				<span v-if="errorMessage" class="error-message" :class="{ 'error-message--no-icon': noIcon }">
+					{{ errorMessage }}
+				</span>
+			</transition>
+			<span v-if="required && !valid" class="form__element__required">*</span>
+			<transition name="fade">
+				<span class="valid-input" v-if="domainAvailability || valid"></span>
+			</transition>
+		</label>
 	</div>
-  </template>
+</template>
 
 <script>
 import IconUser from '~/assets/svg/user.svg';
@@ -78,10 +67,17 @@ export default {
 		'pattern',
 		'required',
 	],
-	setup() {
-		const { focused, hasValue, focusCheck, valueCheck } = useInputLabels()
-		return { focused, hasValue, focusCheck, valueCheck };
-  	},
+	setup(props) {
+		const { focused, hasValue, focusCheck, valueCheck, inputClasses, placeholderClasses } = useInputLabels(props);
+
+		const iconComponent = computed(() => {
+			return props.iconComponent || this.$options.components[`Icon${props.iconName}`];
+		});
+
+		return {
+			focused, hasValue, focusCheck, valueCheck, inputClasses, placeholderClasses, iconComponent
+		};
+	},
 	components: {
 		IconUser,
 		IconEmail,
@@ -93,11 +89,54 @@ export default {
 		IconVat,
 		IconZip,
 	},
+
+	// setup(props, { emit }) {
+	// 	const focused = ref(false);
+	// 	const hasValue = computed(() => props.value.length > 0);
+
+	// 	const focusCheck = (isFocused) => {
+	// 		focused.value = isFocused;
+	// 	};
+
+	// 	const valueCheck = () => {
+	// 		hasValue.value = props.value.length > 0;
+	// 	};
+
+	// 	const inputClasses = computed(() => ({
+	// 		'form__element__input': true,
+	// 		'form__element__input--no-icon': props.noIcon,
+	// 		'form__element__input--hide': props.hidePlaceholder,
+	// 		'focus': focused.value,
+	// 		'filled': hasValue.value,
+	// 		'error': !!props.errorMessage,
+	// 		'valid': props.valid,
+	// 	}));
+
+	// 	const placeholderClasses = computed(() => ({
+	// 		'form__element__placeholder--no-icon': props.noIcon,
+	// 		'form__element__placeholder--hide': props.hidePlaceholder,
+	// 	}));
+
+	// 	const iconComponent = computed(() => {
+	// 		return props.iconComponent || this.$options.components[`Icon${props.iconName}`];
+	// 	});
+
+	// 	return {
+	// 		focusCheck,
+	// 		valueCheck,
+	// 		inputClasses,
+	// 		placeholderClasses,
+	// 		iconComponent
+	// 	};
+	// }
 };
 </script>
 
+
+
 <style lang="scss">
 @import "../../../assets/scss/import";
+
 input::-ms-clear {
 	display: none;
 }
@@ -106,6 +145,7 @@ input::-ms-clear {
 .fade-leave-active {
 	transition: opacity 0.2s ease-in;
 }
+
 .fade-enter,
 .fade-leave-to {
 	opacity: 0;
@@ -113,9 +153,10 @@ input::-ms-clear {
 
 .kontainer-url {
 	input {
+
 		&.focus,
 		&.filled {
-			+ span {
+			+span {
 				transform: translate(0, 8px);
 			}
 		}
@@ -154,7 +195,7 @@ input::-ms-clear {
 		}
 
 		&__placeholder {
-			// $input-placeholder-selector: & !global;
+			/* $input-placeholder-selector: & !global; */
 			@extend %text-input-placeholder;
 			color: $black;
 			left: 56px;
@@ -200,30 +241,31 @@ input::-ms-clear {
 			&.filled {
 				padding-top: 12px;
 
-				// + #{$input-placeholder-selector} {
-				// 	font-size: 10px;
-				// 	transform: translate(0, 13px);
-				// }
+				/* + #{$input-placeholder-selector} {
+					font-size: 10px;
+					transform: translate(0, 13px);
+				} */
 			}
 
 			&--no-icon {
 				padding-left: 20px;
 
-				// &.focus,
-				// &.filled {
-				// 	+ #{$input-placeholder-selector} {
-				// 		transform: translate(0, 8px);
-				// 	}
-				// }
+				&.focus,
+				&.filled {
+					/* + #{$input-placeholder-selector} {
+						transform: translate(0, 8px);
+					} */
+				}
 			}
 
 			&--hide {
-				// &.focus,
-				// &.filled {
-				// 	+ #{$input-placeholder-selector} {
-				// 		opacity: 0;
-				// 	}
-				// }
+
+				&.focus,
+				&.filled {
+					/* + #{$input-placeholder-selector} {
+						opacity: 0;
+					} */
+				}
 			}
 
 			&:-webkit-autofill {
@@ -319,9 +361,10 @@ input::-ms-clear {
 			}
 
 			input {
+
 				&.focus,
 				&.filled {
-					+ span {
+					+span {
 						transform: translate(0, 8px);
 					}
 				}
@@ -336,7 +379,7 @@ input::-ms-clear {
 			&.filled {
 				padding-top: 12px;
 
-				+ span {
+				+span {
 					transform: translate(0, 12px);
 				}
 			}
