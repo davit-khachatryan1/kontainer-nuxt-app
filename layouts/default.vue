@@ -29,6 +29,6 @@ export default {
 
 <style lang="scss" scoped>
 .default {
-	//overflow: hidden;
+	overflow: hidden;
 }
 </style>
