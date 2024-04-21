@@ -46,7 +46,7 @@
 		</VField>
 	</label>
 	</div>
-  </template>
+</template>
 
 <script>
 import IconUser from '~/assets/svg/user.svg';
@@ -80,10 +80,17 @@ export default {
 		'pattern',
 		'required',
 	],
-	setup() {
-		const { focused, hasValue, focusCheck, valueCheck } = useInputLabels()
-		return { focused, hasValue, focusCheck, valueCheck };
-  	},
+	setup(props) {
+		const { focused, hasValue, focusCheck, valueCheck, inputClasses, placeholderClasses } = useInputLabels(props);
+
+		const iconComponent = computed(() => {
+			return props.iconComponent || this.$options.components[`Icon${props.iconName}`];
+		});
+
+		return {
+			focused, hasValue, focusCheck, valueCheck, inputClasses, placeholderClasses, iconComponent
+		};
+	},
 	components: {
 		IconUser,
 		IconEmail,
@@ -100,6 +107,7 @@ export default {
 
 <style lang="scss">
 @import "../../../assets/scss/import";
+
 input::-ms-clear {
 	display: none;
 }
@@ -108,6 +116,7 @@ input::-ms-clear {
 .fade-leave-active {
 	transition: opacity 0.2s ease-in;
 }
+
 .fade-enter,
 .fade-leave-to {
 	opacity: 0;
@@ -117,7 +126,7 @@ input::-ms-clear {
 	input {
 		&.focus,
 		&.filled {
-			+ span {
+			+span {
 				transform: translate(0, 8px);
 			}
 		}
@@ -156,7 +165,7 @@ input::-ms-clear {
 		}
 
 		&__placeholder {
-			// $input-placeholder-selector: & !global;
+			/* $input-placeholder-selector: & !global; */
 			@extend %text-input-placeholder;
 			color: $black;
 			left: 56px;
@@ -202,30 +211,31 @@ input::-ms-clear {
 			&.filled {
 				padding-top: 12px;
 
-				// + #{$input-placeholder-selector} {
-				// 	font-size: 10px;
-				// 	transform: translate(0, 13px);
-				// }
+				/* + #{$input-placeholder-selector} {
+					font-size: 10px;
+					transform: translate(0, 13px);
+				} */
 			}
 
 			&--no-icon {
 				padding-left: 20px;
 
-				// &.focus,
-				// &.filled {
-				// 	+ #{$input-placeholder-selector} {
-				// 		transform: translate(0, 8px);
-				// 	}
-				// }
+				&.focus,
+				&.filled {
+					/* + #{$input-placeholder-selector} {
+						transform: translate(0, 8px);
+					} */
+				}
 			}
 
 			&--hide {
-				// &.focus,
-				// &.filled {
-				// 	+ #{$input-placeholder-selector} {
-				// 		opacity: 0;
-				// 	}
-				// }
+
+				&.focus,
+				&.filled {
+					/* + #{$input-placeholder-selector} {
+						opacity: 0;
+					} */
+				}
 			}
 
 			&:-webkit-autofill {
@@ -321,9 +331,10 @@ input::-ms-clear {
 			}
 
 			input {
+
 				&.focus,
 				&.filled {
-					+ span {
+					+span {
 						transform: translate(0, 8px);
 					}
 				}
@@ -338,7 +349,7 @@ input::-ms-clear {
 			&.filled {
 				padding-top: 12px;
 
-				+ span {
+				+span {
 					transform: translate(0, 12px);
 				}
 			}
