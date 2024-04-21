@@ -8,7 +8,7 @@
 				  @focus="focusCheck(true)"
 				  @blur="focusCheck(false)"
 				  @keyup="valueCheck"
-				  :class="{ 'focus': focused, 'filled': hasValue }"
+				  :class="{ 'focus': focused, 'filled': field.value }"
 				></textarea>
 				<span>{{ placeholder }}</span>
 			  </VField>

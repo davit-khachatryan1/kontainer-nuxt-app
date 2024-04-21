@@ -15,7 +15,7 @@
 		      'form__element__input--hide': hidePlaceholder,
 		      'error': errors.length > 0,
 			  'focus': focused,
-			  'filled': hasValue,
+			  'filled': field.value,
 		       'valid': !errors.length && field.value
 		    }"
 		  />
@@ -202,30 +202,30 @@ input::-ms-clear {
 			&.filled {
 				padding-top: 12px;
 
-				// + #{$input-placeholder-selector} {
-				// 	font-size: 10px;
-				// 	transform: translate(0, 13px);
-				// }
+				+ .form__element__placeholder {
+				 	font-size: 10px;
+				 	transform: translate(0, 13px);
+				 }
 			}
 
 			&--no-icon {
 				padding-left: 20px;
 
-				// &.focus,
-				// &.filled {
-				// 	+ #{$input-placeholder-selector} {
-				// 		transform: translate(0, 8px);
-				// 	}
-				// }
+				&.focus,
+				&.filled {
+					+ .form__element__placeholder {
+						transform: translate(0, 8px);
+					}
+				}
 			}
 
 			&--hide {
-				// &.focus,
-				// &.filled {
-				// 	+ #{$input-placeholder-selector} {
-				// 		opacity: 0;
-				// 	}
-				// }
+				&.focus,
+				&.filled {
+					+ .form__element__placeholder {
+						opacity: 0;
+					}
+				}
 			}
 
 			&:-webkit-autofill {

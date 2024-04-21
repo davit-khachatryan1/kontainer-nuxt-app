@@ -3,7 +3,7 @@
 	  <div class="content-grid-container">
 		<Teaser :class="'link-swiper__teaser'" :data="data" v-if="data.heading || data.text" :positionOnPage="positionOnPage" />
 		<div class="span-container">
-		  <div class="swiper-button-prev">
+		  <div class="swiper-button-prev" @click="prevSlide">
 			<Arrow />
 		  </div>
 		  <div class="my-swiper" ref="mySwiper" :options="swiperOptions">
@@ -13,7 +13,7 @@
 			</div>
 			<div :class="['fade-after', `fade-after--${data.section_bg_color}`]"></div>
 		  </div>
-		  <div class="swiper-button-next">
+		  <div class="swiper-button-next" @click="nextSlide">
 			<Arrow />
 		  </div>
 		</div>
@@ -22,15 +22,16 @@
 		</div>
 	  </div>
 	</section>
-  </template>
-  
+</template>
+
   <script>
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent, ref, onMounted } from 'vue';
   import Teaser from '~/components/molecules/teaser/index.vue';
   import KardComponent from '~/components/molecules/kard-inverted/index.vue';
   import ButtonComponent from '~/components/atoms/button/index.vue';
   import Arrow from '~/assets/svg/arrow-big.svg';
   import SmartLink from '~/components/helper/smartlink';
+  import Swiper from 'swiper';
   import 'swiper/swiper-bundle.css';
   import { useLangString } from '~/components/composables/useLangString';
   
@@ -51,8 +52,8 @@
 	  const mySwiper = ref(null);
 	  const swiperOptions = {
 		startSlide: 2,
-		slidesPerView: 3,
-		spaceBetween: 30,
+		slidesPerView: 1,
+		spaceBetween: 20,
 		navigation: {
 		  nextEl: '.swiper-button-next',
 		  prevEl: '.swiper-button-prev',
@@ -60,19 +61,36 @@
 		breakpoints: {
 		  1024: {
 			startSlide: 1,
-			slidesPerView: 2,
+			slidesPerView: 3,
 			spaceBetween: 20,
 		  },
 		  768: {
 			startSlide: 1,
-			slidesPerView: 1,
-			spaceBetween: 15,
+			slidesPerView: 2,
+			spaceBetween: 20,
 		  },
 		},
 	  };
-	  const { langString } = useLangString()
+	  const { langString } = useLangString();
   
-	  return { mySwiper, swiperOptions, langString };
+	  onMounted(() => {
+		mySwiper.value = new Swiper(mySwiper.value, swiperOptions);
+	  });
+  
+	  const nextSlide = () => {
+		console.log(mySwiper);
+		if (mySwiper._value) {
+		  mySwiper._value.slideNext();
+		}
+	  };
+  
+	  const prevSlide = () => {
+		if (mySwiper._value) {
+		  mySwiper._value.slidePrev();
+		}
+	  };
+  
+	  return { mySwiper, swiperOptions, langString, nextSlide, prevSlide };
 	},
   });
   </script>
@@ -94,11 +112,12 @@
 	display: flex;
     justify-content: center;
     width: 100%;
+	overflow: hidden;
 	.swiper-wrapper {
 		padding: 60px 60px 0px;
-		width: calc(100% - 30px);
+		width: calc(100%);
 		margin: -60px auto 0;
-		justify-content: space-between;
+
 		@include media('tablet') {
 			width: 100%;
 		}
@@ -167,7 +186,7 @@
 
 .span-container {
 	position: relative;
-
+    padding: 0 70px;
 	.swiper-button-prev,
 	.swiper-button-next {
 		height: calc(100% - 30px) !important;

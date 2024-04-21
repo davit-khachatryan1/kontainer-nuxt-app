@@ -65,7 +65,7 @@ export {
 export default {
 	name: 'Button',
 	props: {
-		hasFunction: { type: String | Boolean },
+		hasFunction: { type: String },
 		link: { type: Object },
 		iconName: { type: String },
 		iconComponent: { type: String },

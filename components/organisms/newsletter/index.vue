@@ -1,5 +1,5 @@
 <template>
-	<Form class="js-cm-form" type="inline" action="https://kontainer.createsend.com/t/d/s/vhrjir/" method="post"  v-slot="{ errors, handleSubmit, resetForm, validate }">
+	<FormComponenet class="js-cm-form form" type="inline" action="https://kontainer.createsend.com/t/d/s/vhrjir/" method="post"  v-slot="{ errors, handleSubmit, resetForm, validate }">
 		<slot></slot>
 		<transition name="form-step-animation" mode="out-in">
 			<div>
@@ -29,14 +29,14 @@
 				</div>
 			</div>
 		</transition>
-	</Form>
+	</FormComponenet>
 </template>
 
 <script>
 import Button from '~/components/atoms/button/index.vue';
 import Input from '~/components/atoms/input/index.vue';
 import Teaser from '~/components/molecules/teaser/index.vue';
-import Form from '~/components/molecules/form/index.vue';
+import FormComponenet from '~/components/molecules/form/index.vue';
 import { useNuxtApp } from '#app';
 import qs from 'qs';
 import { useLangString } from '~/components/composables/useLangString';
@@ -47,7 +47,7 @@ export default {
 		Button,
 		Input,
 		Teaser,
-		Form,
+		FormComponenet,
 	},
 	setup() {
 		const { langString } = useLangString()
