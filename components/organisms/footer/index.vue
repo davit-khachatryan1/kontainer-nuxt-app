@@ -34,11 +34,9 @@
 				<div class="footer__middle">
 					<div class="footer__middle__content">
 						<NewsletterSignup :class="'form--footer'" class="newsletter-footer">
-							<template slot="footer-heading">
-								<div class="newsletter-footer--heading">
+							<div class="newsletter-footer--heading">
 									{{langString('_newsletter_signup_title')}}
-								</div>
-							</template>
+							</div>
 						</NewsletterSignup>
 						<div class="footer__middle__lang">
 							<label for="language">
@@ -853,6 +851,8 @@ export default {
 
 	.newsletter-footer--heading {
 		margin-right: 20px;
+		align-items: center;
+		display: flex;
 
 		@include media('tablet-sm') {
 			flex-basis: 100%;

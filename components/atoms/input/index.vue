@@ -34,9 +34,9 @@
 		  <span
 			class="error-message"
 			:class="{'error-message--no-icon': noIcon}"
-			v-if="errors ? errors[0] : ''"
+			v-if="errors?.length ? errors[0] : ''"
 		  >
-			{{ errors ? errors[0] : '' }}
+			{{ errors?.length ? errors[0] : '' }}
 		  </span>
 		</transition>
 		<span v-if="required && !valid" class="form__element__required">*</span>
@@ -374,6 +374,7 @@ input::-ms-clear {
 	}
 }
 </style>
+
 <!-- <docs>
 ```jsx
 <Input type="text" name="name" placeholder="Navn" iconName="user" iconComponent="IconUser" />

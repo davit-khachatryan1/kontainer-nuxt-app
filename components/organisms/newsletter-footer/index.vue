@@ -2,6 +2,7 @@
 	<Form 
 	v-slot="{ validate }"
 	:class="{
+		'form--inline': true,
 		'js-cm-form': true,
 		'hide-language': (step === 2),
 	}" type="inline" action="https://kontainer.createsend.com/t/d/s/vhrjir/" method="post">
