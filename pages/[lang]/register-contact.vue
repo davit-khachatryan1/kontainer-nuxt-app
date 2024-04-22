@@ -1,14 +1,13 @@
 <template>
 	<div class="content-grid-container">
-		<!-- <SignupContactAccount></SignupContactAccount> -->
+		<SignupContactAccount></SignupContactAccount>
 	</div>
 </template>
 
 <script>
 import meta from '~/plugins/meta';
-// import SignupContactAccount from '~/components/organisms/signup-contact-account/index.vue';
+import SignupContactAccount from '~/components/organisms/signup-contact-account/index.vue';
 import useStore from '@/store'
-import { useRoute } from 'vue-router';
 import { useNuxtApp } from '#app';
 export default {
 	layout: 'modal-like',
@@ -23,16 +22,14 @@ export default {
 		},
 	},
 	components: {
-		// SignupContactAccount,
+		SignupContactAccount,
 	},
 	mixins: [meta],
 	async setup(context) {
 		const nuxtApp = useNuxtApp()
-		const route = useRoute()
-		console.log("ekel em");
-		return await nuxtApp.$myAppApi.getPage(route.params.slug || 'Register', context)
+		return await nuxtApp.$myAppApi.getPage(nuxtApp._route.params.slug || 'Register', context)
 			.catch((e) => {
-			console.log(e, "e");
+				console.log(e, "e");
 				// context.error({ statusCode: 404, message: 'Page not found' });
 			});
 	},
@@ -41,7 +38,8 @@ export default {
 };
 </script>
 
-<!-- <style lang="scss">
+<style lang="scss">
+@import "../../assets/scss/import";
 .modal-like {
 	background: $white;
 	height: 100vh;
@@ -68,4 +66,4 @@ export default {
 .layout-enter, .layout-leave-active {
 	animation: smokescreen 0.5s linear normal forwards;
 }
-</style> -->
+</style>

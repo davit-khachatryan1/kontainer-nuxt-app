@@ -10,7 +10,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   try {
     const {data}  = await nuxtApp.$api.get('api/global', {
       params: {
-        lang: store.locale,
+        lang: to.params.lang,
         cache: 1, // Note for removal in 2025
       },
       headers: {
@@ -18,12 +18,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       }
     });
 
-    console.log(data);
 
     store.setPageOptions(data.options);
-    console.log('data.menus');
-    console.log(data.menus, 'data.menus');
-    console.log('data.menus');
     store.setMenus(data.menus);
     store.setCategories(data.categories);
   } catch (e) {

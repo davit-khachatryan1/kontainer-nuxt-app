@@ -1,89 +1,3 @@
-// import { defineNuxtConfig } from 'nuxt/config'
-// import { fileURLToPath, URL } from 'url'
-
-// // Define environment-dependent variables
-// const environment = process.env.SERVER_NAME;
-// let baseUrl = 'http://localhost:3000';
-// let siteUrl = 'http://kontainer-api.test';
-// let apiUrl = 'http://kontainer-api.test/';
-// let appUrl = 'http://kontainer.test';
-// let sentryDSN = 'https://52449f0e189c4bdc9abcf7274853a78b@sentry.konform.com/24';
-
-// switch (environment) {
-//   case 'production':
-//     baseUrl = 'https://kontainer.com';
-//     siteUrl = 'https://kontainer.com';
-//     apiUrl = 'https://cms.kontainer.com';
-//     appUrl = 'https://app.kontainer.com';
-//     sentryDSN = 'https://ed48997570fa466fb0a3fd668ea387ea@sentry.konform.com/15';
-//     break;
-//   case 'next':
-//     baseUrl = 'https://kontainer.dev.konform.com';
-//     siteUrl = 'https://kontainer.dev.konform.com';
-//     apiUrl = 'https://kontainercms.dev.konform.com';
-//     appUrl = 'https://next.kontainer.com';
-//     break;
-// }
-
-// export default defineNuxtConfig({
-//   app: {
-//     head: {
-//       title: 'Kontainer',
-//       meta: [
-//         { charset: 'utf-8' },
-//         { name: 'viewport', content: 'width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' },
-//         { name: 'description', content: 'Kontainer' },
-//       ],
-//       link: [
-//         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-//         // Other links...
-//       ],
-//       // Other head elements...
-//     },
-//   },
-
-//   css: ['~/assets/scss/framework.scss'],
-
-//   runtimeConfig: {
-//     public: {
-//       baseUrl,
-//       siteUrl,
-//       apiUrl,
-//       appUrl,
-//       postTypes: {
-//         news: 'news',
-//         // Other post types...
-//       },
-//     },
-//     private: {
-//       sentryDSN,
-//     },
-//   },
-
-//   modules: [
-//     // Modules and their configuration...
-//   ],
-
-//   // Example of importing a server middleware in Nuxt 3
-//   serverMiddleware: [
-//     { path: '/sitemap.xml', handler: '~/server/sitemap.ts' },
-//   ],
-
-//   // Nuxt 3 doesn't use the `build` property in the same way as Nuxt 2.
-//   // Custom webpack config adjustments should be done differently.
-//   // Check the documentation for specific needs.
-
-//   // Example of vite plugins configuration if needed for your project
-//   vite: {
-//     plugins: [
-//       // Your Vite plugins here
-//     ],
-//   },
-
-//   // More configuration options...
-// });
-
-
 import { defineNuxtConfig } from "nuxt/config"
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
@@ -146,6 +60,7 @@ export default defineNuxtConfig({
     '~/plugins/directives.js',
     '~/plugins/vee-validate.js',
     '~/plugins/api.js',
+    '~/plugins/meta.js',
     '~/plugins/fonts.js',
     '~/plugins/vue-select.js',
     '~/plugins/googletagmanager.js',
@@ -187,10 +102,11 @@ export default defineNuxtConfig({
 
   },
   modules: [
-    '@nuxt/image-edge'
+    '@nuxt/image-edge',
     // 'nuxt-trailingslash-module',
     // 'cookie-universal-nuxt',
     // '@nuxtjs/sitemap',
-    // '@nuxtjs/sentry'
+    // '@nuxtjs/sentry',
+   '@vee-validate/nuxt'
   ],
 })

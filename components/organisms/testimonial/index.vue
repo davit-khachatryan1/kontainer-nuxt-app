@@ -36,12 +36,11 @@
 <script>
 import objectFitImages from 'object-fit-images';
 import SmartImage from '~/components/helper/smartimage/index.vue';
-import imgurl from '~/components/mixins/imgurl.js';
-import animateOnload from '../../mixins/animate-onload';
+import { useAnimateOnLoad } from '~/components/composables/useAnimateOnLoad';
+import { useImgUrl } from '~/components/composables/useImgUrl';
 
 export default {
 	name: 'TestimonialSection',
-	mixins: [animateOnload, imgurl],
 	components: {
 		SmartImage,
 	},
@@ -49,6 +48,11 @@ export default {
 		data: { type: Object },
 		positionOnPage: { type: Number },
 	},
+	setup() {
+		const { initAnimations } = useAnimateOnLoad()
+		const { imgUrl } = useImgUrl()
+		return { initAnimations, imgUrl };
+  	},
 	data() {
 		return {
 			srcSetPaths:

@@ -1,48 +1,65 @@
 <template>
-	<ContentSwitch :flexible="flexible" />
+  <ContentSwitch :flexible="flexible" />
 </template>
 
-<script>
-import meta from '~/plugins/meta';
-import SmartLink from '~/components/helper/smartlink';
+<script setup>
+definePageMeta({
+    middleware: ['lang', 'global', 'cleanup'],
+    layout: false,
+});
+import { onMounted, ref, watch } from 'vue';
+import { useNuxtApp } from '#app';
+import useStore from '@/store';
 
-import IconAddress from '~/assets/svg/address.svg';
-import ContentSection from '~/components/atoms/section';
+// Import components
 import ContentSwitch from '~/components/organisms/content-switch/index.vue';
-import useStore from '@/store'
-import { useRoute } from 'vue-router';
-import {useNuxtApp} from '#app'
 
-export default {
-	components: {
-		SmartLink,
-		IconAddress,
-		ContentSection,
-		ContentSwitch,
-	},
-	mixins: [meta],
-	async setup(context) {
-		const nuxtApp = useNuxtApp();
-		const route = useRoute()
-		const data = await nuxtApp.$myAppApi.getPage(route.params.slug || 'home', context).catch((e) => {
-			console.log(e, "e");
-			// context.error({ statusCode: 404, message: 'Page not found' });
-		});
-		return data
-	},
-	computed: {
-	},
-	transition: {
-		enter() {
-			const store = useStore();
-			store.menuHide(true);
-			setTimeout(() => {
-				store.menuHide(false);
-			}, 10);
-		},
-	},
+// Import and use mixin as a composable if possible
+// Since mixins are not directly supported in <script setup>, consider converting `meta` to a composable if it's not already.
+// import useMeta from '~/composables/useMeta'; 
+// useMeta(); // This is an example of how you might use a converted mixin.
+
+import meta from '~/plugins/meta'
+
+const nuxtApp = useNuxtApp();
+const flexible = ref(false); // Assuming `flexible` is a property from your data
+
+// Example of an onMounted lifecycle hook
+const fetchPageData = async (slug) => {
+  try {
+    const data = await nuxtApp.$myAppApi.getPage(slug || 'home');
+    if (data) {
+      flexible.value = data.flexible || false; // Modify according to the actual structure of 'data'
+    }
+  } catch (error) {
+    console.error(error, "Error fetching page data");
+  }
 };
-</script>
 
-<style lang="scss">
-</style>
+// Fetch data on mount for the initial slug
+onMounted(() => {
+  fetchPageData(nuxtApp._route.params.slug);
+});
+
+watch(() => nuxtApp._route.params.slug, (newSlug, oldSlug) => {
+  if (newSlug !== oldSlug) {
+    fetchPageData(newSlug);
+  }
+});
+
+watch(() => nuxtApp._route.params.lang, (newSlug, oldSlug) => {
+  if (newSlug !== oldSlug) {
+    fetchPageData(nuxtApp._route.params.slug);
+  }
+});
+
+const enterTransition = () => {
+  const store = useStore();
+  store.menuHide(true);
+  setTimeout(() => {
+    store.menuHide(false);
+  }, 10);
+};
+
+// Watchers, Computed, and other Composition API features can be directly used here.
+</script>

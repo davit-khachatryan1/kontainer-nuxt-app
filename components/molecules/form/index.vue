@@ -1,5 +1,5 @@
 <template>
-	<form :class="['form', 'form--' + type]" :action="action" :method="method"><slot></slot></form>
+	<VForm :class="['form', 'form--' + type]" :action="action" :method="method" v-slot="{ errors, handleSubmit, resetForm, validate }"><slot :errors="errors" :handleSubmit="handleSubmit" :resetForm="resetForm" :validate="validate"></slot></VForm>
 </template>
 
 <script>
@@ -23,7 +23,7 @@ export default {
 		$element: &;
 
 		&:last-child {
-			margin-bottom: 0;
+			margin-bottom: 0 !important;
 		}
 
 		.icon {

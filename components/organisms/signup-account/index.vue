@@ -6,9 +6,11 @@
 		<template v-if="type === 'standalone' && step === 2">
 			<button class="form-go-back" :key="'prev'" @click.prevent="prev">{{ langString('_previous') }}</button>
 		</template>
-		<FormComponent :type="type" ref="form" :style="{ minHeight: height }">
+		<FormComponent :type="type" ref="form" :style="{ minHeight: height }" v-slot="{ errors, handleSubmit, resetForm, validate }">
 			<transition name="form-step-animation" mode="out-in">
-				<slot name="teaser" v-if="step < 3" />
+				<div>
+					<slot name="teaser" v-if="step < 3" />
+				</div>
 			</transition>
 			<slot>
 				<template v-if="type === 'standalone'">
@@ -98,7 +100,6 @@
 						2. Kontainer domain
 					</div>
 				</div> -->
-
 				<transition name="form-step-animation" mode="out-in">
 					<div>
 						<div v-if="step === 1" :key="step" class="form-step-active">
@@ -106,26 +107,21 @@
 								<template v-if="isFreeKontainer()">
 									<div class="columns" v-if="type === 'standalone'">
 										<div class="columns__item">
-											<!-- <Input :key="'name'" type="text" name="name" v-model="registration.name"
-												v-validate="'required|alpha_spaces_dash'"
-												:valid="fields.name && fields.name.valid"
-												:errorMessage="errors.first('name')" :placeholder="langString('_name')"
+											<Input :key="'name'" type="text" name="name" v-model="registration.name"
+												:rules="'required|alpha_spaces_dash'"
+												:placeholder="langString('_name')"
 												iconName="user" iconComponent="IconUser"
 												:class="['form__element--gray']" :required="true" />
 											<Input :key="'email'" type="text" name="email" v-model="registration.email"
-												v-validate="'required|email|business_email'"
-												:valid="fields.email && fields.email.valid"
-												:errorMessage="errors.first('email')"
+												:rules="'required|email|business_email'"
 												:placeholder="langString('_e-mail')" iconName="email"
 												iconComponent="IconEmail" :class="['form__element--gray']"
 												:required="true" />
 											<Input :key="'company'" type="text" name="company"
-												v-model="registration.company" v-validate="'required'"
-												:errorMessage="errors.first('company')"
-												:valid="fields.company && fields.company.valid"
+												v-model="registration.company" :rules="'required'"
 												:placeholder="langString('_company')" iconName="company"
 												iconComponent="IconCompany" :class="['form__element--gray']"
-												:required="true" /> -->
+												:required="true" />
 										</div>
 										<div class="columns__item columns__item--column">
 											<div v-for="(paragraph, index) in extraTexts" :key="index" class="quote">
@@ -137,23 +133,19 @@
 										</div>
 									</div>
 									<template v-else>
-										<!-- <Input :key="'name'" type="text" name="name" v-model="registration.name"
-											v-validate="'required|alpha_spaces_dash'"
-											:valid="fields.name && fields.name.valid"
-											:errorMessage="errors.first('name')" :placeholder="langString('_name')"
+										<Input :key="'name'" type="text" name="name" v-model="registration.name"
+											:rules="'required|alpha_spaces_dash'"
+											:placeholder="langString('_name')"
 											iconName="user" iconComponent="IconUser" :class="['form__element--gray']" />
 										<Input :key="'email'" type="text" name="email" v-model="registration.email"
-											v-validate="'required|email|business_email'"
-											:valid="fields.email && fields.email.valid"
-											:errorMessage="errors.first('email')" :placeholder="langString('_e-mail')"
+											:rules="'required|email|business_email'"
+											:placeholder="langString('_e-mail')"
 											iconName="email" iconComponent="IconEmail"
 											:class="['form__element--gray']" />
 										<Input :key="'company'" type="text" name="company"
-											v-model="registration.company" v-validate="'required'"
-											:errorMessage="errors.first('company')"
-											:valid="fields.company && fields.company.valid"
+											v-model="registration.company" :rules="'required'"
 											:placeholder="langString('_company')" iconName="company"
-											iconComponent="IconCompany" :class="['form__element--gray']" /> -->
+											iconComponent="IconCompany" :class="['form__element--gray']" />
 									</template>
 								</template>
 
@@ -161,8 +153,8 @@
 									<div class="form__group">
 										<Input :class="['kontainer-url', 'form__element--gray']" :noIcon="true"
 											:hidePlaceholder="true" :key="'url'" type="text" name="host"
-											v-model="registration.host" v-validate="'required'"
-											:errorMessage="errors.first('host') || hostError"
+											v-model="registration.host" :rules="'required'"
+											:errorMessage="hostError"
 											:domainAvailability="hostStatus" :placeholder="langString('_URL')">
 										<slot>
 											<span class="prefix">https://</span>
@@ -171,23 +163,21 @@
 										</Input>
 									</div>
 									<div class="form__group">
-										<!-- <Input :key="'name'" type="text" name="name" v-model="registration.name"
-											v-validate="'required|alpha_spaces_dash'"
-											:valid="fields.name && fields.name.valid"
-											:errorMessage="errors.first('name')" :placeholder="langString('_name')"
+										<Input :key="'name'" type="text" name="name" v-model="registration.name"
+											:rules="'required|alpha_spaces_dash'"
+											:placeholder="langString('_name')"
 											iconName="user" iconComponent="IconUser" :class="['form__element--gray']"
 											:required="true" />
 										<Input :key="'email'" type="text" name="email" v-model="registration.email"
-											v-validate="'required|email|business_email'"
-											:valid="fields.email && fields.email.valid"
-											:errorMessage="errors.first('email')" :placeholder="langString('_e-mail')"
+											:rules="'required|email|business_email'"
+											:placeholder="langString('_e-mail')"
 											iconName="email" iconComponent="IconEmail" :class="['form__element--gray']"
-											:required="true" /> -->
+											:required="true" />
 									</div>
 								</template>
 
 								<div class="form__element" :key="'action'">
-									<Button hasFunction="true" @func="next" icon="arrow"
+									<Button hasFunction="true" @func="next(validate)" icon="arrow"
 										:class="['btn--price', 'btn--price-free']">
 										<template v-if="btnSubmitText">{{ btnSubmitText }}</template>
 										<template v-else-if="isFreeKontainer()">{{ langString('_free_signup')
@@ -206,7 +196,7 @@
 							<div class="fieldset">
 								<template v-if="isFreeKontainer()">
 									<Input :class="['kontainer-url', 'form__element--gray']" :key="'url'" type="text"
-										name="host" v-model="registration.host" v-validate="'required'"
+										name="host" v-model="registration.host" :rules="'required'"
 										:noIcon="type !== 'block'" :errorMessage="hostError"
 										:domainAvailability="hostStatus" :placeholder="null">
 									<slot><span class="prefix">https://</span><span class="suffix">.kontainer.com</span>
@@ -218,9 +208,7 @@
 									<h3 class="invoice-heading">Invoice info</h3>
 									<div class="form__group">
 										<Input :key="'company'" type="text" name="company"
-											v-model="registration.company" v-validate="'required'"
-											:errorMessage="errors.first('company')"
-											:valid="fields.company && fields.company.valid"
+											v-model="registration.company" :rules="'required'"
 											:placeholder="langString('_company')" iconName="company"
 											iconComponent="IconCompany" :class="['form__element--gray']"
 											:required="true" />
@@ -232,47 +220,47 @@
 										<div class="form__group__inline">
 											<div class="form__element form__element--gray styled-select">
 												<IconCountry class="country-icon"></IconCountry>
-												<v-select v-model="registration.country"
-													:class="{ 'error': errors.has('country') }" v-validate="'required'"
-													data-vv-name="country" data-vv-value-path="mutableValue"
-													label="name" :options="countries"
-													:placeholder="langString('_country')" />
-												<div v-if="errors.has('country')" class="error-message">
-													<span v-text="errors.first('country')" />
-												</div>
+												<VField v-model="registration.country" v-slot="{ field, errors: errorMessages }" :rules="'required'"> 
+													<v-select 
+														v-bind="field"
+														:class="{ 'error': errorMessages ? errorMessages[0] : '' }"
+														data-vv-name="country" data-vv-value-path="mutableValue"
+														label="name" :options="countries"
+														:placeholder="langString('_country')" />
+													<div v-if="errorMessages ? errorMessages[0] : ''" class="error-message">
+														<span v-text="errorMessages ? errorMessages[0] : ''" />
+													</div>
+												</VField>
 											</div>
 
 											<Input :key="'address'" type="text" name="address"
-												v-model="registration.address" v-validate="'required'"
-												:valid="fields.address && fields.address.valid"
-												:errorMessage="errors.first('address')"
+												v-model="registration.address" :rules="'required'"
 												:placeholder="langString('_address')" iconName="address"
 												iconComponent="IconAddress" :class="['form__element--gray']"
 												:required="true" />
 										</div>
 										<div class="form__group__inline">
 											<Input :key="'zip'" type="text" name="zip" v-model="registration.zip"
-												v-validate="'required'" :valid="fields.zip && fields.zip.valid"
-												:errorMessage="errors.first('zip')" :placeholder="langString('_zip')"
+												:rules="'required'" 
+												:placeholder="langString('_zip')"
 												iconName="zip" iconComponent="IconZip" :class="['form__element--gray']"
 												:required="true" />
 											<Input :key="'city'" type="text" name="city" v-model="registration.city"
-												v-validate="'required'" :valid="fields.city && fields.city.valid"
-												:errorMessage="errors.first('city')" :placeholder="langString('_city')"
+												:rules="'required'"
+												:placeholder="langString('_city')"
 												iconName="city" iconComponent="IconCity"
 												:class="['form__element--gray']" :required="true" />
 										</div>
 									</div>
 									<div class="form__group">
 										<Input :key="'phone'" type="text" name="phone" v-model="registration.phone"
-											:valid="fields.phone && fields.phone.valid"
-											:errorMessage="errors.first('phone')" :placeholder="langString('_phone')"
+											:placeholder="langString('_phone')"
 											iconName="phone" iconComponent="IconPhone"
 											:class="['form__element--gray']" />
 									</div>
 								</template>
 
-								<Button hasFunction="true" @func="submit" :class="['btn--price', 'btn--price-free']">
+								<Button hasFunction="true" @func="submit(validate)" :class="['btn--price', 'btn--price-free']">
 									<template v-if="btnSubmitText">{{ btnSubmitText }}</template>
 									<template v-else>{{ langString('_sign_up') }}</template>
 								</Button>
@@ -296,16 +284,14 @@ import FormComponent from '~/components/molecules/form/index.vue';
 import Button from '~/components/atoms/button/index.vue';
 import Input from '~/components/atoms/input/index.vue';
 import IconCountry from '~/assets/svg/country.svg';
-import axios from '~/plugins/axios';
-import langstring from '~/components/mixins/langstring.js';
+import { useLangString } from '~/components/composables/useLangString';
 import qs from 'qs';
 import SmartImage from '~/components/helper/smartimage/index.vue';
 import useStore from '@/store'
-import { useRoute } from 'vue-router'
+import { useNuxtApp } from '#app';
 
 export default {
 	name: 'SignupAccount',
-	mixins: [langstring],
 	components: {
 		FormComponent,
 		Button,
@@ -313,6 +299,10 @@ export default {
 		SmartImage,
 		IconCountry,
 	},
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 	props: {
 		data: { type: Object },
 		type: { type: String },
@@ -1097,8 +1087,8 @@ export default {
 		prev() {
 			this.step -= 1;
 		},
-		next() {
-			this.$validator.validate().then((result) => {
+		next(validate) {
+			validate().then((result) => {
 				if (result) {
 					this.checkDomainAvailability();
 					this.step += 1;
@@ -1126,11 +1116,13 @@ export default {
 
 			return true;
 		},
-		submit() {
+		submit(validate) {
+			const config = useRuntimeConfig();
+			const {$api: axios} = useNuxtApp()
 			// this.checkDomainAvailability();
 			const store = useStore();
 
-			this.$validator.validate().then((result) => {
+			validate().then((result) => {
 				const { locale } = store;
 				const {
 					name,
@@ -1196,7 +1188,7 @@ export default {
 					this.addToHubSpot(registrationData);
 					axios
 						.post(
-							`${process.env.appUrl}/api/signup`,
+							`${config.public.appUrl}/api/signup`,
 							qs.stringify(registrationData),
 						)
 						.then((response) => {
@@ -1210,6 +1202,8 @@ export default {
 		},
 
 		addToHubSpot(registrationData) {
+			const {$api: axios} = useNuxtApp()
+
 			var data = {
 				fields: [
 					{
@@ -1263,6 +1257,9 @@ export default {
 			});
 		},
 		checkDomainAvailability() {
+			const config = useRuntimeConfig();
+			const {$api: axios} = useNuxtApp()
+
 			let domain;
 			if (this.registration.host) {
 				domain = this.registration.host.toLowerCase();
@@ -1273,7 +1270,7 @@ export default {
 			}
 
 			axios
-				.get(`${process.env.appUrl}/api/signup/availability`, {
+				.get(`${config.public.appUrl}/api/signup/availability`, {
 					params: {
 						clientHost: domain,
 					},
@@ -1356,9 +1353,10 @@ export default {
 	},
 	mounted() {
 		const store = useStore();
-		const route = useRoute();
-		if (route.query.kontainer) {
-			this.getKontainerPackage(route.query.kontainer); // check url containing ?kontainer=slug
+		const nuxtApp = useNuxtApp();
+
+		if (nuxtApp._route.query.kontainer) {
+			this.getKontainerPackage(nuxtApp._route.query.kontainer); // check url containing ?kontainer=slug
 		} else {
 			this.getKontainerPackage('free');
 		}

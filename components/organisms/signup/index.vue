@@ -11,7 +11,7 @@
 							<div slot="terms" v-if="data.terms" class="signup-block__conditions" v-html="data.terms" />
 						</SignupForm>
 
-						<NewsletterSignup v-else-if="data.acf_fc_layout === 'newsletter'">
+						<NewsletterSignup v-if="data.acf_fc_layout === 'newsletter'">
 							<slot>
 								<Teaser :data="{ heading: data.heading, text: data.subheading }" :class="'teaser--fluid'" :positionOnPage="positionOnPage" />
 							</slot>
@@ -30,11 +30,10 @@ import Input from '~/components/atoms/input/index.vue';
 import SignupForm from '~/components/organisms/signup-account/index.vue';
 import Teaser from '~/components/molecules/teaser/index.vue';
 import NewsletterSignup from '~/components/organisms/newsletter/index.vue';
-import langstring from '~/components/mixins/langstring.js';
+import { useLangString } from '~/components/composables/useLangString';
 
 export default {
 	name: 'SignupBlock',
-	mixins: [langstring],
 	components: {
 		Button,
 		Input,
@@ -46,6 +45,10 @@ export default {
 		data: { type: Object },
 		positionOnPage: { type: Number },
 	},
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 };
 </script>
 

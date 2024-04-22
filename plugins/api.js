@@ -2,16 +2,17 @@ import { defineNuxtPlugin } from '#app';
 import useStore from "@/store"
 import { useRoute } from 'vue-router';
 class Api {
-	constructor(connection) {
+	constructor(connection, nuxtApp) {
 		this.connection = connection;
+		this.nuxtApp = nuxtApp;
 	}
-	
+
 	fetch(path, context, pageInfo) {
 		const store = useStore()
-		const route = useRoute()
+		const route = this.nuxtApp._route
 		let requestPath = path;
 		const params = {
-			lang: route.params.lang,
+			lang: this.nuxtApp._route.params.lang,
 		};
 
 		if (route && route.query.preview) {
@@ -19,9 +20,11 @@ class Api {
 			params.key = route.query.previewkey;
 		}
 
-		return this.connection.get(`/api/content/${requestPath}`, { params: {
-			...params, cache: 1 // remove cache: 1 in 2025
-		} }).then(({ data }) => {
+		return this.connection.get(`/api/content/${requestPath}`, {
+			params: {
+				...params, cache: 1 // remove cache: 1 in 2025
+			}
+		}).then(({ data }) => {
 			const pageInfoProper = pageInfo;
 			if (data.translated && pageInfo.slug) {
 				const untranslated = {};
@@ -62,7 +65,6 @@ class Api {
 	}
 
 	getPage(slug, context) {
-		console.log("????????????????????????????????????????????????????????????????????????????????????????????", slug);
 		return this.fetch(slug, context, { type: 'page', slug });
 	}
 
@@ -75,12 +77,11 @@ class Api {
 	}
 
 	getCollectionItem(context, collection = false) {
-		const route = useRoute()
-		const collectionType = collection || route.params.collection;
+		const collectionType = collection || this.nuxtApp._route.params.collection;
 		return this.fetch(
-			`${collectionType}/${route.params.slug}`,
+			`${collectionType}/${this.nuxtApp._route.params.slug}`,
 			context,
-			{ type: collectionType, slug: route.params.slug }
+			{ type: collectionType, slug: this.nuxtApp._route.params.slug }
 		).catch((resError) => {
 			const { error } = context;
 			if (resError.response.statusText && resError.response.status) {
@@ -93,6 +94,6 @@ class Api {
 }
 
 export default defineNuxtPlugin(nuxtApp => {
-	const api = new Api(nuxtApp.$api);
-	nuxtApp.provide('myAppApi', api); 
+	const api = new Api(nuxtApp.$api, nuxtApp);
+	nuxtApp.provide('myAppApi', api);
 });
