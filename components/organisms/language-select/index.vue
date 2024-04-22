@@ -72,22 +72,24 @@ export default {
 	},
 	methods: {
 		languageSelect(locale) {
-			const store = useStore();
-			const { pageInfo } = store;
-			const link = getLocalUrl({
-				locale,
-				type: pageInfo.type,
-				slug: pageInfo.slug ? pageInfo.translated[locale] : undefined,
-			}) || '/';
+			if(typeof locale == 'string'){
+				const store = useStore();
+				const { pageInfo } = store;
+				const link = getLocalUrl({
+					locale,
+					type: pageInfo.type,
+					slug: pageInfo.slug ? pageInfo.translated[locale] : undefined,
+				}) || '/';
+				
+				const date = new Date();
+				const year = 365 * 24 * 60 * 60 * 1000;
+				date.setTime(date.getTime() + year);
+				const expires = date.toGMTString();
+				document.cookie = `preferredLang=${locale}; expires=${expires}; path=/`;
 
-			const date = new Date();
-			const year = 365 * 24 * 60 * 60 * 1000;
-			date.setTime(date.getTime() + year);
-			const expires = date.toGMTString();
-			document.cookie = `preferredLang=${locale}; expires=${expires}; path=/`;
-
-			store.setLang(locale);
-			this.$router.push(`${link}`);
+				store.setLang(locale);
+				this.$router.push(`${link}`);
+			}
 		},
 	},
 };

@@ -33,7 +33,7 @@
 
 <script>
 import PinElement from '../pin/index.vue';
-import animateOnload from '../../mixins/animate-onload';
+import { useAnimateOnLoad } from '~/components/composables/useAnimateOnLoad';
 
 const SECTION_ANGLE_NONE = '0';
 const SECTION_ANGLE_POSITIVE = '1';
@@ -60,10 +60,13 @@ export {
 
 export default {
 	name: 'ContentSection',
-	mixins: [animateOnload],
 	components: {
 		PinElement,
 	},
+	setup() {
+		const { initAnimations } = useAnimateOnLoad()
+		return { initAnimations };
+  	},
 	props: {
 		angleType: {
 			validator(value) {

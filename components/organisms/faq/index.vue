@@ -45,17 +45,19 @@
 </template>
 
 <script>
-import langstring from '~/components/mixins/langstring.js';
 import IconCaret from '~/assets/svg/caret.svg';
+import { useLangString } from '~/components/composables/useLangString';
 
 export default {
 	name: 'Faq',
-	mixins: [langstring],
 
 	components: {
 		IconCaret,
 	},
-
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 	props: {
 		data: { type: Object },
 		positionOnPage: { type: Number },

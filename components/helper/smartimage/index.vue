@@ -232,7 +232,7 @@ export default {
 
 	&.quoteicon {
 		img {
-			width: auto;
+			width: 100%;
 		}
 	}
 

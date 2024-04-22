@@ -1,7 +1,7 @@
 <template>
 	<section class="signup-account" ref="signupAccount">
 		<button class="form-close" :key="'close'" @click="close">{{ langString('_close') }}</button>
-		<FormComponent :type="type" ref="form" :style="{ minHeight: height }">
+		<FormComponent :type="type" ref="form" :style="{ minHeight: height }" v-slot="{ validate }">
 			<slot>
 				<transition name="form-step-animation" mode="out-in">
 					<div>
@@ -13,31 +13,28 @@
 								</div>
 								<div class="form__group">
 									<Input :key="'name'" type="text" name="name" v-model="registration.name"
-										v-validate="'required|alpha_spaces_dash'"
-										:valid="fields.name && fields.name.valid" :errorMessage="errors.first('name')"
+										:rules="'required|alpha_spaces_dash'"
 										:placeholder="langString('_name')" iconName="user" iconComponent="IconUser"
 										:class="['form__element--gray']" :required="true" />
 									<Input :key="'company'" type="text" name="company" v-model="registration.company"
-										:errorMessage="errors.first('company')" :placeholder="langString('_company')"
+										:placeholder="langString('_company')"
 										iconName="company" iconComponent="IconCompany"
 										:class="['form__element--gray']" />
 									<Input :key="'email'" type="text" name="email" v-model="registration.email"
-										v-validate="'required|email'" :valid="fields.email && fields.email.valid"
-										:errorMessage="errors.first('email')" :placeholder="langString('_e-mail')"
+										:rules="'required|email'"
+										:placeholder="langString('_e-mail')"
 										iconName="email" iconComponent="IconEmail" :class="['form__element--gray']"
 										:required="true" />
 									<Textarea :key="'message'" name="message" v-model="registration.message"
-										:errorMessage="errors.first('message')"
-										:valid="fields.message && fields.message.valid"
 										:placeholder="langString('_contact_account_modal_message')"
 										class="contact-message"></Textarea>
 								</div>
 							</div>
 
 							<div class="form__element" :key="'action'">
-								<Button hasFunction="true" @func="submit" icon="arrow"
+								<Button hasFunction="true" @func="submit(validate)" icon="arrow"
 									:class="['btn--price', 'btn--price-free']">
-									<template>{{ langString('_contact_account_modal_send') }}</template>
+									{{ langString('_contact_account_modal_send') }}
 								</Button>
 							</div>
 
@@ -63,15 +60,13 @@
 import FormComponent from '~/components/molecules/form/index.vue';
 import Button from '~/components/atoms/button/index.vue';
 import Input from '~/components/atoms/input/index.vue';
-import axios from '~/plugins/axios';
-import langstring from '~/components/mixins/langstring.js';
+import { useNuxtApp } from '#app';
+import { useLangString } from '~/components/composables/useLangString';
 import SmartImage from '~/components/helper/smartimage/index.vue';
 import Textarea from '~/components/atoms/textarea/index.vue';
 import useStore from '@/store'
-import { useRoute } from 'vue-router'
 
 export default {
-	mixins: [langstring],
 	components: {
 		FormComponent,
 		Button,
@@ -83,6 +78,10 @@ export default {
 		data: { type: Object },
 		type: { type: String },
 	},
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 	/* eslint-disable */
 	data() {
 		return {
@@ -120,19 +119,21 @@ export default {
 				this.$router.push('/');
 			}
 		},
-		submit() {
-			this.$validator.validate().then((result) => {
+		submit(validate) {
+			validate().then((result) => {
 				if (result) {
 					this.handleSubmit();
 				}
 			});
 		},
 		handleSubmit() {
-			const route = useRoute()
+			const nuxtApp = useNuxtApp()
+			const {$api: axios} = useNuxtApp();
+
 			if (
 				this.registration.name &&
 				this.registration.email &&
-				route.query.kontainer
+				nuxtApp._route.query.kontainer
 			) {
 				this.addToHubSpot(this.registration);
 				axios
@@ -141,7 +142,7 @@ export default {
 						email: this.registration.email,
 						company: this.registration.company,
 						message: this.registration.message,
-						package: route.query.kontainer,
+						package: nuxtApp._route.query.kontainer,
 					})
 					.then(() => {
 						this.success();
@@ -162,6 +163,7 @@ export default {
 
 		addToHubSpot(registrationData) {
 			const store = useStore();
+			const {$api: axios} = useNuxtApp();
 			var data = {
 				fields: [
 					{

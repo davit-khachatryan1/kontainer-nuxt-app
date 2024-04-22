@@ -1,25 +1,24 @@
 <template>
 	<div class="form__element" :key="keyName">
 	  <label>
-		<input
-		  :type="type"
-		  :name="name"
-		  :pattern="pattern"
-		  :value="value"
-		  @input="$emit('input', $event.target.value)"
-		  @focus="focusCheck(true)"
-		  @blur="focusCheck(false)"
-		  @keyup="valueCheck"
-		  :class="{
-			'form__element__input': true,
-			'form__element__input--no-icon': noIcon,
-			'form__element__input--hide': hidePlaceholder,
-			'focus': focused,
-			'filled': hasValue,
-			'error': errorMessage,
-			'valid': valid,
-		  }"
-		/>
+		<VField :name="name" :type="type" :pattern="pattern"
+		 v-slot="{ field, errors }" :rules="rules">
+		  <input
+		    v-bind="field"
+		    @input="field.onChange($event.target.value); $emit('update:modelValue', $event.target.value)"
+		    @focus="focusCheck(true)"
+		    @blur="focusCheck(false)"
+		    @keyup="valueCheck"
+		    :class="{
+		      'form__element__input': true,
+		      'form__element__input--no-icon': noIcon,
+		      'form__element__input--hide': hidePlaceholder,
+		      'error': errors.length > 0,
+			  'focus': focused,
+			  'filled': field.value,
+		       'valid': !errors.length && field.value
+		    }"
+		  />
 		<span
 		  class="form__element__placeholder"
 		  :class="{
@@ -35,16 +34,17 @@
 		  <span
 			class="error-message"
 			:class="{'error-message--no-icon': noIcon}"
-			v-if="errorMessage"
+			v-if="errors?.length ? errors[0] : ''"
 		  >
-			{{ errorMessage }}
+			{{ errors?.length ? errors[0] : '' }}
 		  </span>
 		</transition>
 		<span v-if="required && !valid" class="form__element__required">*</span>
 		<transition name="fade">
 		  <span class="valid-input" v-if="domainAvailability || valid"></span>
 		</transition>
-	  </label>
+		</VField>
+	</label>
 	</div>
   </template>
 
@@ -58,27 +58,32 @@ import IconCity from '~/assets/svg/city.svg';
 import IconCountry from '~/assets/svg/country.svg';
 import IconVat from '~/assets/svg/vat.svg';
 import IconZip from '~/assets/svg/zip.svg';
-import inputLabels from '../../mixins/input-labels';
+import { useInputLabels } from '~/components/composables/useInputLabels';
 
 export default {
 	name: 'Input',
-	mixins: [inputLabels],
 	props: [
 		'type',
 		'name',
 		'placeholder',
 		'iconName',
 		'iconComponent',
-		'value',
-		'errorMessage',
+		'modelValue',
 		'noIcon',
 		'hidePlaceholder',
 		'keyName',
+		'rules',
+		'value',
+		'errorMessage',
 		'domainAvailability',
 		'valid',
 		'pattern',
 		'required',
 	],
+	setup() {
+		const { focused, hasValue, focusCheck, valueCheck } = useInputLabels()
+		return { focused, hasValue, focusCheck, valueCheck };
+  	},
 	components: {
 		IconUser,
 		IconEmail,
@@ -197,30 +202,30 @@ input::-ms-clear {
 			&.filled {
 				padding-top: 12px;
 
-				// + #{$input-placeholder-selector} {
-				// 	font-size: 10px;
-				// 	transform: translate(0, 13px);
-				// }
+				+ .form__element__placeholder {
+				 	font-size: 10px;
+				 	transform: translate(0, 13px);
+				 }
 			}
 
 			&--no-icon {
 				padding-left: 20px;
 
-				// &.focus,
-				// &.filled {
-				// 	+ #{$input-placeholder-selector} {
-				// 		transform: translate(0, 8px);
-				// 	}
-				// }
+				&.focus,
+				&.filled {
+					+ .form__element__placeholder {
+						transform: translate(0, 8px);
+					}
+				}
 			}
 
 			&--hide {
-				// &.focus,
-				// &.filled {
-				// 	+ #{$input-placeholder-selector} {
-				// 		opacity: 0;
-				// 	}
-				// }
+				&.focus,
+				&.filled {
+					+ .form__element__placeholder {
+						opacity: 0;
+					}
+				}
 			}
 
 			&:-webkit-autofill {
@@ -369,6 +374,7 @@ input::-ms-clear {
 	}
 }
 </style>
+
 <!-- <docs>
 ```jsx
 <Input type="text" name="name" placeholder="Navn" iconName="user" iconComponent="IconUser" />

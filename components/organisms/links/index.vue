@@ -12,19 +12,22 @@
 <script>
 import Teaser from '~/components/molecules/teaser/index.vue';
 import KardComponent from '~/components/molecules/kard/index.vue';
-import langstring from '~/components/mixins/langstring.js';
 import SmartLink, {
 	prepareWPObjectsToLinks,
 } from '~/components/helper/smartlink/index.vue';
+import { useLangString } from '~/components/composables/useLangString';
 
 export default {
 	name: 'Links',
-	mixins: [langstring],
 	components: {
 		Teaser,
 		KardComponent,
 		SmartLink,
 	},
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 	props: {
 		data: { type: Object },
 		positionOnPage: { type: Number },

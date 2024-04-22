@@ -12,17 +12,19 @@
 
 <script>
 
-import langstring from '~/components/mixins/langstring.js';
+import { useLangString } from '~/components/composables/useLangString';
 
 export default {
 	name: 'CodeInserter',
-	mixins: [langstring],
 
 	props: {
 		data: { type: Object },
 		positionOnPage: { type: Number },
 	},
-
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 	methods: {
 
 		executeHTML() {

@@ -4,23 +4,21 @@
 	</div>
 </template>
 
-<script>
-import api from '~/plugins/api';
-import meta from '~/plugins/meta';
-import ContentSwitch from '~/components/organisms/content-switch/index.vue';
-import useStore from '@/store'
+<script setup>
+import { ref, computed, onMounted } from "vue";
 import { useNuxtApp } from '#app';
-
-export default {
-	components: {
-		ContentSwitch,
-	},
-	mixins: [meta],
-	async setup(context) {
-		const nuxtApp = useNuxtApp()
-		return await nuxtApp.$myAppApi.getCollectionItem(context, 'blog');
-	},
-	computed: {
-	},
-};
+import ContentSwitch from '~/components/organisms/content-switch/index.vue';
+const flexible = ref([]);
+const nuxtApp = useNuxtApp();
+const api = nuxtApp.$myAppApi;
+definePageMeta({
+	middleware: ['lang', 'global', 'cleanup'],
+	layout: false,
+})
+onMounted(async () => {
+	const context = {}; // Define or get your context
+	const data = await api.getCollectionItem(context, 'blog');
+	flexible.value = data?.flexible || [];
+	posts.value = data?.posts || { blog: [] };
+});
 </script>

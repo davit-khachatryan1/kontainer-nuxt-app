@@ -17,6 +17,7 @@
     "@types/express": "^4.17.21",
     "@types/lodash": "^4.17.0",
     "@vee-validate/i18n": "^4.12.6",
+    "@vee-validate/nuxt": "^4.12.6",
     "@vee-validate/rules": "^4.12.6",
     "accept-language": "^3.0.18",
     "apicache": "^1.6.3",

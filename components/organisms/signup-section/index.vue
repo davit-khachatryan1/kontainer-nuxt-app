@@ -28,13 +28,12 @@ import SellingpointComponent from '~/components/molecules/sellingpoint/index.vue
 import FormComponent from '~/components/molecules/form/index.vue';
 import InputComponent from '~/components/atoms/input/index.vue';
 import SignupForm from '~/components/organisms/signup-account/index.vue';
-import langstring from '~/components/mixins/langstring.js';
-import preplink from '~/components/mixins/preplink.js';
+import { useLangString } from '~/components/composables/useLangString';
+import { usePrepLink } from '~/components/composables/usePrepLink';
 import Parallax from '~/components/_nuclides/parallax/index.vue';
 
 export default {
 	name: 'SignupSection',
-	mixins: [langstring, preplink],
 	components: {
 		ButtonComponent,
 		SellingpointComponent,
@@ -43,6 +42,11 @@ export default {
 		SignupForm,
 		Parallax,
 	},
+	setup() {
+		const { prepLink } = usePrepLink()
+		const { langString } = useLangString()
+		return { langString, prepLink };
+  	},
 	props: {
 		data: { type: Object },
 	},

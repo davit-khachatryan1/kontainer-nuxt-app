@@ -4,23 +4,32 @@
 	</div>
 </template>
 
-<script>
-import api from '~/plugins/api';
-import meta from '~/plugins/meta';
-import ContentSwitch from '~/components/organisms/content-switch/index.vue';
-import useStore from '@/store'
+<script setup>
+definePageMeta({
+  middleware: ['lang', 'global', 'cleanup'],
+  layout: false,
+})
+import { ref, onMounted } from 'vue';
 import { useNuxtApp } from '#app';
+import ContentSwitch from '~/components/organisms/content-switch/index.vue';
 
-export default {
-	components: {
-		ContentSwitch,
-	},
-	mixins: [meta],
-	async setup(context) {
-		const nuxtApp = useNuxtApp()
-		return await nuxtApp.$myAppApi.getCollectionItem(context, 'news');
-	},
-	computed: {
-	},
-};
+const flexible = ref([]);
+const type = ref('');
+
+const { $myAppApi } = useNuxtApp();
+
+onMounted(async () => {
+  // Assuming the context you need is available or constructed here
+  // If context is derived from props or other sources, adjust accordingly
+  const context = {}; // Construct or derive the needed context
+
+  try {
+    const data = await $myAppApi.getCollectionItem(context, 'news');
+    // Assuming data structure includes { flexible: [], type: '' }, adjust based on actual structure
+    flexible.value = data.flexible;
+    type.value = data.type;
+  } catch (error) {
+    console.error('Error fetching collection item:', error);
+  }
+});
 </script>

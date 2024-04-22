@@ -1,19 +1,37 @@
 <template>
 	<div class="form__element">
 		<label>
-			<textarea :name="name" :value="value" @input="$emit('input', $event.target.value)" @focus="focusCheck(true)" @blur="focusCheck(false)" @keyup="valueCheck" :class="{ 'focus': focused, 'filled': hasValue }"></textarea>
-			<span>{{placeholder}}</span>
+			<VField :name="name" :rules="rules" v-slot="{ field, errors }">
+				<textarea 
+				  v-bind="field"
+				  @input="handleInput"
+				  @focus="focusCheck(true)"
+				  @blur="focusCheck(false)"
+				  @keyup="valueCheck"
+				  :class="{ 'focus': focused, 'filled': field.value }"
+				></textarea>
+				<span>{{ placeholder }}</span>
+			  </VField>
 		</label>
 	</div>
 </template>
 
 <script>
-import inputLabels from '../../mixins/input-labels';
+import { useInputLabels } from '~/components/composables/useInputLabels';
 
 export default {
 	name: 'Textarea',
-	mixins: [inputLabels],
-	props: ['name', 'placeholder', 'value'],
+	props: ['name', 'placeholder', 'value', 'rules', 'modelValue'],
+	emits: ['update:modelValue'],
+  	setup(props, { emit }) {
+		const { focused, hasValue, focusCheck, valueCheck } = useInputLabels();
+
+		const handleInput = event => {
+		emit('update:modelValue', event.target.value);
+		};
+
+		return { focused, hasValue, focusCheck, valueCheck, handleInput };
+	},
 };
 </script>
 

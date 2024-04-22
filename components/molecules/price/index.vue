@@ -32,14 +32,13 @@
 <script>
 import Button from '~/components/atoms/button/index.vue';
 import Checklist from '~/components/atoms/checklist/index.vue';
-import langstring from '~/components/mixins/langstring';
+import { useLangString } from '~/components/composables/useLangString';
 import { DEFAULT_LOCALE } from '~/constants/styles';
 import debounce from 'lodash/debounce';
 import useStore from '@/store'
 
 export default {
 	name: 'Price',
-	mixins: [langstring],
 	props: {
 		data: { type: Object },
 		first: { type: Number },
@@ -50,6 +49,10 @@ export default {
 			animationRunning: false,
 		};
 	},
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 	components: {
 		Button,
 		Checklist,

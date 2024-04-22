@@ -196,26 +196,28 @@
 			</div>
 		</div>
 		<transition name="fade">
-			<div
-				class="video-modal"
-				v-if="videoModalActive"
-				@click.prevent="closeVideoModal"
-			>
-				<button class="video-modal__close" @click.prevent="closeVideoModal">
-					close
-				</button>
-				<video
-					playsinline
-					controls
-					autoplay
-					ref="videoplayer"
-					width="1280"
-					height="720"
-					@keyup.esc="closeVideoModal"
-					tabindex="0"
+			<div>
+				<div
+					class="video-modal"
+					v-if="videoModalActive"
+					@click.prevent="closeVideoModal"
 				>
-					<source :src="videoModalFile" type="video/mp4" />
-				</video>
+					<button class="video-modal__close" @click.prevent="closeVideoModal">
+						close
+					</button>
+					<video
+						playsinline
+						controls
+						autoplay
+						ref="videoplayer"
+						width="1280"
+						height="720"
+						@keyup.esc="closeVideoModal"
+						tabindex="0"
+					>
+						<source :src="videoModalFile" type="video/mp4" />
+					</video>
+				</div>
 			</div>
 		</transition>
 	</section>
@@ -229,13 +231,12 @@ import PinElement from '~/components/atoms/pin/index.vue';
 import LaptopMockup from '~/assets/svg/hero-laptop.svg';
 import LaptopMockupShadow from '~/assets/svg/hero-laptop-shadow.svg';
 import Teaser from '~/components/molecules/teaser/index.vue';
-import imgurl from '~/components/mixins/imgurl.js';
+import { useImgUrl } from '~/components/composables/useImgUrl';
 import SmartFlash from '~/components/helper/smartFlash/index.vue';
 import CodeInserter from '~/components/organisms/code-inserter/index.vue';
 
 export default {
 	name: 'Sidekick',
-	mixins: [imgurl],
 	data() {
 		return {
 			inView: false,
@@ -243,6 +244,10 @@ export default {
 			videoModalActive: false,
 		};
 	},
+	setup() {
+		const { imgUrl } = useImgUrl()
+		return { imgUrl };
+  	},
 	components: {
 		SmartImage,
 		Button,

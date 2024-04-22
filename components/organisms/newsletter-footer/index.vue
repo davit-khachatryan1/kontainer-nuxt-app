@@ -1,5 +1,8 @@
 <template>
-	<Form :class="{
+	<Form 
+	v-slot="{ validate }"
+	:class="{
+		'form--inline': true,
 		'js-cm-form': true,
 		'hide-language': (step === 2),
 	}" type="inline" action="https://kontainer.createsend.com/t/d/s/vhrjir/" method="post">
@@ -8,27 +11,31 @@
 			<div>
 				<div class="fieldset" v-if="step < 2">
 					<slot name="footer-heading"></slot>
-					<!-- <Input ref="email" name="email" type="text" :class="['js-cm-email-input', 'input-trigger']"
-						v-model="newsletterInfo.email" v-validate="'required|email'"
-						:valid="fields.email && fields.email.valid" :errorMessage="errors.first('email')"
-						:placeholder="langString('_e-mail')" iconName="email" iconComponent="IconEmail"
-						@click.native="step === 0 ? incrementStep() : ''" /> -->
-
-					<!-- <transition name="fade">
-						<Input name="name" type="text" v-model="newsletterInfo.name"
-							v-validate="'required|alpha_spaces_dash'" :valid="fields.name && fields.name.valid"
-							:errorMessage="errors.first('name')" :placeholder="langString('_name')" iconName="user"
-							iconComponent="IconUser" v-if="step === 1" :key="0" />
-					</transition> -->
+					<Input ref="email" type="text" name="email"
+						v-model="newsletterInfo.email" :rules="'required|email'"
+						:placeholder="langString('_e-mail')"
+						iconName="email" iconComponent="IconEmail" 
+						@click.native="step === 0 ? incrementStep() : ''"
+					/>
 					<transition name="fade">
-						<div class="form__element" v-if="step === 1" :key="0">
-							<Button hasFunction="true" @func="submit" :class="['js-cm-submit-button', 'button']">
-								{{ langString('_sign_up') }}
-							</Button>
+						<Input type="text" name="name"
+							v-model="newsletterInfo.name" :rules="'required|alpha_spaces_dash'"
+							:placeholder="langString('_name')"
+							iconName="user" iconComponent="IconUser" 
+							v-if="step === 1" :key="0" 
+						/>
+					</transition>
+					<transition name="fade">
+						<div>
+							<div class="form__element" v-if="step == 1" :key="0">
+								<Button hasFunction="true" @func="submit(validate)" :class="['js-cm-submit-button', 'button']">
+									{{ langString('_sign_up') }}
+								</Button>
+							</div>
 						</div>
 					</transition>
 				</div>
-				<div v-if="step === 2" :key="step" class="form__confirmation">
+				<div v-if="step == 2" :key="step" class="form__confirmation">
 					<div class="checkmark"></div>
 					<div class="form__confirmation__response">{{ langString('_thanks_for_signing_up_to_our_newsletter') }}
 					</div>
@@ -43,13 +50,12 @@ import Button from '~/components/atoms/button/index.vue';
 import Input from '~/components/atoms/input/index.vue';
 import Teaser from '~/components/molecules/teaser/index.vue';
 import Form from '~/components/molecules/form/index.vue';
-import axios from '~/plugins/axios';
 import qs from 'qs';
-import langstring from '~/components/mixins/langstring';
+import { useLangString } from '~/components/composables/useLangString';
+import { useNuxtApp } from '#app';
 
 export default {
 	name: 'NewsletterSignup',
-	mixins: [langstring],
 	components: {
 		Button,
 		Input,
@@ -60,6 +66,10 @@ export default {
 		data: { type: Object },
 		type: { type: String },
 	},
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 	computed: {},
 	data() {
 		return {
@@ -97,8 +107,10 @@ export default {
 			});
 			return Object.assign({}, ...keyValues);
 		},
-		submit() {
-			this.$validator.validate().then((result) => {
+		submit(validate) {
+			const { $api: axios } = useNuxtApp();
+
+			validate().then((result) => {
 				const newsletterData = this.newsletterInfo;
 				const cmNames = { name: 'cm-name', email: 'cm-vhrjir-vhrjir' };
 				const cmData = this.renameKeys(newsletterData, cmNames);
@@ -114,7 +126,6 @@ export default {
 								response.data.slice(11).slice(0, -1),
 							);
 							console.warn(responseJSON.Status);
-							console.warn(response);
 
 							if (responseJSON.Status === 200) {
 								this.incrementStep();

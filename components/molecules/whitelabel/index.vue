@@ -38,17 +38,21 @@
 <script>
 import SmartImage from '~/components/helper/smartimage/index.vue';
 import Teaser from '~/components/molecules/teaser/index.vue';
-import imgurl from '~/components/mixins/imgurl.js';
+import { useImgUrl } from '~/components/composables/useImgUrl';
+
 import Parallax from '~/components/_nuclides/parallax/index.vue';
 
 export default {
 	name: 'WhitelabelComponent',
-	mixins: [imgurl],
 	components: {
 		SmartImage,
 		Teaser,
 		Parallax,
 	},
+	setup() {
+		const { imgUrl } = useImgUrl()
+		return { imgUrl };
+  	},
 	props: {
 		whitelabel: { type: Object },
 	},

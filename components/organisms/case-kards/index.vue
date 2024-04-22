@@ -13,18 +13,17 @@
 </template>
 
 <script>
-import axios from '~/plugins/axios';
 import Teaser from '~/components/molecules/teaser/index.vue';
 import KardComponent from '~/components/molecules/kard/index.vue';
 import ButtonComponent from '~/components/atoms/button/index.vue';
-import langstring from '~/components/mixins/langstring.js';
 import { prepareWPObjectsToLinks } from '~/components/helper/smartlink/index.vue';
-import preplink from '~/components/mixins/preplink.js';
-import useStore from '@/store'
+import useStore from '@/store';
+import { usePrepLink } from '~/components/composables/usePrepLink';
+import { useLangString } from '~/components/composables/useLangString';
+import { useNuxtApp } from '#app';
 
 export default {
 	name: 'CaseKards',
-	mixins: [langstring, preplink],
 	components: {
 		Teaser,
 		KardComponent,
@@ -39,7 +38,13 @@ export default {
 			lastestKards: [],
 		};
 	},
+	setup() {
+		const { prepLink } = usePrepLink()
+		const { langString } = useLangString()
+		return { langString, prepLink };
+  	},
 	created() {
+		const { $api: axios } = useNuxtApp()
 		const store = useStore();
 		if (this.data.fetch_resource_type === 'latest') {
 			axios

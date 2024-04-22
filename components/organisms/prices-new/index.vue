@@ -424,8 +424,8 @@
 import forEach from 'lodash/forEach';
 import { DEFAULT_LOCALE } from '~/constants/styles';
 import SmartLink from '~/components/helper/smartlink/index.vue';
-import langstring from '~/components/mixins/langstring';
-import getClosest from '~/components/mixins/getclosest';
+import { useGetClosest } from '~/components/composables/useGetClosest';
+import { useLangString } from '~/components/composables/useLangString';
 import Button from '~/components/atoms/button/index.vue';
 import Teaser from '~/components/molecules/teaser/index.vue';
 import IconBookmark from '~/assets/svg/bookmark.svg';
@@ -433,7 +433,6 @@ import useStore from '@/store'
 
 export default {
 	name: 'PriceSection',
-	mixins: [getClosest, langstring],
 	components: {
 		Teaser,
 		Button,
@@ -444,6 +443,11 @@ export default {
 		data: { type: Object },
 		positionOnPage: { type: Number },
 	},
+	setup() {
+		const { getClosest } = useGetClosest()
+		const { langString } = useLangString()
+		return { langString, getClosest };
+  	},
 	data: () => {
 		return {
 			pricingTableHeadPosition: 0,

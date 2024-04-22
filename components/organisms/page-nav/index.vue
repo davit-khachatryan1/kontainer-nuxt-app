@@ -71,11 +71,12 @@
 	</div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue';
+import useStore from '@/store'; // Assuming you're using Vuex 4 for Nuxt 3
+import { useNuxtApp } from '#app';
 import forEach from 'lodash/forEach';
-import SmartLink, {
-	prepareWPObjectsToLinks,
-} from '~/components/helper/smartlink/index.vue';
+import SmartLink, { prepareWPObjectsToLinks } from '~/components/helper/smartlink/index.vue';
 import LanguageSelect from '~/components/organisms/language-select/index.vue';
 import ButtonComp from '~/components/atoms/button/index.vue';
 import Hamburger from '~/components/atoms/hamburger/index.vue';
@@ -83,94 +84,67 @@ import iconCaret from '~/assets/svg/caret-select.svg';
 import LanguageIcon from '~/assets/svg/language.svg';
 import IconLogoText from '~/assets/svg/kontainer-logo-text.svg';
 import IconLogoMark from '~/assets/svg/kontainer-logo-mark.svg';
-import useStore from '@/store'
-import {useNuxtApp} from '#app'
 
-export default {
-	components: {
-		SmartLink,
-		LanguageSelect,
-		ButtonComp,
-		Hamburger,
-		iconCaret,
-		LanguageIcon,
-		IconLogoText,
-		IconLogoMark,
-	},
-	data() {
-		return {
-			submenuOpen: false,
-			openMenuItem: false,
-			hoverMenu: false,
-			hoverSubmenu: false,
-			showLanguageMenu: false,
-		};
-	},
-	methods: {
-		handleLangMenuHover(e) {
-			const { type } = e;
-			if (!window.matchMedia('(hover: none)').matches) {
-				// hover available, show or hide menu based on mouseovers
-				this.showLanguageMenu = type === 'mouseenter';
-			}
-		},
-		handleLangMenuClick(e) {
-			if (window.matchMedia('(hover: none)').matches) {
-				// hover unavailable, open on click instead
-				this.showLanguageMenu = !this.showLanguageMenu;
-			}
-		},
-	},
-	computed: {
-		logoLabel() {
-			const store = useStore();
+// Refs for reactive state
+const submenuOpen = ref(false);
+const openMenuItem = ref(false);
+const hoverMenu = ref(false);
+const hoverSubmenu = ref(false);
+const showLanguageMenu = ref(false);
 
-			// console.log(this);
-			return store.pageOptions.logo_label;
-		},
-		menuItems() {
-			const store = useStore();
-			return store.menus ? store.menus.primary : [];
-		},
-		cta() {
-			const store = useStore();
-			return {
-				title: store.pageOptions.navcta_title,
-				titleShort: store.pageOptions.navcta_title_short,
-				link: prepareWPObjectsToLinks(store.pageOptions.navcta),
-				class: this.bookDemo.show ? 'btn--grey' : 'btn--cta',
-			};
-		},
-		bookDemo() {
-			const store = useStore();
-			return {
-				title: store.pageOptions.book_demo_button,
-				link: prepareWPObjectsToLinks(store.pageOptions.book_demo_url),
-				show:
-					store.pageOptions.nav_show_bookdemo &&
-					store.pageOptions.book_demo_button &&
-					store.pageOptions.book_demo_url,
-			};
-		},
-		activeMenuParent() {
-			const nuxtApp = useNuxtApp();
-			const currentMenuSlug = nuxtApp._route.slug;
-			let activeParent = '';
+const store = useStore(); // Use your Vuex store
+const nuxtApp = useNuxtApp(); // Access Nuxt 3 app context
 
-			forEach(this.menuItems, (item) => {
-				if (item.children) {
-					forEach(item.children, (child) => {
-						if (child.slug === currentMenuSlug) {
-							activeParent = item.slug;
-						}
-					});
-				}
-			});
-			return activeParent;
-		},
-	},
-};
+// Computed properties
+const logoLabel = computed(() => store.pageOptions.logo_label);
+const menuItems = computed(() => store.menus ? store.menus.primary : []);
+const cta = computed(() => ({
+  title: store.pageOptions.navcta_title,
+  titleShort: store.pageOptions.navcta_title_short,
+  link: prepareWPObjectsToLinks(store.pageOptions.navcta),
+  class: bookDemo.value.show ? 'btn--grey' : 'btn--cta',
+}));
+const bookDemo = computed(() => ({
+  title: store.pageOptions.book_demo_button,
+  link: prepareWPObjectsToLinks(store.pageOptions.book_demo_url),
+  show:
+    store.pageOptions.nav_show_bookdemo &&
+    store.pageOptions.book_demo_button &&
+    store.pageOptions.book_demo_url,
+}));
+
+const activeMenuParent = computed(() => {
+  const currentMenuSlug = nuxtApp._route.params.slug; // Use $route.params for route params
+  let activeParent = '';
+  forEach(menuItems.value, (item) => {
+    if (item.children) {
+      forEach(item.children, (child) => {
+        if (child.slug === currentMenuSlug) {
+          activeParent = item.slug;
+        }
+      });
+    }
+  });
+  return activeParent;
+});
+
+// Methods
+function handleLangMenuHover(e) {
+  const { type } = e;
+  if (!window.matchMedia('(hover: none)').matches) {
+    // hover available, show or hide menu based on mouseovers
+    showLanguageMenu.value = type === 'mouseenter';
+  }
+}
+
+function handleLangMenuClick(e) {
+  if (window.matchMedia('(hover: none)').matches) {
+    // hover unavailable, open on click instead
+    showLanguageMenu.value = !showLanguageMenu.value;
+  }
+}
 </script>
+
 <!-- 
 <template>
 	<div class="header">

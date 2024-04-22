@@ -32,18 +32,22 @@
 
 <script>
 import SmartImage from '~/components/helper/smartimage/index.vue';
-import preplink from '~/components/mixins/preplink.js';
-import langstring from '~/components/mixins/langstring.js';
-import imgurl from '~/components/mixins/imgurl.js';
 import ButtonComponent from '~/components/atoms/button/index.vue';
 import linkArrow from '~/assets/svg/link-arrow.svg';
 import SmartLink from '../../helper/smartlink/index.vue';
 import useStore from '@/store'
-
+import { usePrepLink } from '~/components/composables/usePrepLink';
+import { useImgUrl } from '~/components/composables/useImgUrl';
+import { useLangString } from '~/components/composables/useLangString';
 
 export default {
 	name: 'kardInverted',
-	mixins: [langstring, imgurl, preplink],
+	setup() {
+		const { prepLink } = usePrepLink()
+		const { imgUrl } = useImgUrl()
+		const { langString } = useLangString()
+		return { langString, imgUrl, prepLink };
+  	},
 	components: {
 		SmartLink,
 		SmartImage,

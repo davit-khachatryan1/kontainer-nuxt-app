@@ -40,7 +40,7 @@
   <script>
   import { defineComponent, ref, onMounted } from 'vue';
   import Teaser from '~/components/molecules/teaser/index.vue';
-  import langstring from '~/components/mixins/langstring.js';
+  import { useLangString } from '~/components/composables/useLangString';
   import Arrow from '~/assets/svg/arrow-big.svg';
   import QuoteIcon from '~/assets/svg/quote_icon.svg';
   import CapFourFiveStars from '~/assets/svg/cap-4-5-stars.svg';
@@ -61,7 +61,6 @@
 	  G2FourFiveStars,
 	  G2FiveStars,
 	},
-	mixins: [langstring],
 	props: {
 	  data: { type: Object, required: true },
 	  positionOnPage: { type: Number, required: false },
@@ -110,9 +109,12 @@
 		// Initialize Swiper here if necessary, using `mySwiper.value` and `swiperOptions.value`
 	  });
   
+	  const { langString } = useLangString()
+	  
 	  return {
 		mySwiper,
 		swiperOptions,
+		langString
 	  };
 	},
   });

@@ -1,12 +1,12 @@
 <template>
 	<div class="content-grid-container">
-		<!-- <SignupContactAccount></SignupContactAccount> -->
+		<SignupContactAccount></SignupContactAccount>
 	</div>
 </template>
 
 <script>
 import meta from '~/plugins/meta';
-// import SignupContactAccount from '~/components/organisms/signup-contact-account/index.vue';
+import SignupContactAccount from '~/components/organisms/signup-contact-account/index.vue';
 import useStore from '@/store'
 import { useNuxtApp } from '#app';
 export default {
@@ -22,7 +22,7 @@ export default {
 		},
 	},
 	components: {
-		// SignupContactAccount,
+		SignupContactAccount,
 	},
 	mixins: [meta],
 	async setup(context) {
@@ -38,7 +38,8 @@ export default {
 };
 </script>
 
-<!-- <style lang="scss">
+<style lang="scss">
+@import "../../assets/scss/import";
 .modal-like {
 	background: $white;
 	height: 100vh;
@@ -65,4 +66,4 @@ export default {
 .layout-enter, .layout-leave-active {
 	animation: smokescreen 0.5s linear normal forwards;
 }
-</style> -->
+</style>

@@ -7,11 +7,10 @@
 <script>
 /* eslint-disable no-mixed-operators */
 import fastdom from 'fastdom';
-import getClosest from '~/components/mixins/getclosest';
+import { useGetClosest } from '~/components/composables/useGetClosest';
 
 export default {
 	name: 'Parallax',
-	mixins: [getClosest],
 	props: {
 		speed: { type: Number, default: 0.5 },
 	},
@@ -20,6 +19,10 @@ export default {
 			inView: false,
 		};
 	},
+	setup() {
+		const { getClosest } = useGetClosest()
+		return { getClosest };
+  	},
 	methods: {
 		handleScroll() {
 			if (!this.inView) {
