@@ -79,14 +79,14 @@
   
 	  const nextSlide = () => {
 		console.log(mySwiper);
-		if (mySwiper._value) {
-		  mySwiper._value.slideNext();
+		if (mySwiper.value) {
+		  mySwiper.value.slideNext();
 		}
 	  };
   
 	  const prevSlide = () => {
-		if (mySwiper._value) {
-		  mySwiper._value.slidePrev();
+		if (mySwiper.value) {
+		  mySwiper.value.slidePrev();
 		}
 	  };
   
