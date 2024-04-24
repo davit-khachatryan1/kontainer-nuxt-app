@@ -1,53 +1,4 @@
-import { Router } from 'express';
-import axios from 'axios';
-import apicache from 'apicache';
-import redis from 'redis';
-import qs from 'qs';
-import config from '~/config';
 
-export const envConfigs = {
-	env: {
-		...config
-	}
-}
-
-const DEFAULT_LOCALE = "en";
-
-import bodyParser from 'body-parser';
-const router = Router();
-
-const redisOptions = process.env.REDIS_DB ? { db: process.env.REDIS_DB } : {};
-
-const redisClient = redis.createClient(redisOptions);
-const cacheOptions = {
-	headers: { 'cache-control': 'no-cache' },
-	defaultDuration: '100 hours',
-};
-if (1 || process.env.NODE_ENV === 'production') {
-	cacheOptions.redisClient = redisClient;
-}
-const cache = apicache.options(cacheOptions).middleware;
-
-router.use(bodyParser.json({ limit: '50mb' }));
-router.use(bodyParser.urlencoded({
-	extended: true,
-}));
-
-console.log(envConfigs.env.apiUrl, 'envConfigs.env.apiUrlenvConfigs.env.apiUrlenvConfigs.env.apiUrl');
-const wpapi = axios.create({
-	baseURL: envConfigs.env.apiUrl,
-});
-
-const getUrlWithLangPrefix = (path, options) => {
-	const { params: { lang = false } = {} } = options;
-	const base = `/wp-json/${path}`;
-
-	if (lang && lang !== DEFAULT_LOCALE) {
-		return `/${lang}${base}`;
-	}
-
-	return base;
-};
 
 console.log(envConfigs.env.apiUrl);
 
@@ -143,83 +94,7 @@ router.get('/content/home', cache('10 minutes'), (req, res, next) => {
 
 const postTypes = envConfigs.env.postTypes;
 
-function prepareCollection(posts) {
-	const collection = [];
-	Object.keys(posts).forEach((i) => {
-		collection.push(preparePage(posts[i]));
-	});
-	return collection;
-}
 
-function prepareCollectionFromArray(posts) {
-	const collection = [];
-	for (let i = 0; i < posts.length; i += 1) {
-		collection.push(preparePage(posts[i]));
-	}
-	return collection;
-}
-
-function prepareAcf(data) {
-	const result = {};
-	if (typeof data === 'object') {
-		Object.keys(data).forEach((i) => {
-			let field = data[i];
-			if (Array.isArray(field) && field.length) {
-				if (field[0].ID) {
-					field = field.map(normalizePost);
-				} else {
-					field = field.map(prepareAcf);
-				}
-			}
-			result[i] = field;
-		});
-	}
-	return result;
-}
-
-function normalizePost(post) {
-	return {
-		date: post.post_date,
-		title: post.post_title,
-		type: post.post_type,
-		slug: post.slug || post.post_name,
-	};
-}
-
-function preparePage(data) {
-	const acfData = data.custom ? prepareAcf(data.custom) : null;
-	const page = {
-		id: data.id,
-		title: data.title,
-		slug: data.slug,
-		date: data.date,
-		type: data.type,
-		categories: data.categories || [],
-		translated: data.translated,
-		taxonomies: data.taxonomies,
-		yoast_title: data.yoast_title,
-		yoast_meta: data.yoast_meta,
-		yoast_json_ld: data.yoast_json_ld,
-	};
-	if (acfData) {
-		Object.keys(acfData).forEach((i) => {
-			page[i] = acfData[i];
-		});
-	}
-	return page;
-}
-
-function prepareCategories(items) {
-	const categories = {};
-	for (let i = 0; i < items.length; i += 1) {
-		const item = items[i];
-		categories[item.id] = {
-			slug: item.slug,
-			name: item.name,
-		};
-	}
-	return categories;
-}
 
 router.get('/content/:collection/preview', (req, res, next) => {
 	const { collection } = req.params;
@@ -423,27 +298,7 @@ router.get('/cache/clear', (req, res, next) => {
 	res.send('Cache cleared');
 });
 
-function deleteUrlFromCache(req, url, deep = false, params = false) {
-	let urlWithQS = url;
-	if (params && params.lang) {
-		urlWithQS = url + qs.stringify(params, { addQueryPrefix: true });
-	}
 
-	// eslint-disable-next-line no-console
-	console.log('Deleting url from cache', urlWithQS);
-	redisClient.del(urlWithQS);
-	axios.get(`${req.protocol}://${req.get('host')}${url}`);
-
-	if (deep) {
-		redisClient.keys('*', (err, keys) => {
-			for (let i = 0; i < keys.length; i += 1) {
-				if (keys[i].indexOf(url) === 0) {
-					deleteUrlFromCache(req, keys[i]);
-				}
-			}
-		});
-	}
-}
 
 router.post('/cache/clear', (req, res, next) => {
 	const { slug, type, lang } = req.body;
