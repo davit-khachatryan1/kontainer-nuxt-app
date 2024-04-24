@@ -5,9 +5,9 @@
 				<div class="span12 span4--mobile">
 					<div class="signup-block__inner">
 						<SignupForm type="inline" v-if="data.acf_fc_layout === 'signup'">
-							<div slot="teaser">
+							<template v-slot:teaser>
 								<Teaser :data="{ heading: data.heading, text: data.subheading, alternate_headline: data.alternate_headline }" :class="'teaser--fluid'" :positionOnPage="positionOnPage" />
-							</div>
+							</template>
 							<div slot="terms" v-if="data.terms" class="signup-block__conditions" v-html="data.terms" />
 						</SignupForm>
 

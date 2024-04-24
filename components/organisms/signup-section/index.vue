@@ -9,11 +9,13 @@
 				<div class="span6 span6--tablet span4--mobile signup">
 					<Parallax class="form-container">
 						<SignupForm :type="'block'" :btn-submit-text="data.signup_right.submit_button_text">
-							<div slot="teaser">
+							<template v-slot:teaser>
 								<h2 v-if="data.signup_right.heading">{{data.signup_right.heading}}</h2>
 								<p v-if="data.signup_right.text">{{data.signup_right.text}}</p>
-							</div>
-							<div slot="terms" class="terms" v-if="data.signup_right.terms" v-html="data.signup_right.terms" />
+							</template>
+							<template v-slot:terms>
+								<div class="terms" v-if="data.signup_right.terms" v-html="data.signup_right.terms" />
+							</template>
 						</SignupForm>
 					</Parallax>
 				</div>
