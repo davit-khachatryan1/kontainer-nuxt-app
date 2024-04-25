@@ -3,8 +3,7 @@ import { envConfigs, redisClient } from "~/server/constants/constant";
 const postTypes: any = envConfigs.env.postTypes;
 
 export default defineEventHandler(async (event) => {
-    const { slug, type, lang } = await getQuery(event);
-    console.log('Clear cache, type:', type, ' slug:', slug, ' lang:', lang);
+    const { slug, type, lang } = getQuery(event);
   
     if (type === 'global') {
       await deleteKeyFromCache(`/api/global?lang=${lang}`);

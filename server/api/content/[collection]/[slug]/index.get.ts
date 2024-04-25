@@ -14,8 +14,7 @@ export default defineEventHandler(async (event) => {
       slug,
     },
   };
-
-  const cacheKey = `content-${collection}-${slug}`;
+  const cacheKey = `content-${collection}-${slug}-${JSON.stringify(query)}`;
   const cachedData = myCache.get(cacheKey) as string;
 
   if (cachedData) {

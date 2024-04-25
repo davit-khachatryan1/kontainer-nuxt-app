@@ -1,17 +1,14 @@
 import { getUrlWithLangPrefix, myCache, preparePage, wpapi } from "../../constants/constant";
 
-// Create a cache instance with a standard TTL
- // 100 hours
-
 export default defineEventHandler(async (event) => {
-  const cacheKey = 'frontpageData';
+  const query = getQuery(event);  // Ensure you have a method to extract query parameters
+  const cacheKey = `frontpageData-${JSON.stringify(query)}`;
   const cachedData = myCache.get(cacheKey) as string;
 
   if (cachedData) {
     return JSON.parse(cachedData);
   }
 
-  const query = getQuery(event);  // Ensure you have a method to extract query parameters
   const axiosOptions = { params: { ...query } };
   const frontpageUrl = getUrlWithLangPrefix('kustom/frontpage', axiosOptions);
 
@@ -24,7 +21,7 @@ export default defineEventHandler(async (event) => {
 
       // Cache the page data with node-cache
       myCache.set(cacheKey, JSON.stringify(pageData), 600); // Optionally specify TTL here
-      
+
       return pageData;
     }
   } catch (error) {

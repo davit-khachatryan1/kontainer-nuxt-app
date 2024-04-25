@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   const { taxonomy } = event.context.params as any;
   const query = getQuery(event); // Ensure getQuery is properly defined
   const axiosOptions = { params: query };
-  const cacheKey = `taxonomyData-${taxonomy}`;
+  const cacheKey = `taxonomyData-${taxonomy}-${JSON.stringify(query)}`;
   const cachedData = myCache.get(cacheKey) as string;
 
   if (cachedData) {

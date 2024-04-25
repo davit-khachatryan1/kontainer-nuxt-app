@@ -78,7 +78,6 @@
 	  });
   
 	  const nextSlide = () => {
-		console.log(mySwiper);
 		if (mySwiper.value) {
 		  mySwiper.value.slideNext();
 		}

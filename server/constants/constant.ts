@@ -36,7 +36,6 @@ router.use(bodyParser.urlencoded({
 	extended: true,
 }));
 
-console.log(envConfigs.env.apiUrl, 'envConfigs.env.apiUrlenvConfigs.env.apiUrlenvConfigs.env.apiUrl');
 export const wpapi = axios.create({
 	baseURL: envConfigs.env.apiUrl,
 });

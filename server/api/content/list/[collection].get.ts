@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const postType = postTypes[collection]; // Ensure 'postTypes' is defined or imported
   const query = getQuery(event); // Ensure getQuery is a function that extracts query parameters properly
   const axiosOptions = { params: query };
-  const cacheKey = `content-list-${collection}`;
+  const cacheKey = `content-list-${collection}-${JSON.stringify(query)}`;
   const cachedData = myCache.get(cacheKey) as string;
 
   if (cachedData) {

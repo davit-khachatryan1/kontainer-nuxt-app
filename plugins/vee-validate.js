@@ -1,7 +1,7 @@
 import { defineNuxtPlugin } from 'nuxt/app';
 import { Field, Form, ErrorMessage, configure, defineRule } from 'vee-validate';
 import { required, email } from '@vee-validate/rules';
-import { localize, loadLocaleFromURL } from '@vee-validate/i18n';
+import { localize } from '@vee-validate/i18n';
 
 export default defineNuxtPlugin((nuxtApp) => {
   defineRule('required', required);
@@ -60,13 +60,9 @@ export default defineNuxtPlugin((nuxtApp) => {
           'phone': 'Telefonnummer',
         },
       },
-      // Define other locales here
     }),
   });
   nuxtApp.vueApp.component('VField', Field);
   nuxtApp.vueApp.component('VForm', Form);
   nuxtApp.vueApp.component('ErrorMessage', ErrorMessage);
-
-  // console.log(store.locale);
-  // loadLocaleFromURL(`/path/to/locales/${store.locale}.json`);
 });

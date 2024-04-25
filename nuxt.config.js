@@ -7,34 +7,37 @@ let baseUrl = 'http://localhost:3000'; // http://localhost:3000
 let siteUrl = 'http://kontainer-api.test'; // https://kontainer.dev.konform.com // no trailing slash
 let apiUrl = 'http://kontainer-api.test/'; // 'https://kontainercms.dev.konform.com'
 let appUrl = 'http://kontainer.test';
+let analyticsId = null;
 let sentryDSN = 'https://52449f0e189c4bdc9abcf7274853a78b@sentry.konform.com/24';
 
 if (process.env.SERVER_NAME === 'production') {
-	baseUrl = 'https://kontainer.com';
-	siteUrl = 'https://kontainer.com';
-	apiUrl = 'https://cms.kontainer.com';
-	appUrl = 'https://app.kontainer.com';
-	sentryDSN = 'https://ed48997570fa466fb0a3fd668ea387ea@sentry.konform.com/15';
+  baseUrl = 'https://kontainer.com';
+  siteUrl = 'https://kontainer.com';
+  apiUrl = 'https://cms.kontainer.com';
+  appUrl = 'https://app.kontainer.com';
+  analyticsId = 'G-0WYFD1L6VN';
+  sentryDSN = 'https://ed48997570fa466fb0a3fd668ea387ea@sentry.konform.com/15';
 } else if (process.env.SERVER_NAME === 'next') {
-	baseUrl = 'https://kontainer.dev.konform.com';
-	siteUrl = 'https://kontainer.dev.konform.com';
-	apiUrl = 'https://kontainercms.dev.konform.com';
-	appUrl = 'https://next.kontainer.com';
+  baseUrl = 'https://kontainer.dev.konform.com';
+  siteUrl = 'https://kontainer.dev.konform.com';
+  apiUrl = 'https://kontainercms.dev.konform.com';
+  appUrl = 'https://next.kontainer.com';
+  analyticsId = 'G-40FXY02M7H';
 }
 
 export const config = {
-    baseUrl: baseUrl,
-    siteUrl: siteUrl,
-    apiUrl: apiUrl,
-    appUrl: appUrl,
-    sentryDSN: sentryDSN,
-    postTypes: {
-        news: 'news',
-        blog: 'blog',
-        prices: 'prices',
-        prices_new: 'prices_new',
-        cases: 'cases',
-    },
+  baseUrl: baseUrl,
+  siteUrl: siteUrl,
+  apiUrl: apiUrl,
+  appUrl: appUrl,
+  sentryDSN: sentryDSN,
+  postTypes: {
+    news: 'news',
+    blog: 'blog',
+    prices: 'prices',
+    prices_new: 'prices_new',
+    cases: 'cases',
+  },
 }
 
 
@@ -77,6 +80,10 @@ export default defineNuxtConfig({
   ssr: true,
   debug: false,
   app: {
+    vueRouterOptions: {
+      strict: true,
+      trailingSlash: true,
+    },
     layoutTransition: {
       name: 'layout',
       mode: 'in-out',
@@ -97,11 +104,22 @@ export default defineNuxtConfig({
         },
         { rel: 'icon', sizes: '32x32', href: '/favicon-32x32.png' },
         { rel: 'icon', sizes: '16x16', href: '/favicon-16x16.png' },
-        // { rel: 'manifest', href: '/site.webmanifest' },
+        { rel: 'manifest', href: '/site.webmanifest' },
         { rel: 'mask-icon', type: '/safari-pinned-tab.svg', href: '#5bbad5' },
         { name: 'theme-color', content: '#ffffff' },
       ],
-      script: [],
+      script: [
+        analyticsId ? {
+          src: `https://www.googletagmanager.com/gtag/js?id=${analyticsId}`,
+          async: true,
+        } : null,
+        analyticsId && process.env.SERVER_NAME === 'next' && {
+          src: '/js/nextgtag.js',
+        },
+        analyticsId && process.env.SERVER_NAME === 'production' && {
+          src: '/js/livegtag.js',
+        },
+      ],
     },
     pageTransition: {
       name: 'page',
@@ -111,13 +129,13 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxt/image-edge',
-    // 'nuxt-trailingslash-module',
-    // 'cookie-universal-nuxt',
     '@nuxtjs/sitemap',
-    // '@nuxtjs/sentry',
-   '@vee-validate/nuxt'
+    '@vee-validate/nuxt'
   ],
   sitemap: {
     sources: ['/api/sitemap'],
+    defaultSitemapsChunkSize: 1000 * 60 * 15,
+    experimentalCompression: true,
+    exclude: ['/register'],
   },
 })
