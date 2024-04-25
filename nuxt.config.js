@@ -59,7 +59,7 @@ export default defineNuxtConfig({
     //   }
     // }
   },
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   plugins: [
     '~/plugins/swiper.js',
     '~/plugins/axios.js',
