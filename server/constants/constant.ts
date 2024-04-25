@@ -3,17 +3,19 @@ import axios from 'axios';
 import apicache from 'apicache';
 import redis from 'redis';
 import qs from 'qs';
-import config from '../../config';
+const config = useRuntimeConfig();
 
 export const envConfigs = {
 	env: {
-		...config
+		...config.public
 	}
 }
+export const myCache = new NodeCache({ stdTTL: 360000 });
 
 const DEFAULT_LOCALE = "en";
 
 import bodyParser from 'body-parser';
+import NodeCache from 'node-cache';
 const router = Router();
 
 const redisOptions = process.env.REDIS_DB ? { url: process.env.REDIS_DB } : {};
@@ -39,7 +41,7 @@ export const wpapi = axios.create({
 	baseURL: envConfigs.env.apiUrl,
 });
 
-export const getUrlWithLangPrefix = (path: string, options) => {
+export const getUrlWithLangPrefix = (path: string, options:any) => {
 	const { params: { lang = false } = {} } = options;
 	const base = `/wp-json/${path}`;
 
@@ -50,7 +52,7 @@ export const getUrlWithLangPrefix = (path: string, options) => {
 	return base;
 };
 
-export const deleteUrlFromCache = (req, url, deep = false, params: any = false) => {
+export const deleteUrlFromCache = (req:any, url:any, deep = false, params: any = false) => {
 	let urlWithQS = url;
 	if (params && params.lang) {
 		urlWithQS = url + qs.stringify(params, { addQueryPrefix: true });
@@ -79,15 +81,15 @@ export const deleteUrlFromCache = (req, url, deep = false, params: any = false) 
 }
 
 
-export const prepareCollection = (posts) => {
-	const collection = [];
+export const prepareCollection = (posts:any) => {
+	const collection: any = [];
 	Object.keys(posts).forEach((i) => {
 		collection.push(preparePage(posts[i]));
 	});
 	return collection;
 }
 
-export const prepareCollectionFromArray = (posts) => {
+export const prepareCollectionFromArray = (posts:any) => {
 	const collection = [];
 	for (let i = 0; i < posts.length; i += 1) {
 		collection.push(preparePage(posts[i]));
@@ -95,8 +97,8 @@ export const prepareCollectionFromArray = (posts) => {
 	return collection;
 }
 
-export const prepareAcf = (data) => {
-	const result = {};
+export const prepareAcf = (data:any) => {
+	const result:any = {};
 	if (typeof data === 'object') {
 		Object.keys(data).forEach((i) => {
 			let field = data[i];
@@ -113,7 +115,7 @@ export const prepareAcf = (data) => {
 	return result;
 }
 
-export const normalizePost = (post) => {
+export const normalizePost = (post:any) => {
 	return {
 		date: post.post_date,
 		title: post.post_title,
@@ -122,9 +124,9 @@ export const normalizePost = (post) => {
 	};
 }
 
-export const preparePage = (data) => {
-	const acfData = data.custom ? prepareAcf(data.custom) : null;
-	const page = {
+export const preparePage = (data: any) => {
+	const acfData:any = data?.custom ? prepareAcf(data.custom) : null;
+	const page: any = {
 		id: data.id,
 		title: data.title,
 		slug: data.slug,
@@ -139,14 +141,14 @@ export const preparePage = (data) => {
 	};
 	if (acfData) {
 		Object.keys(acfData).forEach((i) => {
-			page[i] = acfData[i];
+			page[i] = acfData[i] as any;
 		});
 	}
 	return page;
 }
 
-export const prepareCategories = (items) => {
-	const categories = {};
+export const prepareCategories = (items: any) => {
+	const categories:any = {};
 	for (let i = 0; i < items.length; i += 1) {
 		const item = items[i];
 		categories[item.id] = {
@@ -155,4 +157,16 @@ export const prepareCategories = (items) => {
 		};
 	}
 	return categories;
+}
+
+export const prepTaxonomy = (data = []) => {
+	return data.map((item: any) => {
+		return {
+			id: item.id,
+			name: item.name,
+			slug: item.slug,
+			parent: item.parent,
+			description: item.description,
+		};
+	});
 }

@@ -36,6 +36,7 @@
     "http": "^0.0.1-security",
     "js-cookie": "^3.0.5",
     "node": "^18.20.0",
+    "node-cache": "^5.1.2",
     "nuxt": "^3.11.1",
     "nuxt-trailingslash-module": "^1.2.0",
     "object-fit-images": "^3.2.4",

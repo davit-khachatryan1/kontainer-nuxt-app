@@ -1,14 +1,17 @@
-import { getUrlWithLangPrefix, prepareAcf, prepareCategories, redisClient, wpapi } from "../constants/constant";
+// Import necessary helpers and constants
+import { getUrlWithLangPrefix, myCache, prepareAcf, prepareCategories, wpapi } from "../constants/constant";
+
+// Create a cache instance with a standard TTL
 
 export default defineEventHandler(async (event) => {
     const cacheKey = 'globalData';
-    const cachedData = await redisClient.get(cacheKey);
+    const cachedData = myCache.get(cacheKey) as string;
   
     if (cachedData) {
       return JSON.parse(cachedData);
     }
   
-    const query = event.context.query;
+    const query = getQuery(event); // Assuming getQuery is a function you have defined to extract the query parameters
   
     const axiosOptions = { params: { ...query } };
     const optionsUrl = getUrlWithLangPrefix('kustom/options', axiosOptions);
@@ -30,12 +33,13 @@ export default defineEventHandler(async (event) => {
         categories: prepareCategories(categories.data),
       };
   
-      // Cache data with Redis, setting expiration (e.g., 100 hours in seconds)
-      await redisClient.setEx(cacheKey, 600, JSON.stringify(responseData));
+      // Cache the data with node-cache, set the TTL explicitly if different from default
+      myCache.set(cacheKey, JSON.stringify(responseData), 600); // Optionally specify TTL here
+  
       return responseData;
     } catch (error) {
       event.res.statusCode = 404;
       console.error(error);
       return 'Could not get global options';
     }
-})
+});

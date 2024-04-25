@@ -1,14 +1,17 @@
-import { getUrlWithLangPrefix,  preparePage,  redisClient, wpapi } from "../../constants/constant";
+import { getUrlWithLangPrefix, myCache, preparePage, wpapi } from "../../constants/constant";
+
+// Create a cache instance with a standard TTL
+ // 100 hours
 
 export default defineEventHandler(async (event) => {
   const cacheKey = 'frontpageData';
-  const cachedData = await redisClient.get(cacheKey);
+  const cachedData = myCache.get(cacheKey) as string;
 
   if (cachedData) {
     return JSON.parse(cachedData);
   }
 
-  const query = event.context.query;
+  const query = getQuery(event);  // Ensure you have a method to extract query parameters
   const axiosOptions = { params: { ...query } };
   const frontpageUrl = getUrlWithLangPrefix('kustom/frontpage', axiosOptions);
 
@@ -19,8 +22,9 @@ export default defineEventHandler(async (event) => {
       const pageResponse = await wpapi.get(pagesUrl, axiosOptions);
       const pageData = preparePage(pageResponse.data);
 
-      // Cache the page data with Redis
-      await redisClient.setEx(cacheKey, 600, JSON.stringify(pageData)); // 100 hours in seconds
+      // Cache the page data with node-cache
+      myCache.set(cacheKey, JSON.stringify(pageData), 600); // Optionally specify TTL here
+      
       return pageData;
     }
   } catch (error) {

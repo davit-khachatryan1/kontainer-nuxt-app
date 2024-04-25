@@ -8,7 +8,7 @@
 							<template v-slot:teaser>
 								<Teaser :data="{ heading: data.heading, text: data.subheading, alternate_headline: data.alternate_headline }" :class="'teaser--fluid'" :positionOnPage="positionOnPage" />
 							</template>
-							<div slot="terms" v-if="data.terms" class="signup-block__conditions" v-html="data.terms" />
+							<template v-slot:terms v-if="data.terms" class="signup-block__conditions" v-html="data.terms" />
 						</SignupForm>
 
 						<NewsletterSignup v-if="data.acf_fc_layout === 'newsletter'">
