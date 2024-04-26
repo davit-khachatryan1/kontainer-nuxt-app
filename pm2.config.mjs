@@ -1,4 +1,5 @@
-module.exports = {
+// pm2.config.mjs
+export default {
 	apps: [
 		{
 			name: 'kontainersite',
