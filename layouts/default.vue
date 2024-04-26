@@ -2,7 +2,7 @@
 	<div class="default">
 		<OffcanvasMenu />
 		<nuxt />
-		<div class="page-leave-overlay"></div>
+		<div class="page-leave-overlay"/>
 		<FooterComponent />
 		<BookDemoModal />
 		<CookieNotification />

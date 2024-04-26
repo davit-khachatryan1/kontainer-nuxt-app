@@ -7,7 +7,6 @@
     "devprod": "cross-env SERVER_NAME=production nuxt dev",
     "devnext": "cross-env SERVER_NAME=next nuxt dev",
     "build": "nuxt build",
-    "start": "cross-env NODE_ENV=production node build/main.js",
     "build:next": "cross-env SERVER_NAME=next nuxt build",
     "build:prod": "cross-env SERVER_NAME=production nuxt build",
     "startnext": "cross-env NODE_ENV=production SERVER_NAME=next node build/main.js",

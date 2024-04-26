@@ -7,7 +7,7 @@
 		<transition name="image-fade" v-on:after-enter="transitionedEnd">
 			<div>
 				<div v-if="loaded && crop" :style="{ backgroundImage: bg }" class="cropimage" />
-				<NuxtImg v-if="loaded && !crop" :title="image.title" :alt="image.alt" :src="src"
+				<img v-if="loaded && !crop" :title="image.title" :alt="image.alt" :src="src"
 				:class="{ inlineimage: true }"
 				:width="image.sizes['mobile-width']" :height="image.sizes['mobile-width'] / image.ratio" />
 			</div>

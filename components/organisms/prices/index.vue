@@ -40,16 +40,14 @@ export default {
 		data: { type: Object },
 		positionOnPage: { type: Number },
 	},
-	data: () => {
-		return {
-			listToggled: false,
-		};
-	},
+	data: () => ({
+    	listToggled: false
+	}),
 	methods: {
-		toggleSwitch: () => {
-			this.listToggled = !this.listToggled;
-		},
-	},
+    toggleSwitch() {
+        this.listToggled = !this.listToggled;
+    },
+},
 };
 </script>
 
