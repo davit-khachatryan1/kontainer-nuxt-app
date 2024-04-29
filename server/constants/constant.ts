@@ -13,21 +13,7 @@ const DEFAULT_LOCALE = "en";
 
 import bodyParser from 'body-parser';
 import NodeCache from 'node-cache';
-// import redisClient from '~/plugins/redis';
 const router = Router();
-
-// const redisOptions = process.env.REDIS_DB ? { url: process.env.REDIS_DB } : {};
-
-// export const redisClient = redis.createClient({
-// 	url: 'http://localhost:6379',
-// });
-// redisClient.on('error', (err) => {
-// 	console.error('Redis Client Error', err);
-// });
-
-// redisClient.connect().catch(console.error);
-
-// export const redisClient = redis.createClient(redisOptions);
 
 router.use(bodyParser.json({ limit: '50mb' }));
 router.use(bodyParser.urlencoded({
@@ -48,35 +34,6 @@ export const getUrlWithLangPrefix = (path: string, options: any) => {
 
 	return base;
 };
-
-// export const deleteUrlFromCache = (req: any, url: any, deep = false, params: any = false) => {
-// 	let urlWithQS = url;
-// 	if (params && params.lang) {
-// 		urlWithQS = url + qs.stringify(params, { addQueryPrefix: true });
-// 	}
-
-// 	// eslint-disable-next-line no-console
-// 	console.log('Deleting url from cache', urlWithQS);
-// 	redisClient.del(urlWithQS);
-// 	axios.get(`${req.protocol}://${req.get('host')}${url}`);
-
-// 	if (deep) {
-// 		redisClient.keys('*').then((keys: string[]) => {
-// 			for (let i = 0; i < keys.length; i++) {
-// 				if (keys[i].indexOf(url) === 0) {
-// 					deleteUrlFromCache(req, keys[i]);
-// 				}
-// 			}
-// 		})
-// 			.catch((error: any) => {
-// 				console.error('Error fetching keys:', error);
-// 			})
-// 			.finally(() => {
-// 				redisClient.quit();
-// 			});;
-// 	}
-// }
-
 
 export const prepareCollection = (posts: any) => {
 	const collection: any = [];
