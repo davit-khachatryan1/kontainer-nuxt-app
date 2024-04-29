@@ -1,9 +1,11 @@
-import { getUrlWithLangPrefix, myCache, preparePage, wpapi } from "../../constants/constant";
+import { getUrlWithLangPrefix, preparePage, wpapi } from "../../constants/constant";
 
 export default defineEventHandler(async (event) => {
+  const redisClient:any = event.context.redisClient
+   
   const query = getQuery(event);  // Ensure you have a method to extract query parameters
   const cacheKey = `frontpageData-${JSON.stringify(query)}`;
-  const cachedData = myCache.get(cacheKey) as string;
+  const cachedData = await redisClient.get(cacheKey);
 
   if (cachedData) {
     return JSON.parse(cachedData);
@@ -19,8 +21,7 @@ export default defineEventHandler(async (event) => {
       const pageResponse = await wpapi.get(pagesUrl, axiosOptions);
       const pageData = preparePage(pageResponse.data);
 
-      // Cache the page data with node-cache
-      myCache.set(cacheKey, JSON.stringify(pageData), 600); // Optionally specify TTL here
+      await redisClient.setEx(cacheKey, 600, JSON.stringify(pageData));
 
       return pageData;
     }

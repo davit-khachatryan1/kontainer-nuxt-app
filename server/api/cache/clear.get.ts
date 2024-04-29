@@ -1,13 +1,13 @@
-import { myCache, redisClient } from '~/server/constants/constant'; // Assumed import path for Redis client
-
 export default defineEventHandler(async (event) => {
+  const redisClient:any = event.context.redisClient
+ 
   try {
     // Clear all Redis keys
-    const keys = await getAllRedisKeys();
+    const keys = await getAllRedisKeys(redisClient);
     await Promise.all(keys.map(key => redisClient.del(key)));
 
     // Clear all node-cache data
-    myCache.flushAll();
+    // myCache.flushAll();
 
     return 'All caches cleared';
   } catch (error) {
@@ -17,8 +17,8 @@ export default defineEventHandler(async (event) => {
   }
 });
 
-async function getAllRedisKeys() {
-    return new Promise<string[]>((resolve, reject) => {
-        redisClient.keys('*').then(resolve).catch(reject);
-    });
+async function getAllRedisKeys(redisClient: any) {
+  return new Promise<string[]>((resolve, reject) => {
+    redisClient.keys('*').then(resolve).catch(reject);
+  });
 }

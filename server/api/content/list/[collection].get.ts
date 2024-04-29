@@ -1,14 +1,16 @@
-import { envConfigs, getUrlWithLangPrefix, myCache, prepareCollectionFromArray, wpapi } from "~/server/constants/constant";
+import { envConfigs, getUrlWithLangPrefix, prepareCollectionFromArray, wpapi } from "~/server/constants/constant";
 
 const postTypes: any = envConfigs.env.postTypes;
 
 export default defineEventHandler(async (event) => {
+  const redisClient:any = event.context.redisClient
+ 
   const { collection } = event.context.params as any;
   const postType = postTypes[collection]; // Ensure 'postTypes' is defined or imported
   const query = getQuery(event); // Ensure getQuery is a function that extracts query parameters properly
   const axiosOptions = { params: query };
   const cacheKey = `content-list-${collection}-${JSON.stringify(query)}`;
-  const cachedData = myCache.get(cacheKey) as string;
+  const cachedData = await redisClient.get(cacheKey);
 
   if (cachedData) {
     return JSON.parse(cachedData);
@@ -20,8 +22,7 @@ export default defineEventHandler(async (event) => {
     const response = await wpapi.get(postTypeUrl, axiosOptions);
     const result = prepareCollectionFromArray(response.data);
 
-    // Cache the result with node-cache
-    myCache.set(cacheKey, JSON.stringify(result));
+    await redisClient.setEx(cacheKey, 600, JSON.stringify(result)); // Caches with a TTL of 600 seconds (10 minutes)
 
     return result;
   } catch (error) {

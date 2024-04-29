@@ -1,10 +1,11 @@
 // Import necessary helpers and constants
-import { getUrlWithLangPrefix, myCache, prepareAcf, prepareCategories, wpapi } from "../constants/constant";
+import { getUrlWithLangPrefix, prepareAcf, prepareCategories, wpapi } from "../constants/constant";
 
 export default defineEventHandler(async (event) => {
+  const redisClient:any = event.context.redisClient
   const query = getQuery(event); // Assuming getQuery is a function you have defined to extract the query parameters
   const cacheKey = `globalData-${JSON.stringify(query)}`;
-  const cachedData = myCache.get(cacheKey) as string;
+  const cachedData = await redisClient.get(cacheKey);
 
   if (cachedData) {
     return JSON.parse(cachedData);
@@ -31,13 +32,12 @@ export default defineEventHandler(async (event) => {
       categories: prepareCategories(categories.data),
     };
 
-    // Cache the data with node-cache, set the TTL explicitly if different from default
-    myCache.set(cacheKey, JSON.stringify(responseData), 600); // Optionally specify TTL here
+    await redisClient.setEx(cacheKey, 600, JSON.stringify(responseData));
 
     return responseData;
   } catch (error) {
+    console.error('Error in fetching data:', error);
     event.res.statusCode = 404;
-    console.error(error);
     return 'Could not get global options';
   }
 });

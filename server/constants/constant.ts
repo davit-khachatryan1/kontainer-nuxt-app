@@ -1,8 +1,5 @@
 import { Router } from 'express';
 import axios from 'axios';
-import apicache from 'apicache';
-import redis from 'redis';
-import qs from 'qs';
 const config = useRuntimeConfig();
 
 export const envConfigs = {
@@ -16,20 +13,21 @@ const DEFAULT_LOCALE = "en";
 
 import bodyParser from 'body-parser';
 import NodeCache from 'node-cache';
+// import redisClient from '~/plugins/redis';
 const router = Router();
 
-const redisOptions = process.env.REDIS_DB ? { url: process.env.REDIS_DB } : {};
+// const redisOptions = process.env.REDIS_DB ? { url: process.env.REDIS_DB } : {};
 
-export const redisClient = redis.createClient(redisOptions);
-const cacheOptions = {
-	headers: { 'cache-control': 'no-cache' },
-	defaultDuration: '100 hours',
-    redisClient: null,
-};
-if (1 || process.env.NODE_ENV === 'production') {
-	cacheOptions.redisClient = redisClient as any;
-}
-export const cache = apicache.options(cacheOptions).middleware;
+// export const redisClient = redis.createClient({
+// 	url: 'http://localhost:6379',
+// });
+// redisClient.on('error', (err) => {
+// 	console.error('Redis Client Error', err);
+// });
+
+// redisClient.connect().catch(console.error);
+
+// export const redisClient = redis.createClient(redisOptions);
 
 router.use(bodyParser.json({ limit: '50mb' }));
 router.use(bodyParser.urlencoded({
@@ -40,7 +38,7 @@ export const wpapi = axios.create({
 	baseURL: envConfigs.env.apiUrl,
 });
 
-export const getUrlWithLangPrefix = (path: string, options:any) => {
+export const getUrlWithLangPrefix = (path: string, options: any) => {
 	const { params: { lang = false } = {} } = options;
 	const base = `/wp-json/${path}`;
 
@@ -51,36 +49,36 @@ export const getUrlWithLangPrefix = (path: string, options:any) => {
 	return base;
 };
 
-export const deleteUrlFromCache = (req:any, url:any, deep = false, params: any = false) => {
-	let urlWithQS = url;
-	if (params && params.lang) {
-		urlWithQS = url + qs.stringify(params, { addQueryPrefix: true });
-	}
+// export const deleteUrlFromCache = (req: any, url: any, deep = false, params: any = false) => {
+// 	let urlWithQS = url;
+// 	if (params && params.lang) {
+// 		urlWithQS = url + qs.stringify(params, { addQueryPrefix: true });
+// 	}
 
-	// eslint-disable-next-line no-console
-	console.log('Deleting url from cache', urlWithQS);
-	redisClient.del(urlWithQS);
-	axios.get(`${req.protocol}://${req.get('host')}${url}`);
+// 	// eslint-disable-next-line no-console
+// 	console.log('Deleting url from cache', urlWithQS);
+// 	redisClient.del(urlWithQS);
+// 	axios.get(`${req.protocol}://${req.get('host')}${url}`);
 
-	if (deep) {
-		redisClient.keys('*').then((keys: string[]) => {
-			for (let i = 0; i < keys.length; i++) {
-				if (keys[i].indexOf(url) === 0) {
-					deleteUrlFromCache(req, keys[i]);
-				}
-			}
-		})
-        .catch(error => {
-            console.error('Error fetching keys:', error);
-        })
-        .finally(() => {
-            redisClient.quit();
-        });;
-	}
-}
+// 	if (deep) {
+// 		redisClient.keys('*').then((keys: string[]) => {
+// 			for (let i = 0; i < keys.length; i++) {
+// 				if (keys[i].indexOf(url) === 0) {
+// 					deleteUrlFromCache(req, keys[i]);
+// 				}
+// 			}
+// 		})
+// 			.catch((error: any) => {
+// 				console.error('Error fetching keys:', error);
+// 			})
+// 			.finally(() => {
+// 				redisClient.quit();
+// 			});;
+// 	}
+// }
 
 
-export const prepareCollection = (posts:any) => {
+export const prepareCollection = (posts: any) => {
 	const collection: any = [];
 	Object.keys(posts).forEach((i) => {
 		collection.push(preparePage(posts[i]));
@@ -88,7 +86,7 @@ export const prepareCollection = (posts:any) => {
 	return collection;
 }
 
-export const prepareCollectionFromArray = (posts:any) => {
+export const prepareCollectionFromArray = (posts: any) => {
 	const collection = [];
 	for (let i = 0; i < posts.length; i += 1) {
 		collection.push(preparePage(posts[i]));
@@ -96,8 +94,8 @@ export const prepareCollectionFromArray = (posts:any) => {
 	return collection;
 }
 
-export const prepareAcf = (data:any) => {
-	const result:any = {};
+export const prepareAcf = (data: any) => {
+	const result: any = {};
 	if (typeof data === 'object') {
 		Object.keys(data).forEach((i) => {
 			let field = data[i];
@@ -114,7 +112,7 @@ export const prepareAcf = (data:any) => {
 	return result;
 }
 
-export const normalizePost = (post:any) => {
+export const normalizePost = (post: any) => {
 	return {
 		date: post.post_date,
 		title: post.post_title,
@@ -124,7 +122,7 @@ export const normalizePost = (post:any) => {
 }
 
 export const preparePage = (data: any) => {
-	const acfData:any = data?.custom ? prepareAcf(data.custom) : null;
+	const acfData: any = data?.custom ? prepareAcf(data.custom) : null;
 	const page: any = {
 		id: data.id,
 		title: data.title,
@@ -147,7 +145,7 @@ export const preparePage = (data: any) => {
 }
 
 export const prepareCategories = (items: any) => {
-	const categories:any = {};
+	const categories: any = {};
 	for (let i = 0; i < items.length; i += 1) {
 		const item = items[i];
 		categories[item.id] = {

@@ -1,10 +1,10 @@
-import { envConfigs, getUrlWithLangPrefix, myCache, preparePage, wpapi } from "~/server/constants/constant";
+import { envConfigs, getUrlWithLangPrefix, preparePage, wpapi } from "~/server/constants/constant";
 
 const postTypes: any = envConfigs.env.postTypes;
 
-// Create a cache instance with a standard TTL
-
 export default defineEventHandler(async (event) => {
+  const redisClient:any = event.context.redisClient
+   
   const { collection, slug } = event.context.params as any;
   const postType = postTypes[collection]; // Ensure 'postTypes' is defined or imported
   const query = getQuery(event); // Ensure getQuery is properly implemented to extract query parameters
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     },
   };
   const cacheKey = `content-${collection}-${slug}-${JSON.stringify(query)}`;
-  const cachedData = myCache.get(cacheKey) as string;
+  const cachedData = await redisClient.get(cacheKey);
 
   if (cachedData) {
     return JSON.parse(cachedData);
@@ -28,8 +28,7 @@ export default defineEventHandler(async (event) => {
     if (response.data && response.data.length > 0) {
       const preparedData = preparePage(response.data[0]);
 
-      // Cache the prepared data with node-cache
-      myCache.set(cacheKey, JSON.stringify(preparedData));
+      await redisClient.setEx(cacheKey, 600, JSON.stringify(preparedData)); // Using a TTL of 600 seconds (10 minutes)
 
       return preparedData;
     } else {

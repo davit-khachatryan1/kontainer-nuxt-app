@@ -1,6 +1,6 @@
 // start-pm2.mjs
 import pm2 from 'pm2';
-import config from './pm2.config.mjs';
+import { pm2Configs } from './nuxt.config.js';
 
 // Connect to PM2
 pm2.connect(function(err) {
@@ -11,7 +11,7 @@ pm2.connect(function(err) {
   console.log("Connected to PM2 successfully.");
 
   // Start the PM2 with the given configuration
-  pm2.start(config, function(err, apps) {
+  pm2.start(pm2Configs, function(err, apps) {
     if (err) {
       console.error("Error starting the application with PM2:", err);
       process.exit(2);

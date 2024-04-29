@@ -1,10 +1,10 @@
-import { redisClient } from "~/server/constants/constant";
-
 export default defineEventHandler(async (event) => {
+    const redisClient: any = event.context.redisClient
+
     try {
-        const keys = await getAllRedisKeys();
+        const keys = await getAllRedisKeys(redisClient);
         for (const key of keys) {
-            await deleteKeyFromCache(key);
+            await deleteKeyFromCache(key, redisClient);
         }
         return 'Cache cleared';
     } catch (error) {
@@ -14,22 +14,22 @@ export default defineEventHandler(async (event) => {
     }
 });
 
-async function getAllRedisKeys() {
+async function getAllRedisKeys(redisClient: any) {
     return new Promise<string[]>((resolve, reject) => {
         redisClient.keys('*').then((keys: string[]) => {
             resolve(keys);
-        }).catch(err => {
+        }).catch((err: any) => {
             reject(err);
         });
     });
 }
 
 
-async function deleteKeyFromCache(key: string) {
+async function deleteKeyFromCache(key: string, redisClient: any) {
     return new Promise<void>((resolve, reject) => {
         redisClient.del(key).then(() => {
             resolve();
-        }).catch(err => {
+        }).catch((err: any) => {
             reject(err);
         });
     });

@@ -3,12 +3,38 @@ import { defineNuxtConfig } from "nuxt/config"
 
 import svgLoader from 'vite-svg-loader';
 
+export const pm2Configs = {
+	apps: [
+		{
+			name: 'kontainersite',
+			script: 'npm',
+			args: 'start',
+			watch: true,
+			env_production: {
+				NODE_ENV: 'production',
+				SERVER_NAME: 'production',
+				HOST: '127.0.0.1',
+				PORT: 3001,
+				REDIS_DB: 11,
+			},
+			env_next: {
+				NODE_ENV: 'next',
+				SERVER_NAME: 'next',
+				HOST: '127.0.0.1',
+				PORT: 3001,
+				REDIS_DB: 11,
+			},
+		},
+	],
+}
+
 let baseUrl = 'http://localhost:3000'; // http://localhost:3000
 let siteUrl = 'http://kontainer-api.test'; // https://kontainer.dev.konform.com // no trailing slash
 let apiUrl = 'http://kontainer-api.test/'; // 'https://kontainercms.dev.konform.com'
 let appUrl = 'http://kontainer.test';
 let analyticsId = null;
 let sentryDSN = 'https://52449f0e189c4bdc9abcf7274853a78b@sentry.konform.com/24';
+let redisUrl = 'redis://localhost:6379';
 
 if (process.env.SERVER_NAME === 'production') {
   baseUrl = 'https://kontainer.com';
@@ -17,12 +43,14 @@ if (process.env.SERVER_NAME === 'production') {
   appUrl = 'https://app.kontainer.com';
   analyticsId = 'G-0WYFD1L6VN';
   sentryDSN = 'https://ed48997570fa466fb0a3fd668ea387ea@sentry.konform.com/15';
+  redisUrl = '';
 } else if (process.env.SERVER_NAME === 'next') {
   baseUrl = 'https://kontainer.dev.konform.com';
   siteUrl = 'https://kontainer.dev.konform.com';
   apiUrl = 'https://kontainercms.dev.konform.com';
   appUrl = 'https://next.kontainer.com';
   analyticsId = 'G-40FXY02M7H';
+  redisUrl = 'redis://localhost:6379';
 }
 
 export const config = {
@@ -45,6 +73,22 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       ...config,
+    },
+    private: {
+      redisUrl,
+    }
+  },
+  nitro: {
+    storage: {
+      redis: {
+        driver: 'redis',
+        port: 6379,
+        host: "127.0.0.1", // Redis host
+        username: "", // needs Redis >= 6
+        password: "",
+        db: 0, // Defaults to 0
+        tls: {} // tls/ssl
+      }
     }
   },
   css: [
@@ -54,13 +98,6 @@ export default defineNuxtConfig({
     plugins: [
       svgLoader()
     ],
-    // css: {
-    //   preprocessorOptions: {
-    //     scss: {
-    //       additionalData: '@import "@/assets/scss/import.scss";'
-    //     }
-    //   }
-    // }
   },
   devtools: { enabled: false },
   plugins: [
