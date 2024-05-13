@@ -37,7 +37,6 @@ import Button from '~/components/atoms/button/index.vue';
 import Input from '~/components/atoms/input/index.vue';
 import Teaser from '~/components/molecules/teaser/index.vue';
 import FormComponenet from '~/components/molecules/form/index.vue';
-import { useNuxtApp } from '#app';
 import qs from 'qs';
 import { useLangString } from '~/components/composables/useLangString';
 
@@ -88,21 +87,22 @@ export default {
 			return Object.assign({}, ...keyValues);
 		},
 		submit(validate) {
-			const { $api: axios } = useNuxtApp()
 			validate().then((result) => {
 				const newsletterData = this.newsletterInfo;
 				const cmNames = { name: 'cm-name', email: 'cm-vhrjir-vhrjir' };
 				const cmData = this.renameKeys(newsletterData, cmNames);
 
 				if (result) {
-					axios
-						.post(
+					$fetch(
 							'https://kontainer.createsend.com/t/d/s/vhrjir/?callback=cmCallback',
-							qs.stringify(cmData),
+							{
+								method: 'POST',
+								body: qs.stringify(cmData)
+							},
 						)
 						.then((response) => {
 							const responseJSON = JSON.parse(
-								response.data.slice(11).slice(0, -1),
+								response.slice(11).slice(0, -1),
 							);
 							if (responseJSON.Status === 200) {
 								this.step += 1;

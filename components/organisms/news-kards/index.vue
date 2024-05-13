@@ -30,7 +30,6 @@ import SmartLink, {
 } from '~/components/helper/smartlink/index.vue';
 import useStore from '@/store'
 import { useLangString } from '~/components/composables/useLangString';
-import { useNuxtApp } from '#app';
 
 export default {
 	name: 'NewsKards',
@@ -54,12 +53,10 @@ export default {
 		return { langString };
   	},
 	created() {
-		const { $api: axios } = useNuxtApp();
 		
 		const store = useStore();
 		if (this.data.fetch_resource_type === 'latest') {
-			axios
-				.get(`/api/content/list/news?lang=${store.locale}`, {
+			$fetch(`/api/content/list/news?lang=${store.locale}`, {
 					params: {
 						per_page: '3',
 						order: 'desc',
@@ -67,7 +64,7 @@ export default {
 					},
 				})
 				.then((data) => {
-					this.lastestKards = data.data;
+					this.lastestKards = data;
 				});
 		}
 	},

@@ -421,7 +421,6 @@
 </template>
 
 <script>
-import forEach from 'lodash/forEach';
 import { DEFAULT_LOCALE } from '~/constants/styles';
 import SmartLink from '~/components/helper/smartlink/index.vue';
 import { useGetClosest } from '~/components/composables/useGetClosest';
@@ -539,12 +538,12 @@ export default {
 			// const elements = this.$refs[ref];
 			const elements = document.querySelectorAll(ref);
 			const elementsHeight = [];
-			forEach(elements, (el) => {
+			elements?.forEach((el) => {
 				elementsHeight.push(el.offsetHeight);
 			});
 
 			const highest = Math.max.apply(null, elementsHeight);
-			forEach(elements, (el) => {
+			elements?.forEach(elements, (el) => {
 				if (sticky) {
 					Object.assign(el.style, {
 						height: `${highest}px`,
@@ -571,21 +570,21 @@ export default {
 
 			const tableHeaders = document.querySelectorAll('.js-tableheader');
 			if (this.scrollPos + 120 > this.pricingTableHeadPosition) {
-				forEach(tableHeaders, (tableHead) => {
+				tableHeaders.forEach((tableHead) => {
 					tableHead.classList.add('sticky', 'shrink');
 				});
 			} else {
-				forEach(tableHeaders, (tableHead) => {
+				tableHeaders?.forEach((tableHead) => {
 					tableHead.classList.remove('sticky', 'shrink');
 				});
 			}
 
 			if (this.scrollPos > this.pricingTableCtaPosition - 100 - 120) {
-				forEach(tableHeaders, (tableHead) => {
+				tableHeaders?.forEach((tableHead) => {
 					tableHead.classList.add('hide');
 				});
 			} else {
-				forEach(tableHeaders, (tableHead) => {
+				tableHeaders?.forEach((tableHead) => {
 					tableHead.classList.remove('hide');
 				});
 			}
@@ -612,7 +611,7 @@ export default {
 			this.replaceSelectedDropdownValue(event);
 		},
 		getMobileTablePositions() {
-			forEach(this.$refs['mobileTables'], (el) => {
+			this.$refs['mobileTables']?.forEach((el) => {
 				this.mobileTablePositions.push(
 					el.getBoundingClientRect().top + 20 - 55 - 20,
 				);

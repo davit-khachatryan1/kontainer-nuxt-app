@@ -2,12 +2,11 @@ import { defineNuxtPlugin } from '#app';
 import useStore from "@/store"
 import { useRoute } from 'vue-router';
 class Api {
-	constructor(connection, nuxtApp) {
-		this.connection = connection;
+	constructor(nuxtApp) {
 		this.nuxtApp = nuxtApp;
 	}
 
-	fetch(path, context, pageInfo) {
+	fetchData(path, context, pageInfo) {
 		const store = useStore()
 		const route = this.nuxtApp._route
 		let requestPath = path;
@@ -20,11 +19,11 @@ class Api {
 			params.key = route.query.previewkey;
 		}
 
-		return this.connection.get(`/api/content/${requestPath}`, {
+		return $fetch(`/api/content/${requestPath}`, {
 			params: {
 				...params, cache: 1 // remove cache: 1 in 2025
 			}
-		}).then(({ data }) => {
+		}).then((data) => {
 			const pageInfoProper = pageInfo;
 			if (data.translated && pageInfo.slug) {
 				const untranslated = {};
@@ -42,13 +41,13 @@ class Api {
 	}
 
 	getHomepage(context) {
-		return this.fetch('home', context, { type: 'page', slug: 'home' });
+		return this.fetchData('home', context, { type: 'page', slug: 'home' });
 	}
 
 	getCollection(context, collectionType = false) {
 		const route = useRoute()
 
-		return this.fetch(
+		return this.fetchData(
 			collectionType || route.params.page,
 			context,
 			{ type: collectionType || route.params.page }
@@ -57,7 +56,7 @@ class Api {
 
 	getTaxonomy(context, taxonomy = false) {
 		const route = useRoute()
-		return this.fetch(
+		return this.fetchData(
 			`taxonomy/${taxonomy}`,
 			context,
 			{ type: taxonomy || route.params.page }
@@ -65,11 +64,11 @@ class Api {
 	}
 
 	getPage(slug, context) {
-		return this.fetch(slug, context, { type: 'page', slug });
+		return this.fetchData(slug, context, { type: 'page', slug });
 	}
 
 	getCollectionItems(collectionType) {
-		return this.fetch(
+		return this.fetchData(
 			`list/${collectionType}`,
 			false,
 			{ type: collectionType }
@@ -78,7 +77,7 @@ class Api {
 
 	getCollectionItem(context, collection = false) {
 		const collectionType = collection || this.nuxtApp._route.params.collection;
-		return this.fetch(
+		return this.fetchData(
 			`${collectionType}/${this.nuxtApp._route.params.slug}`,
 			context,
 			{ type: collectionType, slug: this.nuxtApp._route.params.slug }
@@ -94,6 +93,6 @@ class Api {
 }
 
 export default defineNuxtPlugin(nuxtApp => {
-	const api = new Api(nuxtApp.$api, nuxtApp);
+	const api = new Api(nuxtApp);
 	nuxtApp.provide('myAppApi', api);
 });

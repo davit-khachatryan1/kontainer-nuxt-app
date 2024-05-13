@@ -1,5 +1,6 @@
 // plugins/google-tag-manager.js
 export default defineNuxtPlugin(nuxtApp => {
+	if(process.server) return;
 	if (process.env.NODE_ENV === 'development') return;
   
 	let ga_id = 'GTM-MNHKD9J';

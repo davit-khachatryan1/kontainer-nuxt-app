@@ -62,7 +62,6 @@ import InputSelect from '~/components/atoms/select/index.vue';
 import CodeInserter from '~/components/organisms/code-inserter/index.vue';
 import { useLangString } from '~/components/composables/useLangString';
 import { usePrepLink } from '~/components/composables/usePrepLink';
-import { useNuxtApp } from '#app';
 
 export default {
 	name: 'ContactSection',
@@ -112,7 +111,6 @@ export default {
 			}, 5000);
 		},
 		handleSubmit() {
-			const { $api: axios } = useNuxtApp()
 			if (this.contact.name === '') {
 				this.addError('name', 'Dette felt skal udfyldes');
 				return;
@@ -125,12 +123,15 @@ export default {
 				this.addError('message', 'Dette felt skal udfyldes');
 				return;
 			}
-			axios
-				.post('/api/sendmessage', {
+			$fetch('/api/sendmessage', {
+				method: 'POST',
+				body: {
+
 					name: this.contact.name,
 					email: this.contact.email,
 					topic: this.contact.subjectSelected,
 					message: this.contact.message,
+				}
 				})
 				.then(() => {
 					this.isSent = true;

@@ -1,7 +1,6 @@
 // server/api/sitemap.js
 
 import axios, { type AxiosInstance } from 'axios';
-import flatten from 'lodash/flatten';
 const LOCALES = ['en', 'da', 'de'];
 const DEFAULT_LOCALE = 'en';
 const RESOURCE_TYPES = ['page', 'news'];
@@ -57,7 +56,7 @@ async function getAllResources(wpapi: AxiosInstance) {
     const endpoint = BASE_ENDPOINTS[type];
     const response = await wpapi.get(endpoint);
     return preparePathsFromData(response.data, type);
-  })).then(flatten);
+  })).then(res => res.flat());
 }
 
 // Utility to handle language prefixes

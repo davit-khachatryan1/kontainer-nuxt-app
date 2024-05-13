@@ -34,7 +34,6 @@ import Button from '~/components/atoms/button/index.vue';
 import Checklist from '~/components/atoms/checklist/index.vue';
 import { useLangString } from '~/components/composables/useLangString';
 import { DEFAULT_LOCALE } from '~/constants/styles';
-import debounce from 'lodash/debounce';
 import useStore from '@/store'
 
 export default {
@@ -58,6 +57,18 @@ export default {
 		Checklist,
 	},
 	methods: {
+		debounce(func, wait) {
+			let timeout;
+			return function(...args) {
+				const context = this;
+				const later = () => {
+				clearTimeout(timeout);
+				func.apply(context, args);
+				};
+				clearTimeout(timeout);
+				timeout = setTimeout(later, wait);
+			};
+		},
 		registerUrl() {
 			const store = useStore();
 			const langPrefix =
@@ -86,7 +97,7 @@ export default {
 			}
 
 			if (typeof this.priceActionCleanup !== 'function') {
-				this.priceActionCleanup = debounce((state) => {
+				this.priceActionCleanup = this.debounce((state) => {
 					this.isHovered = state;
 					this.animationRunning = false;
 					this.timer = false;

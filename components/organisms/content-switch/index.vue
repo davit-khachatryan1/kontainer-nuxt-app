@@ -13,7 +13,7 @@
 			">
 					<SignupBlock v-if="block.layout === 'signup' || block.layout === 'newsletter'" :data="block.data"
 						:positionOnPage="index" />
-					<Hero v-if="block.layout === 'hero'" :data="block.data" :positionOnPage="index" />
+					<Hero v-else-if="block.layout === 'hero'" :data="block.data" :positionOnPage="index" />
 					<Sidekick v-else-if="block.layout === 'sidekick'" :data="block.data" :positionOnPage="index" />
 					<TestimonialBlock v-else-if="block.layout === 'testimonial'"
 						:data="dataWithNextAngle(block.data, index)" :class="['testimonial--' + index]"

@@ -75,7 +75,6 @@
 import { ref, computed } from 'vue';
 import useStore from '@/store'; // Assuming you're using Vuex 4 for Nuxt 3
 import { useNuxtApp } from '#app';
-import forEach from 'lodash/forEach';
 import SmartLink, { prepareWPObjectsToLinks } from '~/components/helper/smartlink/index.vue';
 import LanguageSelect from '~/components/organisms/language-select/index.vue';
 import ButtonComp from '~/components/atoms/button/index.vue';
@@ -116,9 +115,9 @@ const bookDemo = computed(() => ({
 const activeMenuParent = computed(() => {
   const currentMenuSlug = nuxtApp._route.params.slug; // Use $route.params for route params
   let activeParent = '';
-  forEach(menuItems.value, (item) => {
+  menuItems.value?.forEach((item) => {
     if (item.children) {
-      forEach(item.children, (child) => {
+		item.children?.forEach((child) => {
         if (child.slug === currentMenuSlug) {
           activeParent = item.slug;
         }
@@ -144,126 +143,6 @@ function handleLangMenuClick(e) {
   }
 }
 </script>
-
-<!-- 
-<template>
-	<div class="header">
-		<nav class="content-grid-container nav">
-			<div class="nav__left">
-				<SmartLink class="nav__left__logo" type="page" slug="home" :ariaLabel="logoLabel">
-					<IconLogoMark class="icon--logo-mark" />
-					<IconLogoText class="icon--logo-text" />
-				</SmartLink>
-			</div>
-			<div class="nav__right">
-				<ol @mouseover="hoverMenu = true" @mouseleave="hoverMenu = false" :class="{ hover: hoverMenu }">
-					<li v-for="(item, index) in menuItems" :key="index" :class="{ 'has-dropdown': item.children }"
-						class="nav__right__menu-item">
-						<template v-if="item.children">
-							<span :class="['link', { 'nuxt-link-active': activeMenuParent === item.slug }]">
-								<span v-html="item.title" />
-								<IconCaret class="has-dropdown__icon" />
-							</span>
-							<transition name="fade">
-								<ol class="dropdown" v-if="hoverMenu">
-									<li v-for="(sublink, index) in item.children" :key="index"
-										:class="{ 'has-dropdown': sublink.children }">
-										<a v-if="sublink.children" :class="['link', { 'nuxt-link-exact-active': activeMenuParent === item.slug }]" v-html="sublink.title" />
-										<SmartLink v-else class="link" :type="sublink.type" :slug="sublink.slug" :url="sublink.url">
-											<span v-html="sublink.title" />
-										</SmartLink>
-									</li>
-								</ol>
-							</transition>
-						</template>
-						<SmartLink v-else class="link" :type="item.type" :slug="item.slug" :url="item.url">
-							<span v-html="item.title" />
-						</SmartLink>
-					</li>
-					<li class="nav__right__ctas">
-						<ButtonComp v-if="bookDemo.show" id="democlick" class="btn--cta" :link="bookDemo.link">
-							<span class="btn__text">{{ bookDemo.title }}</span>
-						</ButtonComp>
-						<ButtonComp id="trialclick" v-if="cta.link" :class="cta.class" :link="cta.link">
-							<span class="btn__text btn__text--long">{{ cta.title }}</span>
-							<span class="btn__text btn__text--short">{{ cta.titleShort }}</span>
-						</ButtonComp>
-					</li>
-					<li class="nav__right__language has-dropdown no-css-hover" @mouseenter="toggleLanguageMenu" @mouseleave="toggleLanguageMenu" @click="toggleLanguageMenu">
-						<LanguageIcon class="globe" />
-						<IconCaret class="has-dropdown__icon" />
-						<transition name="fade">
-							<LanguageSelect v-if="showLanguageMenu" class="dropdown" markup="list" />
-						</transition>
-					</li>
-					<li class="nav__right__menu-item">
-						<Hamburger />
-					</li>
-				</ol>
-			</div>
-		</nav>
-	</div>
-</template>
-
-<script setup>
-import { ref, computed } from 'vue';
-// import { useStore, useRoute } from 'vuex';
-import forEach from 'lodash/forEach';
-import SmartLink from '~/components/helper/smartlink/index.vue';
-import LanguageSelect from '~/components/organisms/language-select/index.vue';
-import ButtonComp from '~/components/atoms/button/index.vue';
-import Hamburger from '~/components/atoms/hamburger/index.vue';
-import IconCaret from '~/assets/svg/caret-select.svg';
-import LanguageIcon from '~/assets/svg/language.svg';
-import IconLogoText from '~/assets/svg/kontainer-logo-text.svg';
-import IconLogoMark from '~/assets/svg/kontainer-logo-mark.svg';
-
-const store = useStore();
-const route = useRoute();
-
-const hoverMenu = ref(false);
-const showLanguageMenu = ref(false);
-
-const toggleLanguageMenu = (event) => {
-  const eventType = event.type;
-  if (window.matchMedia('(hover: none)').matches) {
-    showLanguageMenu.value = !showLanguageMenu.value;
-  } else {
-    showLanguageMenu.value = eventType === 'mouseenter';
-  }
-};
-
-const logoLabel = computed(() => store.state.pageOptions.logo_label);
-const menuItems = computed(() => store.state.menus ? store.state.menus.primary : []);
-
-const activeMenuParent = computed(() => {
-  let activeParent = '';
-  forEach(menuItems.value, (item) => {
-    if (item.children) {
-      forEach(item.children, (child) => {
-        if (child.slug === route.params.slug) {
-          activeParent = item.slug;
-        }
-      });
-    }
-  });
-  return activeParent;
-});
-
-const cta = computed(() => ({
-  title: store.state.pageOptions.navcta_title,
-  titleShort: store.state.pageOptions.navcta_title_short,
-  link: store.state.pageOptions.navcta,
-  class: bookDemo.value.show ? 'btn--grey' : 'btn--cta',
-}));
-
-const bookDemo = computed(() => ({
-  title: store.state.pageOptions.book_demo_button,
-  link: store.state.pageOptions.book_demo_url,
-  show: store.state.pageOptions.nav_show_bookdemo && store.state.pageOptions.book_demo_button && store.state.pageOptions.book_demo_url,
-}));
-</script>
- -->
 
 
 <style lang="scss">

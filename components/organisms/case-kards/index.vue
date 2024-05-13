@@ -20,7 +20,6 @@ import { prepareWPObjectsToLinks } from '~/components/helper/smartlink/index.vue
 import useStore from '@/store';
 import { usePrepLink } from '~/components/composables/usePrepLink';
 import { useLangString } from '~/components/composables/useLangString';
-import { useNuxtApp } from '#app';
 
 export default {
 	name: 'CaseKards',
@@ -44,11 +43,9 @@ export default {
 		return { langString, prepLink };
   	},
 	created() {
-		const { $api: axios } = useNuxtApp()
 		const store = useStore();
 		if (this.data.fetch_resource_type === 'latest') {
-			axios
-				.get(`/api/content/list/cases?lang=${store.locale}`, {
+			$fetch(`/api/content/list/cases?lang=${store.locale}`, {
 					params: {
 						per_page: '3',
 						order: 'desc',
@@ -56,7 +53,7 @@ export default {
 					},
 				})
 				.then((data) => {
-					this.lastestKards = data.data;
+					this.lastestKards = data;
 				});
 		}
 	},

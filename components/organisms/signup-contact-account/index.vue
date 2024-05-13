@@ -128,7 +128,6 @@ export default {
 		},
 		handleSubmit() {
 			const nuxtApp = useNuxtApp()
-			const {$api: axios} = useNuxtApp();
 
 			if (
 				this.registration.name &&
@@ -136,14 +135,15 @@ export default {
 				nuxtApp._route.query.kontainer
 			) {
 				this.addToHubSpot(this.registration);
-				axios
-					.post('/api/signupcontactform', {
+				$fetch('/api/signupcontactform', {
+					method: 'POST',
+					body: {
 						name: this.registration.name,
 						email: this.registration.email,
 						company: this.registration.company,
 						message: this.registration.message,
 						package: nuxtApp._route.query.kontainer,
-					})
+					}})
 					.then(() => {
 						this.success();
 					})
@@ -163,7 +163,6 @@ export default {
 
 		addToHubSpot(registrationData) {
 			const store = useStore();
-			const {$api: axios} = useNuxtApp();
 			var data = {
 				fields: [
 					{
@@ -208,10 +207,13 @@ export default {
 				},
 			}
 
-			axios.post(
+			$fetch(
 				`https://api.hsforms.com/submissions/v3/integration/submit/25539371/${formId}`,
-				data,
-				config
+				{
+					method: 'POST',
+					body: data,
+					config
+				}
 			)
 		},
 	},

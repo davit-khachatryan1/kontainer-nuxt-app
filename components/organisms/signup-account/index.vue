@@ -279,7 +279,6 @@
 </template>
 
 <script>
-import debounce from 'lodash/debounce';
 import FormComponent from '~/components/molecules/form/index.vue';
 import Button from '~/components/atoms/button/index.vue';
 import Input from '~/components/atoms/input/index.vue';
@@ -1084,6 +1083,18 @@ export default {
 		};
 	},
 	methods: {
+		debounce(func, wait) {
+			let timeout;
+			return function(...args) {
+				const context = this;
+				const later = () => {
+				clearTimeout(timeout);
+				func.apply(context, args);
+				};
+				clearTimeout(timeout);
+				timeout = setTimeout(later, wait);
+			};
+		},
 		prev() {
 			this.step -= 1;
 		},
@@ -1118,7 +1129,6 @@ export default {
 		},
 		submit(validate) {
 			const config = useRuntimeConfig();
-			const {$api: axios} = useNuxtApp()
 			// this.checkDomainAvailability();
 			const store = useStore();
 
@@ -1186,12 +1196,14 @@ export default {
 
 				if (result) {
 					this.addToHubSpot(registrationData);
-					axios
-						.post(
+					$fetch(
 							`${config.public.appUrl}/api/signup`,
-							qs.stringify(registrationData),
+							{
+								method: 'POST',
+								body: qs.stringify(registrationData)
+							},
 						)
-						.then((response) => {
+						.then(() => {
 							this.success(); // redirect to success page
 						})
 						.catch((error) => {
@@ -1202,7 +1214,6 @@ export default {
 		},
 
 		addToHubSpot(registrationData) {
-			const {$api: axios} = useNuxtApp()
 
 			var data = {
 				fields: [
@@ -1243,10 +1254,13 @@ export default {
 				},
 			}
 
-			axios.post(
+			$fetch(
 				`https://api.hsforms.com/submissions/v3/integration/submit/25539371/${formId}`,
-				data,
-				config
+				{
+					method: 'POST',
+					body: data,
+					config
+				}
 			)
 		},
 
@@ -1258,7 +1272,6 @@ export default {
 		},
 		checkDomainAvailability() {
 			const config = useRuntimeConfig();
-			const {$api: axios} = useNuxtApp()
 
 			let domain;
 			if (this.registration.host) {
@@ -1269,13 +1282,12 @@ export default {
 				domain = this.registration.name.replace(/\s+/g, '-').toLowerCase();
 			}
 
-			axios
-				.get(`${config.public.appUrl}/api/signup/availability`, {
+			$fetch(`${config.public.appUrl}/api/signup/availability`, {
 					params: {
 						clientHost: domain,
 					},
 				})
-				.then((response) => {
+				.then(() => {
 					this.registration.host = domain;
 					this.hostStatus = true;
 
@@ -1372,7 +1384,7 @@ export default {
 		}
 	},
 	created() {
-		this.debouncedUrlCheck = debounce(this.checkDomainAvailability, 500);
+		this.debouncedUrlCheck = this.debounce(this.checkDomainAvailability, 500);
 	},
 	watch: {
 		'registration.host': function (host) {

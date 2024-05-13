@@ -1,4 +1,3 @@
-import forEach from 'lodash/forEach';
 import { getLocalUrl } from '~/components/helper/smartlink/index.vue';
 import { DEFAULT_LOCALE } from '~/constants/styles';
 
@@ -29,7 +28,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
 			const link = [];
 			if (this.translated) {
-				forEach(this.translated, (slug, lang) => {
+				this.translated?.forEach((slug, lang) => {
 					const linkObject = {
 						locale: lang,
 						slug,

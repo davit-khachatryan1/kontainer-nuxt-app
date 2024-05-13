@@ -10,7 +10,6 @@
 
 <script>
 import { DEFAULT_LOCALE } from '~/constants/styles';
-import isArray from 'lodash/isArray';
 import useStore from '@/store'
 
 const RESSOURCE_TYPES = ['news', 'cases', 'blog'];
@@ -24,7 +23,7 @@ const prepareWPObjectsToLinks = (obj) => {
 		return { url: '#' };
 	}
 
-	if (isArray(obj)) {
+	if (Array.isArray(obj)) {
 		return obj.map((currentObj) => {
 			return {
 				slug: currentObj.link.slug,

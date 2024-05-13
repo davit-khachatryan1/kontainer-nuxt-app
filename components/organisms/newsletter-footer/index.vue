@@ -52,7 +52,6 @@ import Teaser from '~/components/molecules/teaser/index.vue';
 import Form from '~/components/molecules/form/index.vue';
 import qs from 'qs';
 import { useLangString } from '~/components/composables/useLangString';
-import { useNuxtApp } from '#app';
 
 export default {
 	name: 'NewsletterSignup',
@@ -108,7 +107,6 @@ export default {
 			return Object.assign({}, ...keyValues);
 		},
 		submit(validate) {
-			const { $api: axios } = useNuxtApp();
 
 			validate().then((result) => {
 				const newsletterData = this.newsletterInfo;
@@ -116,14 +114,16 @@ export default {
 				const cmData = this.renameKeys(newsletterData, cmNames);
 
 				if (result) {
-					axios
-						.post(
+					$fetch(
 							'https://kontainer.createsend.com/t/d/s/vhrjir/?callback=cmCallback',
-							qs.stringify(cmData),
+							{
+								method: 'POST',
+								body: qs.stringify(cmData)
+							},
 						)
 						.then((response) => {
 							const responseJSON = JSON.parse(
-								response.data.slice(11).slice(0, -1),
+								response.slice(11).slice(0, -1),
 							);
 							console.warn(responseJSON.Status);
 
