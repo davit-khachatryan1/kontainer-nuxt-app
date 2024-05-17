@@ -1,4 +1,4 @@
-import { getLocalUrl } from '~/components/helper/smartlink/index.vue';
+import { getLocalUrl } from '~/components/composables/getLocalUrl';
 import { DEFAULT_LOCALE } from '~/constants/styles';
 
 // plugins/global-head.js

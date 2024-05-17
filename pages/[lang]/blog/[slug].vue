@@ -7,7 +7,8 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useNuxtApp } from '#app';
-import ContentSwitch from '~/components/organisms/content-switch/index.vue';
+const ContentSwitch = defineAsyncComponent(() => import('~/components/organisms/content-switch/index.vue'));
+
 const flexible = ref([]);
 const nuxtApp = useNuxtApp();
 const api = nuxtApp.$myAppApi;

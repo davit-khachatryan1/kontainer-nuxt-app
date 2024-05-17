@@ -6,7 +6,8 @@
 
 <script>
 import meta from '~/plugins/meta';
-import SignupContactAccount from '~/components/organisms/signup-contact-account/index.vue';
+const SignupContactAccount = defineAsyncComponent(() => import('~/components/organisms/signup-contact-account/index.vue'));
+
 import useStore from '@/store'
 import { useNuxtApp } from '#app';
 export default {

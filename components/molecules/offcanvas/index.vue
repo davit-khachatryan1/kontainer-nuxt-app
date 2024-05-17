@@ -109,16 +109,20 @@
 </template>
 
 <script>
-import SmartLink, {
-	prepareWPObjectsToLinks,
-} from '~/components/helper/smartlink/index.vue';
-import TransitionExpand from '~/components/helper/TransitionExpand.vue';
-import Button, { BUTTON_TYPE_CTA } from '~/components/atoms/button/index.vue';
-import LanguageSelect from '~/components/organisms/language-select/index.vue';
+
+const SmartLink = defineAsyncComponent(() => import('~/components/helper/smartlink/index.vue'));
+import { prepareWPObjectsToLinks } from '~/components/composables/prepareWPObjectsToLinks';
+
+const TransitionExpand = defineAsyncComponent(() => import('~/components/helper/TransitionExpand.vue'));
+const Button = defineAsyncComponent(() => import('~/components/atoms/button/index.vue'));
+const LanguageSelect = defineAsyncComponent(() => import('~/components/organisms/language-select/index.vue'));
 import iconCaret from '~/assets/svg/caret-select.svg';
-import Hamburger from '~/components/atoms/hamburger/index.vue';
-import OffcanvasDimmer from './dimmer.vue';
+const Hamburger = defineAsyncComponent(() => import('~/components/atoms/hamburger/index.vue'));
+const OffcanvasDimmer = defineAsyncComponent(() => import('./dimmer.vue'));
 import useStore from '@/store'
+import {
+	BUTTON_TYPE_CTA,
+} from '~/constants/button'
 
 export default {
 	name: 'OffcanvasMenu',

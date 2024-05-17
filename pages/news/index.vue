@@ -2,7 +2,8 @@
     <Index />
 </template>
 <script setup>
-import Index from '~/pages/[lang]/news/index.vue';
+const Index = defineAsyncComponent(() => import('~/pages/[lang]/news/index.vue'));
+
 definePageMeta({
     middleware: ['lang', 'global', 'cleanup'],
     layout: false,

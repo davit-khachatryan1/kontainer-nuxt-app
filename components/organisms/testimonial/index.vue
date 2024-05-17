@@ -35,7 +35,7 @@
 
 <script>
 import objectFitImages from 'object-fit-images';
-import SmartImage from '~/components/helper/smartimage/index.vue';
+const SmartImage = defineAsyncComponent(() => import('~/components/helper/smartimage/index.vue'));
 import { useAnimateOnLoad } from '~/components/composables/useAnimateOnLoad';
 import { useImgUrl } from '~/components/composables/useImgUrl';
 

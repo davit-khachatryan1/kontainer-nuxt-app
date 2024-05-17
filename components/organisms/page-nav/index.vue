@@ -74,11 +74,11 @@
 <script setup>
 import { ref, computed } from 'vue';
 import useStore from '@/store'; // Assuming you're using Vuex 4 for Nuxt 3
-import { useNuxtApp } from '#app';
-import SmartLink, { prepareWPObjectsToLinks } from '~/components/helper/smartlink/index.vue';
-import LanguageSelect from '~/components/organisms/language-select/index.vue';
-import ButtonComp from '~/components/atoms/button/index.vue';
-import Hamburger from '~/components/atoms/hamburger/index.vue';
+const SmartLink = defineAsyncComponent(() => import('~/components/helper/smartlink/index.vue'));
+import { prepareWPObjectsToLinks } from '~/components/composables/prepareWPObjectsToLinks';
+const LanguageSelect = defineAsyncComponent(() => import('~/components/organisms/language-select/index.vue'));
+const ButtonComp = defineAsyncComponent(() => import('~/components/atoms/button/index.vue'));
+const Hamburger = defineAsyncComponent(() => import('~/components/atoms/hamburger/index.vue'));
 import iconCaret from '~/assets/svg/caret-select.svg';
 import LanguageIcon from '~/assets/svg/language.svg';
 import IconLogoText from '~/assets/svg/kontainer-logo-text.svg';

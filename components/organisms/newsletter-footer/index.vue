@@ -46,10 +46,10 @@
 </template>
 
 <script>
-import Button from '~/components/atoms/button/index.vue';
-import Input from '~/components/atoms/input/index.vue';
-import Teaser from '~/components/molecules/teaser/index.vue';
-import Form from '~/components/molecules/form/index.vue';
+const Button = defineAsyncComponent(() => import( '~/components/atoms/button/index.vue'));
+const Input = defineAsyncComponent(() => import( '~/components/atoms/input/index.vue'));
+const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
+const Form = defineAsyncComponent(() => import('~/components/molecules/form/index.vue'));
 import qs from 'qs';
 import { useLangString } from '~/components/composables/useLangString';
 

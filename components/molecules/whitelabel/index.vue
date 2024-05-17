@@ -36,11 +36,11 @@
 </template>
 
 <script>
-import SmartImage from '~/components/helper/smartimage/index.vue';
-import Teaser from '~/components/molecules/teaser/index.vue';
+const SmartImage = defineAsyncComponent(() => import('~/components/helper/smartimage/index.vue'));
+const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
 import { useImgUrl } from '~/components/composables/useImgUrl';
 
-import Parallax from '~/components/_nuclides/parallax/index.vue';
+const Parallax = defineAsyncComponent(() => import( '~/components/_nuclides/parallax/index.vue'));
 
 export default {
 	name: 'WhitelabelComponent',

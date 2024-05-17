@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import ButtonComponent from '~/components/atoms/button/index.vue';
-import FeatureComponent from '~/components/molecules/feature/index.vue';
+const ButtonComponent = defineAsyncComponent(() => import('~/components/atoms/button/index.vue'));
+const FeatureComponent = defineAsyncComponent(() => import('~/components/molecules/feature/index.vue'));
 
 export default {
 	name: 'FeatureSection',

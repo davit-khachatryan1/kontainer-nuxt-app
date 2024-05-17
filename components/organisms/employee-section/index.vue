@@ -9,8 +9,8 @@
 </template>
 
 <script>
-	import Teaser from '~/components/molecules/teaser/index.vue';
-	import EmployeeComponent from '~/components/molecules/employee/index.vue';
+	const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
+	const EmployeeComponent = defineAsyncComponent(() => import('~/components/molecules/employee/index.vue'));
 
 	export default {
 		name: 'index.vue',

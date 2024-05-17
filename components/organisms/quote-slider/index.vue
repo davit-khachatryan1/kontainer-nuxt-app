@@ -39,7 +39,7 @@
   
   <script>
   import { defineComponent, ref, onMounted } from 'vue';
-  import Teaser from '~/components/molecules/teaser/index.vue';
+  const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
   import { useLangString } from '~/components/composables/useLangString';
   import Arrow from '~/assets/svg/arrow-big.svg';
   import QuoteIcon from '~/assets/svg/quote_icon.svg';
@@ -47,7 +47,7 @@
   import CapFiveStars from '~/assets/svg/cap-5-stars.svg';
   import G2FourFiveStars from '~/assets/svg/g2-4-5-stars.svg';
   import G2FiveStars from '~/assets/svg/g2-5-stars.svg';
-  import SmartLink from '~/components/helper/smartlink/index.vue';
+  const SmartLink = defineAsyncComponent(() => import('~/components/helper/smartlink/index.vue'));
   
   export default defineComponent({
 	name: 'QuoteSlider',

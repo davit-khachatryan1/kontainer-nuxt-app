@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import KardComponent from '~/components/molecules/kard/index.vue';
+const KardComponent = defineAsyncComponent(() => import( '~/components/molecules/kard/index.vue'));
 
 export default {
 	components: {

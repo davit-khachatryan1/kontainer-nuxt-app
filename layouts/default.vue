@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import PageNav from '~/components/organisms/page-nav';
-import OffcanvasMenu from '~/components/molecules/offcanvas/index.vue';
-import BookDemoModal from '~/components/molecules/book-demo';
-import FooterComponent from '~/components/organisms/footer';
+const PageNav = defineAsyncComponent(() => import('~/components/organisms/page-nav/index.vue'));
+const OffcanvasMenu = defineAsyncComponent(() => import('~/components/molecules/offcanvas/index.vue'));
+const BookDemoModal = defineAsyncComponent(() => import('~/components/molecules/book-demo/index.vue'));
+const FooterComponent = defineAsyncComponent(() => import('~/components/organisms/footer/index.vue'));
 
 export default {
 	components: {

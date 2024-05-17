@@ -25,11 +25,11 @@
 </template>
 
 <script>
-import Button from '~/components/atoms/button/index.vue';
-import Input from '~/components/atoms/input/index.vue';
-import SignupForm from '~/components/organisms/signup-account/index.vue';
-import Teaser from '~/components/molecules/teaser/index.vue';
-import NewsletterSignup from '~/components/organisms/newsletter/index.vue';
+const Button = defineAsyncComponent(() => import( '~/components/atoms/button/index.vue'));
+const Input = defineAsyncComponent(() => import( '~/components/atoms/input/index.vue'));
+const SignupForm = defineAsyncComponent(() => import( '~/components/organisms/signup-account/index.vue'));
+const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
+const NewsletterSignup = defineAsyncComponent(() => import( '~/components/organisms/newsletter/index.vue'));
 import { useLangString } from '~/components/composables/useLangString';
 
 export default {

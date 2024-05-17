@@ -37,8 +37,8 @@
 
 <script>
 import objectFitImages from 'object-fit-images';
-import SmartLink from '~/components/helper/smartlink/index.vue';
-import Teaser from '~/components/molecules/teaser/index.vue';
+const SmartLink = defineAsyncComponent(() => import('~/components/helper/smartlink/index.vue'));
+const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
 
 export default {
 	name: 'Logos',

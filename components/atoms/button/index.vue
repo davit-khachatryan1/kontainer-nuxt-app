@@ -38,19 +38,10 @@ import IconLinkedin from '~/assets/svg/linkedin.svg';
 import IconTwitter from '~/assets/svg/twitter.svg';
 import IconArrow from '~/assets/svg/arrow.svg';
 import IconCaret from '~/assets/svg/caret.svg';
-import SmartLink from '../../helper/smartlink';
+const SmartLink = defineAsyncComponent(() => import('../../helper/smartlink/index.vue'));
 
-const BUTTON_TYPE_DEFAULT = 0;
-const BUTTON_TYPE_CTA = 1;
-const BUTTON_TYPE_DARK = 2;
-const BUTTON_TYPE_SQUARE = 3;
-const BUTTON_TYPE_SOCIAL = 4;
-const BUTTON_TYPE_OUTLINE = 'outline';
-const BUTTON_TYPE_SOLID = 'solid';
-const BUTTON_TYPE_CARET = 'caret';
-const BUTTON_TYPE_GREY = 'grey';
 
-export {
+import {
 	BUTTON_TYPE_DEFAULT,
 	BUTTON_TYPE_CTA,
 	BUTTON_TYPE_DARK,
@@ -60,7 +51,7 @@ export {
 	BUTTON_TYPE_OUTLINE,
 	BUTTON_TYPE_SOLID,
 	BUTTON_TYPE_GREY,
-};
+} from '~/constants/button'
 
 export default {
 	name: 'Button',

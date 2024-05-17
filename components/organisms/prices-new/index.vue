@@ -422,11 +422,11 @@
 
 <script>
 import { DEFAULT_LOCALE } from '~/constants/styles';
-import SmartLink from '~/components/helper/smartlink/index.vue';
+const SmartLink = defineAsyncComponent(() => import('~/components/helper/smartlink/index.vue'));
 import { useGetClosest } from '~/components/composables/useGetClosest';
 import { useLangString } from '~/components/composables/useLangString';
-import Button from '~/components/atoms/button/index.vue';
-import Teaser from '~/components/molecules/teaser/index.vue';
+const Button = defineAsyncComponent(() => import( '~/components/atoms/button/index.vue'));
+const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
 import IconBookmark from '~/assets/svg/bookmark.svg';
 import useStore from '@/store'
 

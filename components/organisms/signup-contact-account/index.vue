@@ -57,13 +57,12 @@
 </template>
 
 <script>
-import FormComponent from '~/components/molecules/form/index.vue';
-import Button from '~/components/atoms/button/index.vue';
-import Input from '~/components/atoms/input/index.vue';
-import { useNuxtApp } from '#app';
+const FormComponent = defineAsyncComponent(() => import( '~/components/molecules/form/index.vue'));
+const Button = defineAsyncComponent(() => import( '~/components/atoms/button/index.vue'));
+const Input = defineAsyncComponent(() => import( '~/components/atoms/input/index.vue'));
 import { useLangString } from '~/components/composables/useLangString';
-import SmartImage from '~/components/helper/smartimage/index.vue';
-import Textarea from '~/components/atoms/textarea/index.vue';
+const SmartImage = defineAsyncComponent(() => import('~/components/helper/smartimage/index.vue'));
+const Textarea = defineAsyncComponent(() => import( '~/components/atoms/textarea/index.vue'));
 import useStore from '@/store'
 
 export default {

@@ -152,7 +152,7 @@ export default {
 		},
 	},
 	mounted() {
-		this.screenWidth = this.$el.parentNode.offsetWidth || 1;
+		this.screenWidth = this.$el?.parentNode.offsetWidth || 1;
 	},
 	watch: {
 		wait(newVal, oldVal) {
@@ -174,7 +174,7 @@ export default {
 		},
 		preload() {
 			if (this.$el.parentNode) {
-				this.screenWidth = this.$el.parentNode.offsetWidth || 1;
+				this.screenWidth = this.$el?.parentNode.offsetWidth || 1;
 			}
 			const loader = new Image();
 			loader.onload = () => {

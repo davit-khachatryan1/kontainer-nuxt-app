@@ -6,7 +6,7 @@
 		<template v-if="type === 'standalone' && step === 2">
 			<button class="form-go-back" :key="'prev'" @click.prevent="prev">{{ langString('_previous') }}</button>
 		</template>
-		<FormComponent :type="type" ref="form" :style="{ minHeight: height }" v-slot="{ errors, handleSubmit, resetForm, validate }">
+		<FormComponent :type="type" v-slot="{ errors, handleSubmit, resetForm, validate }">
 			<transition name="form-step-animation" mode="out-in">
 				<div>
 					<slot name="teaser" v-if="step < 3" />
@@ -279,15 +279,14 @@
 </template>
 
 <script>
-import FormComponent from '~/components/molecules/form/index.vue';
-import Button from '~/components/atoms/button/index.vue';
-import Input from '~/components/atoms/input/index.vue';
+const FormComponent = defineAsyncComponent(() => import( '~/components/molecules/form/index.vue'));
+const Button = defineAsyncComponent(() => import( '~/components/atoms/button/index.vue'));
+const Input = defineAsyncComponent(() => import( '~/components/atoms/input/index.vue'));
 import IconCountry from '~/assets/svg/country.svg';
 import { useLangString } from '~/components/composables/useLangString';
 import qs from 'qs';
-import SmartImage from '~/components/helper/smartimage/index.vue';
+const SmartImage = defineAsyncComponent(() => import('~/components/helper/smartimage/index.vue'));
 import useStore from '@/store'
-import { useNuxtApp } from '#app';
 
 export default {
 	name: 'SignupAccount',
@@ -1372,8 +1371,6 @@ export default {
 		} else {
 			this.getKontainerPackage('free');
 		}
-
-		this.height = `${this.$refs.form.$el.clientHeight}px`; // set min height for form, prevent content below moving
 
 		this.isFreeKontainer();
 

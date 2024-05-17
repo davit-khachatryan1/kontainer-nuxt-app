@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import SmartImage from '~/components/helper/smartimage/index.vue';
+const SmartImage = defineAsyncComponent(() => import('~/components/helper/smartimage/index.vue'));
 
 export default {
 	components: {

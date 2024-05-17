@@ -53,13 +53,13 @@
 </template>
 
 <script>
-import ButtonComponent from '~/components/atoms/button/index.vue';
-import FormComponent from '~/components/molecules/form/index.vue';
-import InputComponent from '~/components/atoms/input/index.vue';
-import SellingpointComponent from '~/components/molecules/sellingpoint/index.vue';
-import Textarea from '~/components/atoms/textarea/index.vue';
-import InputSelect from '~/components/atoms/select/index.vue';
-import CodeInserter from '~/components/organisms/code-inserter/index.vue';
+const ButtonComponent = defineAsyncComponent(() => import('~/components/atoms/button/index.vue'));
+const FormComponent = defineAsyncComponent(() => import( '~/components/molecules/form/index.vue'));
+const InputComponent = defineAsyncComponent(() => import( '~/components/atoms/input/index.vue'));
+const SellingpointComponent = defineAsyncComponent(() => import( '~/components/molecules/sellingpoint/index.vue'));
+const Textarea = defineAsyncComponent(() => import( '~/components/atoms/textarea/index.vue'));
+const InputSelect = defineAsyncComponent(() => import('~/components/atoms/select/index.vue'));
+const CodeInserter = defineAsyncComponent(() => import('~/components/organisms/code-inserter/index.vue'));
 import { useLangString } from '~/components/composables/useLangString';
 import { usePrepLink } from '~/components/composables/usePrepLink';
 

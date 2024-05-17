@@ -10,11 +10,11 @@
 </template>
 
 <script>
-import Teaser from '~/components/molecules/teaser/index.vue';
-import KardComponent from '~/components/molecules/kard/index.vue';
-import SmartLink, {
-	prepareWPObjectsToLinks,
-} from '~/components/helper/smartlink/index.vue';
+const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
+const KardComponent = defineAsyncComponent(() => import( '~/components/molecules/kard/index.vue'));
+const SmartLink = defineAsyncComponent(() => import('~/components/helper/smartlink/index.vue'));
+import { prepareWPObjectsToLinks } from '~/components/composables/prepareWPObjectsToLinks';
+
 import { useLangString } from '~/components/composables/useLangString';
 
 export default {

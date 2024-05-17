@@ -26,11 +26,11 @@
 
   <script>
   import { defineComponent, ref, onMounted } from 'vue';
-  import Teaser from '~/components/molecules/teaser/index.vue';
-  import KardComponent from '~/components/molecules/kard-inverted/index.vue';
-  import ButtonComponent from '~/components/atoms/button/index.vue';
+  const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
+  const KardComponent = defineAsyncComponent(() => import('~/components/molecules/kard-inverted/index.vue'));
+  const ButtonComponent = defineAsyncComponent(() => import('~/components/atoms/button/index.vue'));
   import Arrow from '~/assets/svg/arrow-big.svg';
-  import SmartLink from '~/components/helper/smartlink';
+  const SmartLink = defineAsyncComponent(() => import('~/components/helper/smartlink/index.vue'));
   import Swiper from 'swiper';
   import 'swiper/swiper-bundle.css';
   import { useLangString } from '~/components/composables/useLangString';

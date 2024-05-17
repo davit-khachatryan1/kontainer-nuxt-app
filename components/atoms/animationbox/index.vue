@@ -16,8 +16,7 @@ import fastdom from 'fastdom';
 import {
 	SECTION_ANGLE_POSITIVE,
 	SECTION_ANGLE_NEGATIVE,
-} from '../section/index.vue';
-
+} from '~/constants/section';
 export default {
 	name: 'AnimationBox',
 	components: {},

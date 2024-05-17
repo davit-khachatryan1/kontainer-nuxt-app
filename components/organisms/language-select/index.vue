@@ -16,13 +16,14 @@
 </template>
 
 <script>
-import InputSelect from '~/components/atoms/select/index.vue';
+const InputSelect = defineAsyncComponent(() => import('~/components/atoms/select/index.vue'));
 import {SELECT_STYLE_LANGUAGE} from "~/constants/styles"
-import { getLocalUrl } from '~/components/helper/smartlink/index.vue';
+
 import FlagEN from '~/assets/svg/flags/en.svg';
 import FlagDA from '~/assets/svg/flags/da.svg';
 import FlagDE from '~/assets/svg/flags/de.svg';
 import useStore from '@/store'
+import { getLocalUrl } from '~/components/composables/getLocalUrl';
 
 export default {
 	components: {

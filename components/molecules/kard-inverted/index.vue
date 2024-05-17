@@ -31,10 +31,11 @@
 </template>
 
 <script>
-import SmartImage from '~/components/helper/smartimage/index.vue';
-import ButtonComponent from '~/components/atoms/button/index.vue';
+const SmartImage = defineAsyncComponent(() => import('~/components/helper/smartimage/index.vue'));
+const ButtonComponent = defineAsyncComponent(() => import('~/components/atoms/button/index.vue'));
 import linkArrow from '~/assets/svg/link-arrow.svg';
-import SmartLink from '../../helper/smartlink/index.vue';
+const SmartLink = defineAsyncComponent(() => import('../../helper/smartlink/index.vue'));
+
 import useStore from '@/store'
 import { usePrepLink } from '~/components/composables/usePrepLink';
 import { useImgUrl } from '~/components/composables/useImgUrl';

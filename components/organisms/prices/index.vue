@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import Price from '~/components/molecules/price/index.vue';
-import Teaser from '~/components/molecules/teaser/index.vue';
+const Price = defineAsyncComponent(() => import('~/components/molecules/price/index.vue'));
+const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
 
 export default {
 	name: 'PriceSection',

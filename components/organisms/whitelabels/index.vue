@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import WhitelabelComponent from '~/components/molecules/whitelabel/index.vue';
-import Teaser from '~/components/molecules/teaser/index.vue';
+const WhitelabelComponent = defineAsyncComponent(() => import( '~/components/molecules/whitelabel/index.vue'));
+const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
 
 export default {
 	name: 'Whitelabels',

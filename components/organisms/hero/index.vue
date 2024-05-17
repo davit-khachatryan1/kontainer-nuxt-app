@@ -112,12 +112,12 @@
 </template>
 
 <script>
-import SmartImage from '~/components/helper/smartimage/index.vue';
-import Button from '~/components/atoms/button/index.vue';
-import PinElement from '~/components/atoms/pin/index.vue';
+const SmartImage = defineAsyncComponent(() => import('~/components/helper/smartimage/index.vue'));
+const Button = defineAsyncComponent(() => import( '~/components/atoms/button/index.vue'));
+const PinElement = defineAsyncComponent(() => import( '~/components/atoms/pin/index.vue'));
 import LaptopMockup from '~/assets/svg/hero-laptop.svg';
 import LaptopMockupShadow from '~/assets/svg/hero-laptop-shadow.svg';
-import Teaser from '~/components/molecules/teaser/index.vue';
+const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
 import CapterraLogo from '~/assets/svg/capterra-logo.svg';
 import Rating45Star from '~/assets/svg/4-5-stars.svg';
 import G2Logo from '~/assets/svg/g2-logo.svg';

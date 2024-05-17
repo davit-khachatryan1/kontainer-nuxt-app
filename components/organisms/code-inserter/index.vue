@@ -37,7 +37,7 @@ export default {
 					const scripts = target.getElementsByTagName('script');
 					while (scripts.length) {
 						const script = scripts[0];
-						script.parentNode.removeChild(script);
+						script?.parentNode.removeChild(script);
 						const newScript = script;
 						storescripts.push(newScript);
 					}

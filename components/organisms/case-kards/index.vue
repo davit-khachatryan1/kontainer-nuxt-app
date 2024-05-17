@@ -13,13 +13,14 @@
 </template>
 
 <script>
-import Teaser from '~/components/molecules/teaser/index.vue';
-import KardComponent from '~/components/molecules/kard/index.vue';
-import ButtonComponent from '~/components/atoms/button/index.vue';
-import { prepareWPObjectsToLinks } from '~/components/helper/smartlink/index.vue';
+const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
+const KardComponent = defineAsyncComponent(() => import( '~/components/molecules/kard/index.vue'));
+const ButtonComponent = defineAsyncComponent(() => import('~/components/atoms/button/index.vue'));
+
 import useStore from '@/store';
 import { usePrepLink } from '~/components/composables/usePrepLink';
 import { useLangString } from '~/components/composables/useLangString';
+import { prepareWPObjectsToLinks } from '~/components/composables/prepareWPObjectsToLinks';
 
 export default {
 	name: 'CaseKards',

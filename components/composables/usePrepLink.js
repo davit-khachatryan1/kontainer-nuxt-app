@@ -1,4 +1,4 @@
-import { prepareWPObjectsToLinks } from '~/components/helper/smartlink/index.vue';
+import { prepareWPObjectsToLinks } from '~/components/composables/prepareWPObjectsToLinks';
 
 export function usePrepLink() {
   const prepLink = (obj) => prepareWPObjectsToLinks(obj);

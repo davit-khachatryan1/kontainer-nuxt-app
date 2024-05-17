@@ -13,7 +13,10 @@
 </template>
 
 <script>
-import ContentSection, { SECTION_ANGLE_NONE } from '~/components/atoms/section/index.vue';
+const ContentSection = defineAsyncComponent(() => import('~/components/atoms/section/index.vue'));
+import { 
+	SECTION_ANGLE_NONE,
+} from '~/constants/section';
 import useStore from '@/store'
 
 export default {

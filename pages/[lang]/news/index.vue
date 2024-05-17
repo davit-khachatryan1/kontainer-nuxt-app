@@ -8,7 +8,8 @@
 import { computed, ref } from 'vue';
 import useStore from '@/store';
 import { useAsyncData } from '#app';
-import ContentSwitch from '~/components/organisms/content-switch/index.vue';
+const ContentSwitch = defineAsyncComponent(() => import('~/components/organisms/content-switch/index.vue'));
+
 import { useNuxtApp } from '#app';
 const { $myAppApi } = useNuxtApp()
 // Convert mixins to composables

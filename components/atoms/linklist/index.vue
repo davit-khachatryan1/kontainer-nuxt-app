@@ -15,8 +15,7 @@
 </template>
 
 <script>
-import SmartLink from '~/components/helper/smartlink/index.vue';
-
+const SmartLink = defineAsyncComponent(() => import('~/components/helper/smartlink/index.vue'));
 export default {
 	name: 'LinkList',
 	components: {

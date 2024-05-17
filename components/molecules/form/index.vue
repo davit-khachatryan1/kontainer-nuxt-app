@@ -1,11 +1,11 @@
 <template>
-	<VForm :class="['form', 'form--' + type]" :action="action" :method="method" v-slot="{ errors, handleSubmit, resetForm, validate }"><slot :errors="errors" :handleSubmit="handleSubmit" :resetForm="resetForm" :validate="validate"></slot></VForm>
+	<VForm :ref="ref" :class="['form', 'form--' + type]" :action="action" :method="method" v-slot="{ errors, handleSubmit, resetForm, validate }"><slot :errors="errors" :handleSubmit="handleSubmit" :resetForm="resetForm" :validate="validate"></slot></VForm>
 </template>
 
 <script>
 export default {
 	name: 'Form',
-	props: ['action', 'method', 'type'],
+	props: ['action', 'method', 'type', 'ref'],
 };
 </script>
 

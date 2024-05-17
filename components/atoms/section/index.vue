@@ -32,21 +32,9 @@
 </template>
 
 <script>
-import PinElement from '../pin/index.vue';
+const PinElement = defineAsyncComponent(() => import('../pin/index.vue'));
 import { useAnimateOnLoad } from '~/components/composables/useAnimateOnLoad';
-
-const SECTION_ANGLE_NONE = '0';
-const SECTION_ANGLE_POSITIVE = '1';
-const SECTION_ANGLE_NEGATIVE = '2';
-const SECTION_BG_COLOR_WHITE = 'white';
-const SECTION_BG_COLOR_GREY = 'grey';
-const SECTION_BG_COLOR_DARKBLUE = 'bluedark';
-const SECTION_BG_COLOR_BROWN = 'brown';
-
-const SECTION_PADDING_DEFAULT = 'default';
-const SECTION_PADDING_BOTTOM_NONE = 'bottom_none';
-
-export {
+import { 
 	SECTION_ANGLE_NONE,
 	SECTION_ANGLE_POSITIVE,
 	SECTION_ANGLE_NEGATIVE,
@@ -56,6 +44,10 @@ export {
 	SECTION_BG_COLOR_BROWN,
 	SECTION_PADDING_DEFAULT,
 	SECTION_PADDING_BOTTOM_NONE,
+} from '~/constants/section';
+
+export {
+	
 };
 
 export default {

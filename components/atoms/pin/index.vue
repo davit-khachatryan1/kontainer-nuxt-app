@@ -11,7 +11,8 @@
 </template>
 
 <script>
-import Button from '../button/index.vue';
+const Button = defineAsyncComponent(() => import('../button/index.vue'));
+
 import useStore from '@/store'
 
 const PIN_TYPE_VERTICAL = '0';

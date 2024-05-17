@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import Button from '~/components/atoms/button/index.vue';
-import Checklist from '~/components/atoms/checklist/index.vue';
+const Button = defineAsyncComponent(() => import( '~/components/atoms/button/index.vue'));
+const Checklist = defineAsyncComponent(() => import('~/components/atoms/checklist/index.vue'));
 import { useLangString } from '~/components/composables/useLangString';
 import { DEFAULT_LOCALE } from '~/constants/styles';
 import useStore from '@/store'

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import ButtonComponent from '~/components/atoms/button/index.vue';
+const ButtonComponent = defineAsyncComponent(() => import('~/components/atoms/button/index.vue'));
 import { usePrepLink } from '~/components/composables/usePrepLink';
 export default {
 	name: 'FeatureComponent',

@@ -78,19 +78,20 @@
 </template>
 
 <script>
-import LinkList from '~/components/atoms/linklist/index.vue';
-import SmartLink, {
-	prepareWPObjectsToLinks,
-} from '~/components/helper/smartlink/index.vue';
+const LinkList = defineAsyncComponent(() => import('~/components/atoms/linklist/index.vue'));
+const SmartLink = defineAsyncComponent(() => import('~/components/helper/smartlink/index.vue'));
+import { prepareWPObjectsToLinks } from '~/components/composables/prepareWPObjectsToLinks';
 import OfficesLogo from '~/assets/svg/office.svg';
 import CapterraBadge from '~/assets/svg/cap-4-5-stars.svg';
 import G2Badge from '~/assets/svg/g2-5-stars.svg';
-import LanguageSelect from '~/components/organisms/language-select/index.vue';
-import PinElement from '~/components/atoms/pin/index.vue';
-import NewsletterSignup from '~/components/organisms/newsletter-footer/index.vue';
-import ContentSection, {
+const LanguageSelect = defineAsyncComponent(() => import('~/components/organisms/language-select/index.vue'));
+const PinElement = defineAsyncComponent(() => import( '~/components/atoms/pin/index.vue'));
+const NewsletterSignup = defineAsyncComponent(() => import('~/components/organisms/newsletter-footer/index.vue'));
+const ContentSection = defineAsyncComponent(() => import('~/components/atoms/section/index.vue'));
+import {
 	SECTION_PADDING_BOTTOM_NONE,
-} from '~/components/atoms/section/index.vue';
+} from '~/constants/section';
+
 import { useLangString } from '~/components/composables/useLangString';
 import useStore from '@/store'
 

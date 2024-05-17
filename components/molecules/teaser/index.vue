@@ -69,8 +69,8 @@
 </template>
 
 <script>
-import Button from '~/components/atoms/button/index.vue';
-import { prepareWPObjectsToLinks } from '~/components/helper/smartlink/index.vue';
+const Button = defineAsyncComponent(() => import( '~/components/atoms/button/index.vue'));
+import { prepareWPObjectsToLinks } from '~/components/composables/prepareWPObjectsToLinks';
 
 export default {
 	name: 'Teaser',

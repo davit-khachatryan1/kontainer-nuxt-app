@@ -12,7 +12,7 @@ import { useNuxtApp } from '#app';
 import useStore from '@/store';
 
 // Import components
-import ContentSwitch from '~/components/organisms/content-switch/index.vue';
+const ContentSwitch = defineAsyncComponent(() => import('~/components/organisms/content-switch/index.vue'));
 
 // Import and use mixin as a composable if possible
 // Since mixins are not directly supported in <script setup>, consider converting `meta` to a composable if it's not already.

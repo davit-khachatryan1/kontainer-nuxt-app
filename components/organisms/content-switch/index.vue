@@ -73,33 +73,36 @@
 
 <script setup>
 import { computed, ref, defineProps } from 'vue';
-import AnimationBox from '~/components/atoms/animationbox/index.vue';
-import SignupBlock from '~/components/organisms/signup/index.vue';
-import TestimonialBlock from '~/components/organisms/testimonial/index.vue';
-import FeaturesBlock from '~/components/organisms/features/index.vue';
-import ContentSection, { SECTION_ANGLE_NONE } from '~/components/atoms/section/index.vue';
-import Hero from '~/components/organisms/hero/index.vue';
-import Logos from '~/components/organisms/logos/index.vue';
-import Prices from '~/components/organisms/prices/index.vue';
-import PricesNew from '~/components/organisms/prices-new/index.vue';
-import Sidekick from '~/components/organisms/sidekick/index.vue';
-import SignupSection from '~/components/organisms/signup-section/index.vue';
-import NewsKards from '~/components/organisms/news-kards/index.vue';
-import CaseKards from '~/components/organisms/case-kards/index.vue';
-import Whitelabels from '~/components/organisms/whitelabels/index.vue';
-import WysiwygColumns from '~/components/organisms/wysiwyg-columns/index.vue';
-import ContactSection from '~/components/organisms/contact/index.vue';
-import Links from '~/components/organisms/links/index.vue';
-import Employees from '~/components/organisms/employee-section/index.vue';
-import SelectedFeatures from '~/components/organisms/selected-features/index.vue';
-import NewsList from '~/components/organisms/news-list/index.vue';
-import BlogList from '~/components/organisms/blog-list/index.vue';
-import LinksSwiper from '~/components/organisms/links-swiper/index.vue';
-import QuoteSlider from '~/components/organisms/quote-slider/index.vue';
-import CodeInserter from '~/components/organisms/code-inserter/index.vue';
-import LandingPage from '~/components/organisms/landing-page/index.vue';
-import PageNav from '~/components/organisms/page-nav/index.vue';
-import Faq from '~/components/organisms/faq/index.vue';
+const AnimationBox = defineAsyncComponent(() => import('~/components/atoms/animationbox/index.vue'));
+const SignupBlock = defineAsyncComponent(() => import('~/components/organisms/signup/index.vue'));
+const TestimonialBlock = defineAsyncComponent(() => import('~/components/organisms/testimonial/index.vue'));
+const FeaturesBlock = defineAsyncComponent(() => import('~/components/organisms/features/index.vue'));
+const ContentSection = defineAsyncComponent(() => import('~/components/atoms/section/index.vue'));
+import { 
+	SECTION_ANGLE_NONE,
+} from '~/constants/section';
+const Hero = defineAsyncComponent(() => import('~/components/organisms/hero/index.vue'));
+const Logos = defineAsyncComponent(() => import('~/components/organisms/logos/index.vue'));
+const Prices = defineAsyncComponent(() => import('~/components/organisms/prices/index.vue'));
+const PricesNew = defineAsyncComponent(() => import('~/components/organisms/prices-new/index.vue'));
+const Sidekick = defineAsyncComponent(() => import('~/components/organisms/sidekick/index.vue'));
+const SignupSection = defineAsyncComponent(() => import('~/components/organisms/signup-section/index.vue'));
+const NewsKards = defineAsyncComponent(() => import('~/components/organisms/news-kards/index.vue'));
+const CaseKards = defineAsyncComponent(() => import('~/components/organisms/case-kards/index.vue'));
+const Whitelabels = defineAsyncComponent(() => import('~/components/organisms/whitelabels/index.vue'));
+const WysiwygColumns = defineAsyncComponent(() => import('~/components/organisms/wysiwyg-columns/index.vue'));
+const ContactSection = defineAsyncComponent(() => import('~/components/organisms/contact/index.vue'));
+const Links = defineAsyncComponent(() => import('~/components/organisms/links/index.vue'));
+const Employees = defineAsyncComponent(() => import('~/components/organisms/employee-section/index.vue'));
+const SelectedFeatures = defineAsyncComponent(() => import('~/components/organisms/selected-features/index.vue'));
+const NewsList = defineAsyncComponent(() => import('~/components/organisms/news-list/index.vue'));
+const BlogList = defineAsyncComponent(() => import('~/components/organisms/blog-list/index.vue'));
+const LinksSwiper = defineAsyncComponent(() => import('~/components/organisms/links-swiper/index.vue'));
+const QuoteSlider = defineAsyncComponent(() => import('~/components/organisms/quote-slider/index.vue'));
+const CodeInserter = defineAsyncComponent(() => import('~/components/organisms/code-inserter/index.vue'));
+const LandingPage = defineAsyncComponent(() => import('~/components/organisms/landing-page/index.vue'));
+const PageNav = defineAsyncComponent(() => import('~/components/organisms/page-nav/index.vue'));
+const Faq = defineAsyncComponent(() => import('~/components/organisms/faq/index.vue'));
 
 // Define props with defineProps
 const props = defineProps({

@@ -25,14 +25,14 @@
 </template>
 
 <script>
-import ButtonComponent from '~/components/atoms/button/index.vue';
-import SellingpointComponent from '~/components/molecules/sellingpoint/index.vue';
-import FormComponent from '~/components/molecules/form/index.vue';
-import InputComponent from '~/components/atoms/input/index.vue';
-import SignupForm from '~/components/organisms/signup-account/index.vue';
+const ButtonComponent = defineAsyncComponent(() => import('~/components/atoms/button/index.vue'));
+const SellingpointComponent = defineAsyncComponent(() => import( '~/components/molecules/sellingpoint/index.vue'));
+const FormComponent = defineAsyncComponent(() => import( '~/components/molecules/form/index.vue'));
+const InputComponent = defineAsyncComponent(() => import( '~/components/atoms/input/index.vue'));
+const SignupForm = defineAsyncComponent(() => import( '~/components/organisms/signup-account/index.vue'));
 import { useLangString } from '~/components/composables/useLangString';
 import { usePrepLink } from '~/components/composables/usePrepLink';
-import Parallax from '~/components/_nuclides/parallax/index.vue';
+const Parallax = defineAsyncComponent(() => import( '~/components/_nuclides/parallax/index.vue'));
 
 export default {
 	name: 'SignupSection',

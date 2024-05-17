@@ -224,16 +224,16 @@
 </template>
 
 <script>
-import SmartImage from '~/components/helper/smartimage';
-import Button from '~/components/atoms/button/index.vue';
-import Parallax from '~/components/_nuclides/parallax/index.vue';
-import PinElement from '~/components/atoms/pin/index.vue';
+const SmartImage = defineAsyncComponent(() => import( '~/components/helper/smartimage/index.vue'));
+const Button = defineAsyncComponent(() => import( '~/components/atoms/button/index.vue'));
+const Parallax = defineAsyncComponent(() => import( '~/components/_nuclides/parallax/index.vue'));
+const PinElement = defineAsyncComponent(() => import( '~/components/atoms/pin/index.vue'));
 import LaptopMockup from '~/assets/svg/hero-laptop.svg';
 import LaptopMockupShadow from '~/assets/svg/hero-laptop-shadow.svg';
-import Teaser from '~/components/molecules/teaser/index.vue';
+const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
 import { useImgUrl } from '~/components/composables/useImgUrl';
-import SmartFlash from '~/components/helper/smartFlash/index.vue';
-import CodeInserter from '~/components/organisms/code-inserter/index.vue';
+const SmartFlash = defineAsyncComponent(() => import('~/components/helper/smartFlash/index.vue'));
+const CodeInserter = defineAsyncComponent(() => import('~/components/organisms/code-inserter/index.vue'));
 
 export default {
 	name: 'Sidekick',
