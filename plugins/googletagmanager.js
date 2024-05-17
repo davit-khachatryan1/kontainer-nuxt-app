@@ -1,13 +1,14 @@
 // plugins/google-tag-manager.js
 export default defineNuxtPlugin(nuxtApp => {
 	if(process.server) return;
-	if (process.env.NODE_ENV === 'development') return;
-  
-	let ga_id = 'GTM-MNHKD9J';
-	if (window.location.hostname === 'kontainer.dev.konform.com') {
-	  ga_id = 'GTM-53HBZK6';
+
+	const config = useRuntimeConfig();
+
+	let ga_id = config.public.gtmId;
+	if (ga_id === '') {
+    	return;
 	}
-  
+
 	(function(w, d, s, l, i) {
 	  w[l] = w[l] || [];
 	  w[l].push({
@@ -20,4 +21,3 @@ export default defineNuxtPlugin(nuxtApp => {
 	  f.parentNode.insertBefore(j, f);
 	})(window, document, 'script', 'dataLayer', ga_id);
   });
-  

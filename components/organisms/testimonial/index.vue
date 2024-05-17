@@ -276,7 +276,6 @@ export default {
 		}
 
 		&.animate-enter {
-			transform: scale(1.1) translateY(-20px);
 		}
 
 		&__smart {
@@ -349,8 +348,6 @@ export default {
 			}
 
 			&.animate-enter {
-				opacity: 0;
-				transform: translateY(-$transformAnimationDistance);
 			}
 		}
 	}

@@ -5,7 +5,6 @@
 		<div class="page-leave-overlay"/>
 		<FooterComponent />
 		<BookDemoModal />
-		<CookieNotification />
 	</div>
 </template>
 
@@ -14,7 +13,6 @@ import PageNav from '~/components/organisms/page-nav';
 import OffcanvasMenu from '~/components/molecules/offcanvas/index.vue';
 import BookDemoModal from '~/components/molecules/book-demo';
 import FooterComponent from '~/components/organisms/footer';
-import CookieNotification from '~/components/atoms/cookienotification';
 
 export default {
 	components: {
@@ -22,7 +20,6 @@ export default {
 		OffcanvasMenu,
 		BookDemoModal,
 		FooterComponent,
-		CookieNotification,
 	},
 };
 </script>

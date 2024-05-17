@@ -9,20 +9,17 @@
 				<div v-html="errorContent" class="error__content"></div>
 			</div>
 		</ContentSection>
-		<CookieNotification />
 	</div>
 </template>
 
 <script>
 import ContentSection, { SECTION_ANGLE_NONE } from '~/components/atoms/section/index.vue';
-import CookieNotification from '~/components/atoms/cookienotification/index.vue';
 import useStore from '@/store'
 
 export default {
 	props: ['error'],
 	components: {
 		ContentSection,
-		CookieNotification,
 	},
 	computed: {
 		section() {

@@ -251,13 +251,8 @@ a {
 section {
 	&:not(.hero) {
 		&:not(.testimonial) {
-			// margin-top: 0;
-			opacity: 1;
-			transition: transform 0.4s 0.22s $easeInOut, opacity 0.2s 0.32s ease-in;
 
 			.animate-enter & {
-				transform: translateY(-$transformAnimationDistance);
-				opacity: 0;
 			}
 		}
 	}
@@ -265,27 +260,20 @@ section {
 
 .pin {
 	&--vertical--start {
-		transition: background-position 0.15s 0.15s linear;
 	}
 
 	&--vertical--end {
-		transition: background-position 0.15s 0.3s linear;
 	}
 
 	&--vertical--start,
 	&--vertical--end {
-		background-position: 0 0;
 
 		&::after {
-			transition: opacity 0.15s 0.32s ease-in;
-			opacity: 1;
 		}
 
 		.animate-enter & {
-			background-position: 0 100%;
 
 			&::after {
-				opacity: 0;
 			}
 		}
 	}

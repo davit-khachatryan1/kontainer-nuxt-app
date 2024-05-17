@@ -8,7 +8,7 @@ let baseUrl = 'http://localhost:3000'; // http://localhost:3000
 let siteUrl = 'http://kontainer-api.test'; // https://kontainer.dev.konform.com // no trailing slash
 let apiUrl = 'http://kontainer-api.test/'; // 'https://kontainercms.dev.konform.com'
 let appUrl = 'http://kontainer.test';
-let analyticsId = null;
+let gtmId = null;
 let sentryDSN = 'https://52449f0e189c4bdc9abcf7274853a78b@sentry.konform.com/24';
 let redisUrl = 'redis://localhost:6379';
 
@@ -17,15 +17,15 @@ if (process.env.SERVER_NAME === 'production') {
   siteUrl = 'https://kontainer.com';
   apiUrl = 'https://cms.kontainer.com';
   appUrl = 'https://app.kontainer.com';
-  analyticsId = 'G-0WYFD1L6VN';
+  gtmId = 'GTM-MNHKD9J';
   sentryDSN = 'https://ed48997570fa466fb0a3fd668ea387ea@sentry.konform.com/15';
-  redisUrl = '';
+  redisUrl = 'redis://localhost:6379';
 } else if (process.env.SERVER_NAME === 'next') {
   baseUrl = 'https://kontainer.dev.konform.com';
   siteUrl = 'https://kontainer.dev.konform.com';
   apiUrl = 'https://kontainercms.dev.konform.com';
   appUrl = 'https://next.kontainer.com';
-  analyticsId = 'G-40FXY02M7H';
+  gtmId = 'GTM-53HBZK6';
   redisUrl = 'redis://localhost:6379';
 }
 
@@ -35,6 +35,7 @@ export const config = {
   apiUrl: apiUrl,
   appUrl: appUrl,
   sentryDSN: sentryDSN,
+  gtmId: gtmId,
   postTypes: {
     news: 'news',
     blog: 'blog',
@@ -77,7 +78,6 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   plugins: [
     '~/plugins/swiper.js',
-    '~/plugins/linkedin.js',
     '~/plugins/vuex-store.js',
     '~/plugins/directives.js',
     '~/plugins/vee-validate.js',
@@ -119,18 +119,7 @@ export default defineNuxtConfig({
         { rel: 'mask-icon', type: '/safari-pinned-tab.svg', href: '#5bbad5' },
         { name: 'theme-color', content: '#ffffff' },
       ],
-      script: [
-        analyticsId ? {
-          src: `https://www.googletagmanager.com/gtag/js?id=${analyticsId}`,
-          async: true,
-        } : null,
-        analyticsId && process.env.SERVER_NAME === 'next' && {
-          src: '/js/nextgtag.js',
-        },
-        analyticsId && process.env.SERVER_NAME === 'production' && {
-          src: '/js/livegtag.js',
-        },
-      ],
+      script: [],
     },
     pageTransition: {
       name: 'page',

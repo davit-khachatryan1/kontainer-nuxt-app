@@ -103,19 +103,13 @@ export default {
 	$byline: '';
 
 	> * {
-		opacity: 1;
-		transform: translate(0, 0);
 
 		@for $i from 1 through 5 {
 			&:nth-child(#{$i}) {
-				transition: opacity 0.2s #{($i * 0.1)}s $easeInOut,
-					transform 0.2s #{($i * 0.1)}s $easeInOut, color 0.3s 0 ease;
 			}
 		}
 
 		.animate-enter & {
-			opacity: 0;
-			transform: translate(0, -$transformAnimationDistance);
 		}
 	}
 

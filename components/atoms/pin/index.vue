@@ -245,14 +245,10 @@ $strokeDistance: 25px;
 
 			@for $i from 1 through 3 {
 				&:nth-child(#{$i}) {
-					transition: opacity 0.3s #{($i * 0.08) + 0.2}s ease,
-					transform 0.3s #{($i * 0.08) + 0.2}s ease;
 				}
 			}
 
 			.animate-enter & {
-				opacity: 0;
-				transform: translate(-$transformAnimationDistance, 0);
 			}
 		}
 

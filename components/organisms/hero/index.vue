@@ -380,10 +380,8 @@ export default {
 			width: 100%;
 			z-index: z('heroLaptopImage');
 			object-fit: cover;
-			transform: scale(1);
 
 			.animate-enter & {
-				transform: scale(1.2);
 			}
 		}
 	}
