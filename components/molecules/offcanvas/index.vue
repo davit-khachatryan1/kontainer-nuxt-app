@@ -122,7 +122,7 @@ const OffcanvasDimmer = defineAsyncComponent(() => import('./dimmer.vue'));
 import useStore from '@/store'
 import {
 	BUTTON_TYPE_CTA,
-} from '~/constants/button'
+} from '~/components/composables/button'
 
 export default {
 	name: 'OffcanvasMenu',

@@ -16,7 +16,7 @@
 const ContentSection = defineAsyncComponent(() => import('~/components/atoms/section/index.vue'));
 import { 
 	SECTION_ANGLE_NONE,
-} from '~/constants/section';
+} from '~/components/composables/section';
 import useStore from '@/store'
 
 export default {

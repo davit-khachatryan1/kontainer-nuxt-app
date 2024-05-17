@@ -80,7 +80,7 @@ const FeaturesBlock = defineAsyncComponent(() => import('~/components/organisms/
 const ContentSection = defineAsyncComponent(() => import('~/components/atoms/section/index.vue'));
 import { 
 	SECTION_ANGLE_NONE,
-} from '~/constants/section';
+} from '~/components/composables/section';
 const Hero = defineAsyncComponent(() => import('~/components/organisms/hero/index.vue'));
 const Logos = defineAsyncComponent(() => import('~/components/organisms/logos/index.vue'));
 const Prices = defineAsyncComponent(() => import('~/components/organisms/prices/index.vue'));

@@ -44,7 +44,7 @@ import {
 	SECTION_BG_COLOR_BROWN,
 	SECTION_PADDING_DEFAULT,
 	SECTION_PADDING_BOTTOM_NONE,
-} from '~/constants/section';
+} from '~/components/composables/section';
 
 export {
 	

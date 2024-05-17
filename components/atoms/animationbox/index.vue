@@ -16,7 +16,7 @@ import fastdom from 'fastdom';
 import {
 	SECTION_ANGLE_POSITIVE,
 	SECTION_ANGLE_NEGATIVE,
-} from '~/constants/section';
+} from '~/components/composables/section';
 export default {
 	name: 'AnimationBox',
 	components: {},

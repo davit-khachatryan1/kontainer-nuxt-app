@@ -90,7 +90,7 @@ const NewsletterSignup = defineAsyncComponent(() => import('~/components/organis
 const ContentSection = defineAsyncComponent(() => import('~/components/atoms/section/index.vue'));
 import {
 	SECTION_PADDING_BOTTOM_NONE,
-} from '~/constants/section';
+} from '~/components/composables/section';
 
 import { useLangString } from '~/components/composables/useLangString';
 import useStore from '@/store'

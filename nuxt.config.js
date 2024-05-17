@@ -130,7 +130,9 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/image-edge',
     '@nuxtjs/sitemap',
-    '@vee-validate/nuxt'
+    '@vee-validate/nuxt',
+    '@nuxt/image'
+    // 'nuxt-precompress'
   ],
   sitemap: {
     sources: ['/api/sitemap'],
@@ -138,4 +140,19 @@ export default defineNuxtConfig({
     experimentalCompression: true,
     exclude: ['/register'],
   },
+  srcDir: '.',
+  image: {
+    inject: true,
+    quality: 80,
+    format: ['webp'],
+    screens: {
+      'xs': 320,
+      'sm': 640,
+      'md': 768,
+      'lg': 1024,
+      'xl': 1280,
+      'xxl': 1536,
+      '2xl': 1536
+    },
+  }
 })

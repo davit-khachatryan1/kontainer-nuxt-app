@@ -51,7 +51,7 @@ import {
 	BUTTON_TYPE_OUTLINE,
 	BUTTON_TYPE_SOLID,
 	BUTTON_TYPE_GREY,
-} from '~/constants/button'
+} from '~/components/composables/button'
 
 export default {
 	name: 'Button',

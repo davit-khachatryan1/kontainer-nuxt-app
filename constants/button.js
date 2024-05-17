@@ -1,9 +1,0 @@
-export const BUTTON_TYPE_DEFAULT = 0;
-export const BUTTON_TYPE_CTA = 1;
-export const BUTTON_TYPE_DARK = 2;
-export const BUTTON_TYPE_SQUARE = 3;
-export const BUTTON_TYPE_SOCIAL = 4;
-export const BUTTON_TYPE_OUTLINE = 'outline';
-export const BUTTON_TYPE_SOLID = 'solid';
-export const BUTTON_TYPE_CARET = 'caret';
-export const BUTTON_TYPE_GREY = 'grey';
