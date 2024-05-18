@@ -7,7 +7,7 @@
 		<transition name="image-fade" v-on:after-enter="transitionedEnd">
 			<div>
 				<div v-if="loaded && crop" :style="{ backgroundImage: bg }" class="cropimage" />
-				<img v-if="loaded && !crop" :title="image.title" :alt="image.alt" :src="src"
+				<NuxtImg v-if="loaded && !crop" :title="image.title" :alt="image.alt" :src="src"
 				:class="{ inlineimage: true }"
 				:width="image.sizes['mobile-width']" :height="image.sizes['mobile-width'] / image.ratio" />
 			</div>
@@ -148,7 +148,7 @@ export default {
 			return typeof this.nocrop === 'undefined';
 		},
 		fallback() {
-			return `<noscript><img src="${this.src}" class="inlineimage" alt="${this.image.alt}" /></noscript>`;
+			return `<noscript><NuxtImg src="${this.src}" class="inlineimage" alt="${this.image.alt}" /></noscript>`;
 		},
 	},
 	mounted() {

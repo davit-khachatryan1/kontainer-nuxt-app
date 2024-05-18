@@ -131,9 +131,12 @@ export default defineNuxtConfig({
     '@nuxt/image-edge',
     '@nuxtjs/sitemap',
     '@vee-validate/nuxt',
-    '@nuxt/image'
-    // 'nuxt-precompress'
+    '@nuxt/image',
+    '@nuxt/content'
   ],
+  content: {
+    
+  },
   sitemap: {
     sources: ['/api/sitemap'],
     defaultSitemapsChunkSize: 1000 * 60 * 15,

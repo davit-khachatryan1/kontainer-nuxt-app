@@ -13,7 +13,7 @@
 				class="feature-item span4 span6--tablet span4--mobile"
 			>
 				<div class="feature-item__icon">
-					<img
+					<NuxtImg
 						loading="lazy"
 						:title="feature.custom.icon.title"
 						:alt="feature.custom.icon.alt"

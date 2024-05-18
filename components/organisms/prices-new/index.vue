@@ -14,9 +14,9 @@
 							<thead>
 								<tr class="head">
 									<th class="head__cell">
-										<img
+										<NuxtImg
 											class="container-icon"
-											src="~/assets/images/icon-server.png"
+											src="/images/icon-server.png"
 											alt=""
 										/>
 									</th>
@@ -207,9 +207,9 @@
 								<thead>
 									<tr class="head">
 										<th class="head__cell">
-											<img
+											<NuxtImg
 												class="container-icon"
-												src="~/assets/images/icon-server.png"
+												src="/images/icon-server.png"
 												alt=""
 											/>
 										</th>

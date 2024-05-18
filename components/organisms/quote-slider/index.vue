@@ -13,7 +13,7 @@
 				  <SmartLink v-if="entry.content.quote_link" :url="entry.content.quote_link.url" :target="entry.content.quote_link.target"></SmartLink>
 				  <span class="quote_icon"><QuoteIcon /></span>
 				  <div class="user_image">
-					<img :alt="entry.content.name" loading="lazy" v-if="entry.image" width="90" height="90" :src="entry.image.url">
+					<NuxtImg :alt="entry.content.name" loading="lazy" v-if="entry.image" width="90" height="90" :src="entry.image.url" />
 					<p v-else class="intitals">{{ entry.content.initials }}</p>
 				  </div>
 				  <p class="user_name">{{ entry.content.name }}</p>

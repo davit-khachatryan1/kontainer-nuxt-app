@@ -13,14 +13,14 @@
 						:target="'_blank'"
 						v-if="!!logo.logo_link"
 					>
-						<img
+						<NuxtImg
 							loading="lazy"
 							:title="logo.logo_title"
 							:src="logo.logo_img.url"
 							:alt="logo.logo_img.alt"
 						/>
 					</SmartLink>
-					<img
+					<NuxtImg
 						loading="lazy"
 						width="150"
 						:height="150 / logo.logo_img.ratio"
