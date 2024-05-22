@@ -15,6 +15,7 @@
 								<tr class="head">
 									<th class="head__cell">
 										<NuxtImg
+											loading="lazy"
 											class="container-icon"
 											src="/images/icon-server.png"
 											alt=""
@@ -38,7 +39,7 @@
 											<p v-text="column.per_month" />
 										</template>
 										<div class="badge" v-if="column.popular">
-											<IconBookmark />
+											<NuxtImg loading="lazy" src="svg/bookmark.svg"/>
 										</div>
 									</th>
 								</tr>
@@ -208,6 +209,7 @@
 									<tr class="head">
 										<th class="head__cell">
 											<NuxtImg
+												loading="lazy"
 												class="container-icon"
 												src="/images/icon-server.png"
 												alt=""
@@ -227,7 +229,7 @@
 												<p v-text="column.per_month" />
 											</template>
 											<div class="badge" v-if="column.popular">
-												<IconBookmark />
+												<NuxtImg loading="lazy" src="svg/bookmark.svg"/>
 											</div>
 										</th>
 									</tr>
@@ -427,7 +429,7 @@ import { useGetClosest } from '~/components/composables/useGetClosest';
 import { useLangString } from '~/components/composables/useLangString';
 const Button = defineAsyncComponent(() => import( '~/components/atoms/button/index.vue'));
 const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
-import IconBookmark from '~/assets/svg/bookmark.svg';
+
 import useStore from '@/store'
 
 export default {
@@ -436,7 +438,6 @@ export default {
 		Teaser,
 		Button,
 		SmartLink,
-		IconBookmark,
 	},
 	props: {
 		data: { type: Object },
@@ -925,7 +926,7 @@ $pricePerMonthColor: #0e1029;
 		right: 20px;
 		top: 0;
 		transition: width 0.25s ease;
-		svg {
+		img {
 			width: 100%;
 			height: 100%;
 		}

@@ -1,0 +1,11 @@
+<svg width="62px" height="55px" viewBox="0 0 62 55" xmlns="http://www.w3.org/2000/svg">
+	<g id="1440px" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+		<g id="Hvorfor-Kontainer" transform="translate(-290.000000, -3560.000000)">
+			<g id="cloud-upload-94" transform="translate(291.000000, 3561.000000)">
+				<path d="M30,54 L30,22" id="Shape" stroke="#FFBD00"></path>
+				<polyline id="Shape" stroke="#FFBD00" stroke-linecap="square" points="20 32 30 22 40 32"></polyline>
+				<path d="M38,40 L50,40 C55.6,39.5 60,34.7 60,29 C60,23.2 55.6,18.5 49.9,18 C48.9,7.9 40.4,0 30,0 C21,0 13.4,6 10.9,14.2 C4.7,15.2 0,20.5 0,27 C0,33.8 5.3,39.5 12,40 L22,40" id="Shape" stroke="#5391FF" stroke-linecap="square"></path>
+			</g>
+		</g>
+	</g>
+</svg>

@@ -228,8 +228,6 @@ const SmartImage = defineAsyncComponent(() => import( '~/components/helper/smart
 const Button = defineAsyncComponent(() => import( '~/components/atoms/button/index.vue'));
 const Parallax = defineAsyncComponent(() => import( '~/components/_nuclides/parallax/index.vue'));
 const PinElement = defineAsyncComponent(() => import( '~/components/atoms/pin/index.vue'));
-import LaptopMockup from '~/assets/svg/hero-laptop.svg';
-import LaptopMockupShadow from '~/assets/svg/hero-laptop-shadow.svg';
 const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
 import { useImgUrl } from '~/components/composables/useImgUrl';
 const SmartFlash = defineAsyncComponent(() => import('~/components/helper/smartFlash/index.vue'));
@@ -252,8 +250,6 @@ export default {
 		SmartImage,
 		Button,
 		PinElement,
-		LaptopMockup,
-		LaptopMockupShadow,
 		Parallax,
 		Teaser,
 		SmartFlash,

@@ -49,15 +49,6 @@
   </template>
 
 <script>
-import IconUser from '~/assets/svg/user.svg';
-import IconEmail from '~/assets/svg/email.svg';
-import IconCompany from '~/assets/svg/company.svg';
-import IconAddress from '~/assets/svg/address.svg';
-import IconPhone from '~/assets/svg/phone.svg';
-import IconCity from '~/assets/svg/city.svg';
-import IconCountry from '~/assets/svg/country.svg';
-import IconVat from '~/assets/svg/vat.svg';
-import IconZip from '~/assets/svg/zip.svg';
 import { useInputLabels } from '~/components/composables/useInputLabels';
 
 export default {
@@ -83,18 +74,7 @@ export default {
 	setup() {
 		const { focused, hasValue, focusCheck, valueCheck } = useInputLabels()
 		return { focused, hasValue, focusCheck, valueCheck };
-  	},
-	components: {
-		IconUser,
-		IconEmail,
-		IconCompany,
-		IconAddress,
-		IconPhone,
-		IconCity,
-		IconCountry,
-		IconVat,
-		IconZip,
-	},
+  	}
 };
 </script>
 
@@ -374,9 +354,3 @@ input::-ms-clear {
 	}
 }
 </style>
-
-<!-- <docs>
-```jsx
-<Input type="text" name="name" placeholder="Navn" iconName="user" iconComponent="IconUser" />
-```
-</docs> -->

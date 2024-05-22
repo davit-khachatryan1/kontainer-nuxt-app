@@ -24,7 +24,7 @@
 				v-html="kard.resource ? kard.resource.custom.kard_info.excerpt : kard.description" />
 			<div class="kard__info__button">
 				<div class="text">{{ langString('_learn_more', 'learn more') }}</div>
-				<linkArrow />
+				<NuxtImg loading="lazy" src="svg/link-arrow.svg"/>
 			</div>
 		</div>
 	</SmartLink>
@@ -33,7 +33,6 @@
 <script>
 const SmartImage = defineAsyncComponent(() => import('~/components/helper/smartimage/index.vue'));
 const ButtonComponent = defineAsyncComponent(() => import('~/components/atoms/button/index.vue'));
-import linkArrow from '~/assets/svg/link-arrow.svg';
 const SmartLink = defineAsyncComponent(() => import('../../helper/smartlink/index.vue'));
 
 import useStore from '@/store'
@@ -53,7 +52,6 @@ export default {
 		SmartLink,
 		SmartImage,
 		ButtonComponent,
-		linkArrow,
 	},
 	props: {
 		kard: { type: Object },
@@ -256,7 +254,7 @@ img {
 				margin-right: 0px;
 			}
 
-			svg {
+			img {
 				fill: $text-color;
 			}
 		}

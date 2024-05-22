@@ -3,15 +3,11 @@
 </template>
 
 <script>
-import IconTick from '~/assets/svg/tick.svg';
 
 export default {
 	name: 'Checklist',
 	props: {
 		data: { type: String },
-	},
-	components: {
-		IconTick,
 	},
 };
 </script>

@@ -9,10 +9,14 @@
 				<div v-if="loaded && crop" :style="{ backgroundImage: bg }" class="cropimage" />
 				<NuxtImg v-if="loaded && !crop" :title="image.title" :alt="image.alt" :src="src"
 				:class="{ inlineimage: true }"
-				:width="image.sizes['mobile-width']" :height="image.sizes['mobile-width'] / image.ratio" />
+				:width="image.sizes['mobile-width']" :height="image.sizes['mobile-width'] / image.ratio" 
+				loading="lazy"
+				/>
 			</div>
 		</transition>
-		<div v-html="fallback"></div>
+		<div>
+			<noscript><NuxtImg :src="src" class="inlineimage" :alt="image.alt" loading="lazy"/></noscript>
+		</div>
 	</div>
 </template>
 
@@ -146,9 +150,6 @@ export default {
 		},
 		crop() {
 			return typeof this.nocrop === 'undefined';
-		},
-		fallback() {
-			return `<noscript><NuxtImg src="${this.src}" class="inlineimage" alt="${this.image.alt}" /></noscript>`;
 		},
 	},
 	mounted() {

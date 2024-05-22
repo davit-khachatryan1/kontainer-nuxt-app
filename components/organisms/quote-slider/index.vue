@@ -4,14 +4,16 @@
 		<Teaser :class="'quote_intro__teaser'" :data="data" v-if="data.heading || data.text" :positionOnPage="positionOnPage" />
 		<div class="span-container">
 		  <div class="swiper-button-prev">
-			<Arrow/>
+			<NuxtImg loading="lazy" src="svg/arrow-big.svg"/>
 		  </div>
 		  <div class="my-swiper" ref="mySwiper">
 			<div class="swiper-wrapper">
 			  <div v-for="(entry, index) in data.quote_repeater" :key="index" class="swiper-slide" :class="{ with_link: entry.content.quote_link }">
 				<div class="quote_slider__card">
 				  <SmartLink v-if="entry.content.quote_link" :url="entry.content.quote_link.url" :target="entry.content.quote_link.target"></SmartLink>
-				  <span class="quote_icon"><QuoteIcon /></span>
+				  <span class="quote_icon">
+					<NuxtImg loading="lazy" src="svg/quote_icon.svg"/>
+				  </span>
 				  <div class="user_image">
 					<NuxtImg :alt="entry.content.name" loading="lazy" v-if="entry.image" width="90" height="90" :src="entry.image.url" />
 					<p v-else class="intitals">{{ entry.content.initials }}</p>
@@ -20,17 +22,25 @@
 				  <h3 class="user_quote" :class="entry.content.text_size" v-if="entry.content.quote" v-html="entry.content.quote"></h3>
 				  <p class="user_position" v-if="entry.content.position">{{ entry.content.position }}</p>
 				  <div class="user_rating">
-					<template v-if="entry.content.rating === 'cap-5'"><CapFiveStars /></template>
-					<template v-else-if="entry.content.rating === 'cap-4-5'"><CapFourFiveStars /></template>
-					<template v-else-if="entry.content.rating === 'g2-5'"><G2FiveStars /></template>
-					<template v-else-if="entry.content.rating === 'g2-4-5'"><G2FourFiveStars /></template>
+					<template v-if="entry.content.rating === 'cap-5'">
+						<NuxtImg loading="lazy" src="svg/cap-5-stars.svg"/>
+					</template>
+					<template v-else-if="entry.content.rating === 'cap-4-5'">
+						<NuxtImg loading="lazy" src="svg/cap-4-5-stars.svg"/>
+					</template>
+					<template v-else-if="entry.content.rating === 'g2-5'">
+						<NuxtImg loading="lazy" src="svg/g2-5-stars.svg"/>
+					</template>
+					<template v-else-if="entry.content.rating === 'g2-4-5'">
+						<NuxtImg loading="lazy" src="svg/g2-4-5-stars.svg"/>
+					</template>
 				  </div>
 				</div>
 			  </div>
 			</div>
 		  </div>
 		  <div class="swiper-button-next">
-			<Arrow/>
+			<NuxtImg loading="lazy" src="svg/arrow-big.svg"/>
 		  </div>
 		</div>
 	  </div>
@@ -41,12 +51,6 @@
   import { defineComponent, ref, onMounted } from 'vue';
   const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
   import { useLangString } from '~/components/composables/useLangString';
-  import Arrow from '~/assets/svg/arrow-big.svg';
-  import QuoteIcon from '~/assets/svg/quote_icon.svg';
-  import CapFourFiveStars from '~/assets/svg/cap-4-5-stars.svg';
-  import CapFiveStars from '~/assets/svg/cap-5-stars.svg';
-  import G2FourFiveStars from '~/assets/svg/g2-4-5-stars.svg';
-  import G2FiveStars from '~/assets/svg/g2-5-stars.svg';
   const SmartLink = defineAsyncComponent(() => import('~/components/helper/smartlink/index.vue'));
   
   export default defineComponent({
@@ -54,12 +58,6 @@
 	components: {
 	  Teaser,
 	  SmartLink,
-	  Arrow,
-	  QuoteIcon,
-	  CapFourFiveStars,
-	  CapFiveStars,
-	  G2FourFiveStars,
-	  G2FiveStars,
 	},
 	props: {
 	  data: { type: Object, required: true },
@@ -211,7 +209,7 @@
 		left: 50%;
 		transform: translate(-50%, 0);
 		top: -25px;
-		svg {
+		img {
 			width: 60px;
 		}
 	}
@@ -276,6 +274,9 @@
 
 	.user_rating {
 		margin-top: 15px;
+		img {
+			height: 23px;
+		}
 	}
 
 }
@@ -333,7 +334,7 @@
 		opacity: 1;
 		outline: none;
 
-		svg {
+		img {
 			fill: $label-color;
 		}
 
@@ -343,7 +344,7 @@
 	}
 
 	.swiper-button-disabled {
-		svg {
+		img {
 			fill: #C4C4C4;
 		}
 	}

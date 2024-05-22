@@ -219,7 +219,8 @@
 									<div class="form__group">
 										<div class="form__group__inline">
 											<div class="form__element form__element--gray styled-select">
-												<IconCountry class="country-icon"></IconCountry>
+												<NuxtImg loading="lazy" src="svg/country.svg" class="country-icon"/>
+												<NuxtImg loading="lazy" src="svg/country.svg"/>
 												<VField v-model="registration.country" v-slot="{ field, errors: errorMessages }" :rules="'required'"> 
 													<v-select 
 														v-bind="field"
@@ -282,7 +283,6 @@
 const FormComponent = defineAsyncComponent(() => import( '~/components/molecules/form/index.vue'));
 const Button = defineAsyncComponent(() => import( '~/components/atoms/button/index.vue'));
 const Input = defineAsyncComponent(() => import( '~/components/atoms/input/index.vue'));
-import IconCountry from '~/assets/svg/country.svg';
 import { useLangString } from '~/components/composables/useLangString';
 import qs from 'qs';
 const SmartImage = defineAsyncComponent(() => import('~/components/helper/smartimage/index.vue'));
@@ -295,7 +295,6 @@ export default {
 		Button,
 		Input,
 		SmartImage,
-		IconCountry,
 	},
 	setup() {
 		const { langString } = useLangString()

@@ -1,0 +1,23 @@
+<svg width="53px" height="61px" viewBox="0 0 53 61" xmlns="http://www.w3.org/2000/svg">
+	<g id="1440px" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+		<g id="Kontakt" transform="translate(-400.000000, -674.000000)">
+			<g id="folder-shared" transform="translate(400.000000, 674.000000)">
+				<g id="building">
+					<polyline id="Shape" stroke="#5391FF" points="41.5 26.5 41.5 6.5 11.5 6.5 11.5 32.5"></polyline>
+					<path d="M22.5,60.5 L30.5,60.5" id="Shape" stroke="#FFBD00"></path>
+					<path d="M26.5,0.5 L26.5,6.5" id="Shape" stroke="#5391FF"></path>
+					<rect id="Rectangle-path" stroke="#FFBD00" x="0.5" y="38.5" width="22" height="22"></rect>
+					<rect id="Rectangle-path" stroke="#FFBD00" x="30.5" y="32.5" width="22" height="28"></rect>
+					<path d="M19.5,13.5 L33.5,13.5" id="Shape" stroke="#5391FF"></path>
+					<path d="M19.5,19.5 L33.5,19.5" id="Shape" stroke="#5391FF"></path>
+					<path d="M19.5,25.5 L33.5,25.5" id="Shape" stroke="#5391FF"></path>
+					<path d="M8.5,46.5 L14.5,46.5" id="Shape" stroke="#FFBD00"></path>
+					<path d="M38.5,40.5 L44.5,40.5" id="Shape" stroke="#FFBD00"></path>
+					<path d="M38.5,46.5 L44.5,46.5" id="Shape" stroke="#FFBD00"></path>
+					<path d="M38.5,52.5 L44.5,52.5" id="Shape" stroke="#FFBD00"></path>
+					<path d="M8.5,52.5 L14.5,52.5" id="Shape" stroke="#FFBD00"></path>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>

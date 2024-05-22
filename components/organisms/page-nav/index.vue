@@ -3,8 +3,8 @@
 		<nav class="content-grid-container nav">
 			<div class="nav__left">
 				<smart-link class="nav__left__logo" type="page" slug="home" :ariaLabel="logoLabel">
-					<IconLogoMark class="icon--logo-mark" />
-					<IconLogoText class="icon--logo-text" />
+					<NuxtImg loading="lazy" src="svg/kontainer-logo-mark.svg" class="icon--logo-mark"/>
+					<NuxtImg loading="lazy" src="svg/kontainer-logo-text.svg" class="icon--logo-text"/>
 				</smart-link>
 			</div>
 			<div class="nav__right">
@@ -17,7 +17,7 @@
 					{ 'nuxt-link-active': activeMenuParent === item.slug },
 				]">
 								<span v-html="item.title" />
-								<iconCaret class="has-dropdown__icon" />
+								<NuxtImg loading="lazy" src="svg/caret-select.svg" class="has-dropdown__icon"/>
 							</span>
 							<transition name="fade">
 								<ol class="dropdown">
@@ -56,8 +56,8 @@
 					</li>
 					<li class="nav__right__language has-dropdown no-css-hover" @mouseenter="handleLangMenuHover"
 						@mouseleave="handleLangMenuHover" @click="handleLangMenuClick">
-						<LanguageIcon class="globe" />
-						<iconCaret class="has-dropdown__icon" />
+						<NuxtImg loading="lazy" src="svg/language.svg" class="globe"/>
+						<NuxtImg loading="lazy" src="svg/caret-select.svg" class="has-dropdown__icon"/>
 						<transition name="fade">
 							<LanguageSelect :class="{ show: showLanguageMenu }" class="dropdown" markup="list" />
 						</transition>
@@ -79,10 +79,6 @@ import { prepareWPObjectsToLinks } from '~/components/composables/prepareWPObjec
 const LanguageSelect = defineAsyncComponent(() => import('~/components/organisms/language-select/index.vue'));
 const ButtonComp = defineAsyncComponent(() => import('~/components/atoms/button/index.vue'));
 const Hamburger = defineAsyncComponent(() => import('~/components/atoms/hamburger/index.vue'));
-import iconCaret from '~/assets/svg/caret-select.svg';
-import LanguageIcon from '~/assets/svg/language.svg';
-import IconLogoText from '~/assets/svg/kontainer-logo-text.svg';
-import IconLogoMark from '~/assets/svg/kontainer-logo-mark.svg';
 
 // Refs for reactive state
 const submenuOpen = ref(false);
@@ -112,6 +108,7 @@ const bookDemo = computed(() => ({
     store.pageOptions.book_demo_url,
 }));
 
+console.log(menuItems, 'menuItems');
 const activeMenuParent = computed(() => {
   const currentMenuSlug = nuxtApp._route.params.slug; // Use $route.params for route params
   let activeParent = '';
@@ -285,6 +282,7 @@ function handleLangMenuClick(e) {
 
 		a {
 			transition: color 0.2s ease;
+			width: max-content;
 		}
 	}
 
@@ -505,7 +503,7 @@ function handleLangMenuClick(e) {
 			margin-left: 20px;
 		} */
 
-		svg {
+		img {
 			display: block;
 
 			&.globe {
@@ -561,7 +559,7 @@ function handleLangMenuClick(e) {
 					margin-top: 30px;
 				}
 
-				svg {
+				img {
 					margin-right: 19px;
 				}
 

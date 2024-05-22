@@ -1,0 +1,11 @@
+<svg width="61px" height="55px" viewBox="0 0 61 55" xmlns="http://www.w3.org/2000/svg">
+	<g id="1440px" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+		<g id="Hvorfor-Kontainer" transform="translate(-1087.000000, -3558.000000)">
+			<g id="folder-link" transform="translate(1087.000000, 3558.000000)">
+				<path d="M56.5,54.5 L4.5,54.5 C2.291,54.5 0.5,52.709 0.5,50.5 L0.5,0.5 L22.5,0.5 L28.5,8.5 L60.5,8.5 L60.5,50.5 C60.5,52.709 58.709,54.5 56.5,54.5 Z" id="Shape" stroke="#FFBD00"></path>
+				<path d="M29.086,21.601 L31.207,19.48 C34.331,16.356 39.397,16.356 42.521,19.48 C45.645,22.604 45.645,27.67 42.521,30.794 L39.693,33.622 C36.569,36.746 31.503,36.746 28.379,33.622" id="Shape" stroke="#5391FF"></path>
+				<path d="M31.914,41.399 L29.793,43.52 C26.669,46.644 21.603,46.644 18.479,43.52 C15.355,40.396 15.355,35.33 18.479,32.206 L21.307,29.378 C24.431,26.254 29.497,26.254 32.621,29.378" id="Shape" stroke="#5391FF"></path>
+			</g>
+		</g>
+	</g>
+</svg>

@@ -132,11 +132,17 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap',
     '@vee-validate/nuxt',
     '@nuxt/image',
-    '@nuxt/content'
+    'nuxt-delay-hydration'
+    // '@nuxt/content'
   ],
-  content: {
-    
+  delayHydration: {
+    // enables nuxt-delay-hydration in dev mode for testing
+    // NOTE: you should disable this once you've finished testing, it will break HMR
+    debug: true
   },
+  // content: {
+    
+  // },
   sitemap: {
     sources: ['/api/sitemap'],
     defaultSitemapsChunkSize: 1000 * 60 * 15,
@@ -146,7 +152,7 @@ export default defineNuxtConfig({
   srcDir: '.',
   image: {
     inject: true,
-    quality: 80,
+    quality: 100,
     format: ['webp'],
     screens: {
       'xs': 320,
@@ -157,5 +163,8 @@ export default defineNuxtConfig({
       'xxl': 1536,
       '2xl': 1536
     },
-  }
+  },
+  build: {
+    analyze: true
+  },
 })

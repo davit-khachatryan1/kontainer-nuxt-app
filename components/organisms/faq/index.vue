@@ -25,7 +25,7 @@
 							<div class="accordion__item__header">
 								<div class="accordion__item__header__title teaser__text">
 									<span itemprop="name">{{ item.question }}</span>
-									<IconCaret />
+									<NuxtImg loading="lazy" src="svg/caret.svg"/>
 								</div>
 							</div>
 							<div
@@ -45,15 +45,10 @@
 </template>
 
 <script>
-import IconCaret from '~/assets/svg/caret.svg';
 import { useLangString } from '~/components/composables/useLangString';
 
 export default {
 	name: 'Faq',
-
-	components: {
-		IconCaret,
-	},
 	setup() {
 		const { langString } = useLangString()
 		return { langString };
@@ -125,7 +120,7 @@ export default {
 			align-items: center;
 			width: 100%;
 
-			svg {
+			img {
 				transition: 0.25s ease-in-out;
 				transform: rotate(90deg);
 				width: 9px;
@@ -148,7 +143,7 @@ export default {
 
 		&.active {
 			.accordion__item__header {
-				svg {
+				img {
 					transform: rotate(-90deg);
 				}
 			}

@@ -33,11 +33,6 @@
 </template>
 
 <script>
-import IconFacebook from '~/assets/svg/facebook.svg';
-import IconLinkedin from '~/assets/svg/linkedin.svg';
-import IconTwitter from '~/assets/svg/twitter.svg';
-import IconArrow from '~/assets/svg/arrow.svg';
-import IconCaret from '~/assets/svg/caret.svg';
 const SmartLink = defineAsyncComponent(() => import('../../helper/smartlink/index.vue'));
 
 
@@ -85,11 +80,6 @@ export default {
 	},
 	components: {
 		SmartLink,
-		IconFacebook,
-		IconLinkedin,
-		IconTwitter,
-		IconArrow,
-		IconCaret,
 	},
 	computed: {
 		buttonTypeClassName() {
@@ -353,24 +343,3 @@ button:focus {
 	}
 }
 </style>
-<!-- <docs>
-```jsx
-<div>
-<Button :link="{ url: 'http://google.com' }">Opret dig gratis</Button>
-<Button :link="{ url: 'http://google.com' }" :type="1" icon="arrow">Kom i gang gratis</Button>
-<Button :link="{ url: 'http://google.com' }" :type="2" >Kom i gang - 95 DKK</Button>
-<br />
-<Button :link="{ url: 'http://google.com' }" large>Opret dig gratis</Button>
-<Button :link="{ url: 'http://google.com' }" large :type="1" icon="arrow">Kom i gang gratis</Button>
-<Button :link="{ url: 'http://google.com' }" large :type="2" >Kom i gang - 95 DKK</Button>
-<br /><br />
-<Button :link="{ url: 'http://google.com' }" :type="3">Se flere cases</Button>
-<br /><br />
-<Button :link="{ url: 'http://google.com' }" :type="4" iconName="facebook" iconComponent="IconFacebook"></Button>
-<Button :link="{ url: 'http://google.com' }" :type="4" iconName="linkedin" iconComponent="IconLinkedin"></Button>
-<Button :link="{ url: 'http://google.com' }" :type="4" iconName="twitter" iconComponent="IconTwitter"></Button>
-<br /><br />
-<small>Use exported consts for TYPE.</small>
-</div>
-```
-</docs> -->
