@@ -1,5 +1,8 @@
 <template>
-  <ContentSwitch :flexible="flexible" />
+  <div>
+    <ContentSwitch :flexible="flexible" />
+    <NuxtLayout name="default" />
+  </div>
 </template>
 
 <script setup>

@@ -1,46 +1,54 @@
 <template>
-	<section class="quote-slider" :class="{ disabled: data.disable_slider }">
-	  <div class="content-grid-container">
-		<Teaser :class="'quote_intro__teaser'" :data="data" v-if="data.heading || data.text" :positionOnPage="positionOnPage" />
-		<div class="span-container">
-		  <div class="swiper-button-prev">
-			<Arrow/>
-		  </div>
-		  <div class="my-swiper" ref="mySwiper">
-			<div class="swiper-wrapper">
-			  <div v-for="(entry, index) in data.quote_repeater" :key="index" class="swiper-slide" :class="{ with_link: entry.content.quote_link }">
-				<div class="quote_slider__card">
-				  <SmartLink v-if="entry.content.quote_link" :url="entry.content.quote_link.url" :target="entry.content.quote_link.target"></SmartLink>
-				  <span class="quote_icon"><QuoteIcon /></span>
-				  <div class="user_image">
-					<NuxtImg :alt="entry.content.name" loading="lazy" v-if="entry.image" width="90" height="90" :src="entry.image.url" />
-					<p v-else class="intitals">{{ entry.content.initials }}</p>
-				  </div>
-				  <p class="user_name">{{ entry.content.name }}</p>
-				  <h3 class="user_quote" :class="entry.content.text_size" v-if="entry.content.quote" v-html="entry.content.quote"></h3>
-				  <p class="user_position" v-if="entry.content.position">{{ entry.content.position }}</p>
-				  <div class="user_rating">
-					<template v-if="entry.content.rating === 'cap-5'"><CapFiveStars /></template>
-					<template v-else-if="entry.content.rating === 'cap-4-5'"><CapFourFiveStars /></template>
-					<template v-else-if="entry.content.rating === 'g2-5'"><G2FiveStars /></template>
-					<template v-else-if="entry.content.rating === 'g2-4-5'"><G2FourFiveStars /></template>
-				  </div>
+	<section class="quote-slider" :class="{ disabled : data.disable_slider }">
+		<div class="content-grid-container">
+			<Teaser :class="'quote_intro__teaser'" :data="data" v-if="data.heading || data.text" :positionOnPage="positionOnPage" />
+			<div class="span-container">
+				<div class="swiper-button-prev">
+					<Arrow/>
 				</div>
-			  </div>
+				<div class="my-swiper" v-swiper:mySwiper="swiperOptions()">
+					<div class="swiper-wrapper">
+						<div v-for="(entry, index) in data.quote_repeater" :key="index" class="swiper-slide" :class="{with_link : entry.content.quote_link}">
+
+							<div class="quote_slider__card">
+
+								<smart-link
+									v-if="entry.content.quote_link"
+									:url="entry.content.quote_link.url"
+									:target="entry.content.quote_link.target"
+								>
+								</smart-link>
+
+
+								<span class="quote_icon"><QuoteIcon /></span>
+
+								<div class="user_image">
+									<NuxtImg :alt="entry.content.name" loading="lazy" v-if="entry.image" width="90" height="90" :src="entry.image.url" />
+									<p v-else class="intitals">{{entry.content.initials}}</p>
+								</div>
+								<p class="user_name">{{entry.content.name}}</p>
+								<h3 class="user_quote" :class="entry.content.text_size" v-if="entry.content.quote" v-html="entry.content.quote"></h3>
+								<p class="user_position" v-if="entry.content.position">{{entry.content.position}}</p>
+								<div class="user_rating">
+									<template v-if="entry.content.rating === 'cap-5'"><CapFiveStars /></template>
+									<template v-else-if="entry.content.rating === 'cap-4-5'"><CapFourFiveStars /></template>
+									<template v-else-if="entry.content.rating === 'g2-5'"><G2FiveStars /></template>
+									<template v-else-if="entry.content.rating === 'g2-4-5'"><G2FourFiveStars /></template>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="swiper-button-next">
+					<Arrow/>
+				</div>
 			</div>
-		  </div>
-		  <div class="swiper-button-next">
-			<Arrow/>
-		  </div>
 		</div>
-	  </div>
 	</section>
-  </template>
-  
-  <script>
-  import { defineComponent, ref, onMounted } from 'vue';
+</template>
+
+<script>
   const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
-  import { useLangString } from '~/components/composables/useLangString';
   const Arrow = defineAsyncComponent(() => import( '~/assets/svg/arrow-big.svg'));
   const QuoteIcon = defineAsyncComponent(() => import( '~/assets/svg/quote_icon.svg'));
   const CapFourFiveStars = defineAsyncComponent(() => import( '~/assets/svg/cap-4-5-stars.svg'));
@@ -48,77 +56,73 @@
   const G2FourFiveStars = defineAsyncComponent(() => import( '~/assets/svg/g2-4-5-stars.svg'));
   const G2FiveStars = defineAsyncComponent(() => import( '~/assets/svg/g2-5-stars.svg'));
   const SmartLink = defineAsyncComponent(() => import('~/components/helper/smartlink/index.vue'));
-  
-  export default defineComponent({
+  import { useLangString } from '~/components/composables/useLangString';
+
+export default {
 	name: 'QuoteSlider',
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 	components: {
-	  Teaser,
-	  SmartLink,
-	  Arrow,
-	  QuoteIcon,
-	  CapFourFiveStars,
-	  CapFiveStars,
-	  G2FourFiveStars,
-	  G2FiveStars,
+		Teaser,
+		SmartLink,
+		Arrow,
+		QuoteIcon,
+		CapFourFiveStars,
+		CapFiveStars,
+		G2FourFiveStars,
+		G2FiveStars,
 	},
 	props: {
-	  data: { type: Object, required: true },
-	  positionOnPage: { type: Number, required: false },
+		data: { type: Object },
+		positionOnPage: { type: Number },
 	},
-	setup(props, { emit }) {
-	  const mySwiper = ref(null);
-  
-	  const swiperOptions = ref({
-		allowSlidePrev: true,
-		allowSlideNext: true,
-		startSlide: 1,
-		slidesPerView: 4,
-		spaceBetween: 30,
-		centeredSlides: false,
-		watchOverflow: true,
-		centerInsufficientSlides: true,
-		navigation: {
-		  nextEl: '.swiper-button-next',
-		  prevEl: '.swiper-button-prev',
-		},
-		breakpoints: {
-		  2000: {
-			startSlide: 1,
-			slidesPerView: 3,
-			spaceBetween: 25,
-		  },
-		  1300: {
-			startSlide: 1,
-			slidesPerView: 2,
-			spaceBetween: 20,
-		  },
-		  768: {
-			startSlide: 1,
-			slidesPerView: 1,
-			spaceBetween: 15,
-		  },
-		},
-	  });
-  
-	  onMounted(() => {
-		if (props.data.disable_slider) {
-		  swiperOptions.value.watchOverflow = false;
-		  swiperOptions.value.allowSlidePrev = false;
-		  swiperOptions.value.allowSlideNext = false;
+	methods: {
+		swiperOptions() {
+			const options = {
+				allowSlidePrev: true,
+				allowSlideNext: true,
+				startSlide: 1,
+				slidesPerView: 4,
+				spaceBetween: 30,
+				centeredSlides: false,
+				watchOverflow: true,
+				centerInsufficientSlides: true,
+				navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev'
+				},
+				breakpoints: {
+					2000: {
+						startSlide: 1,
+						slidesPerView: 3,
+						spaceBetween: 25,
+					},
+					1300: {
+						startSlide: 1,
+						slidesPerView: 2,
+						spaceBetween: 20,
+					},
+					768: {
+						startSlide: 1,
+						slidesPerView: 1,
+						spaceBetween: 15,
+					}
+				}
+			};
+
+			if (this.data.disable_slider) {
+				options.watchOverflow = false;
+				options.allowSlidePrev = false;
+				options.allowSlideNext = false;
+			}
+			return options;
 		}
-		// Initialize Swiper here if necessary, using `mySwiper.value` and `swiperOptions.value`
-	  });
-  
-	  const { langString } = useLangString()
-	  
-	  return {
-		mySwiper,
-		swiperOptions,
-		langString
-	  };
 	},
-  });
-  </script>
+};
+</script>
+
   
 
 <style scoped lang="scss">
@@ -139,6 +143,7 @@
 	}
 
 	.my-swiper {
+		overflow: hidden;
 		padding: 60px 0px;
 		width: calc(100% - 0px);
 		margin: -60px auto 0;

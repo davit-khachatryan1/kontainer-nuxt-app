@@ -7,7 +7,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   if (process.server) return
   try {
-    const data = await $fetch('api/global', {
+    const data = await $fetch(`${window.location.origin}/api/global`, {
       params: {
         lang: to.params.lang,
         cache: 1, // Note for removal in 2025
@@ -16,7 +16,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         'Access-Control-Allow-Origin': "*"
       }
     });
-    
+
 
     store.setPageOptions(data.options);
     store.setMenus(data.menus);

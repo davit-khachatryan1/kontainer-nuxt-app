@@ -19,7 +19,7 @@ class Api {
 			params.key = route.query.previewkey;
 		}
 
-		return $fetch(`/api/content/${requestPath}`, {
+		return $fetch(`${window.location.origin}/api/content/${requestPath}`, {
 			params: {
 				...params, cache: 1 // remove cache: 1 in 2025
 			}
