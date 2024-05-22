@@ -6,7 +6,7 @@
 					<div class="footer__content">
 						<div class="span-container">
 							<div class="footer__top__offices span4 span12--tablet span4--mobile">
-								<h3><NuxtImg loading="lazy" src="svg/office.svg"/> {{officesHeadline}}</h3>
+								<h3><OfficesLogo /> {{officesHeadline}}</h3>
 
 								<ul class="footer__top__offices-list">
 									<li v-for="office in offices">
@@ -56,10 +56,10 @@
 					<div class="footer__content">
 						<div class="footer__bottom__badges">
 							<a href="https://www.g2.com/products/kontainer/" title="Write a review of Kontainer on G2" target="_blank">
-								<NuxtImg loading="lazy" src="svg/g2-5-stars.svg"/>
+								<G2Badge />
 							</a>
 							<a href='https://www.capterra.com/reviews/143730/Kontainer?utm_source=vendor&utm_medium=badge&utm_campaign=capterra_reviews_badge' target="_blank">
-								<NuxtImg loading="lazy" src="svg/cap-4-5-stars.svg"/>
+								<CapterraBadge />
 							</a>
 						</div>
 						<div class="footer__bottom__text">
@@ -81,6 +81,9 @@
 const LinkList = defineAsyncComponent(() => import('~/components/atoms/linklist/index.vue'));
 const SmartLink = defineAsyncComponent(() => import('~/components/helper/smartlink/index.vue'));
 import { prepareWPObjectsToLinks } from '~/components/composables/prepareWPObjectsToLinks';
+const OfficesLogo = defineAsyncComponent(() => import('~/assets/svg/office.svg'));
+const CapterraBadge = defineAsyncComponent(() => import('~/assets/svg/cap-4-5-stars.svg'));
+const G2Badge = defineAsyncComponent(() => import('~/assets/svg/g2-5-stars.svg'));
 const LanguageSelect = defineAsyncComponent(() => import('~/components/organisms/language-select/index.vue'));
 const PinElement = defineAsyncComponent(() => import( '~/components/atoms/pin/index.vue'));
 const NewsletterSignup = defineAsyncComponent(() => import('~/components/organisms/newsletter-footer/index.vue'));
@@ -95,6 +98,9 @@ import useStore from '@/store'
 export default {
 	components: {
 		LanguageSelect,
+		OfficesLogo,
+		CapterraBadge,
+		G2Badge,
 		LinkList,
 		SmartLink,
 		ContentSection,
@@ -254,7 +260,7 @@ export default {
 				margin-bottom: 30px;
 				align-items: center;
 
-				img {
+				svg {
 					margin-right: 10px;
 				}
 			}

@@ -4,7 +4,7 @@
 			{{selected.text}}
 
 			<div class="input-select__caret">
-				<NuxtImg src="svg/caret-select.svg" loading="lazy"/>
+				<IconSelectCaret />
 			</div>
 
 			<select
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+const IconSelectCaret = defineAsyncComponent(() => import('~/assets/svg/caret-select.svg'));
 import useStore from "@/store"
 const SELECT_STYLE_DEFAULT = 0;
 const SELECT_STYLE_LANGUAGE = 1;
@@ -35,6 +36,9 @@ export { SELECT_STYLE_DEFAULT, SELECT_STYLE_LANGUAGE };
 
 export default {
 	name: 'InputSelect',
+	components: {
+		IconSelectCaret
+	},
 	props: {
 		name: {
 			type: String,
@@ -110,7 +114,7 @@ export default {
 	position: relative;
 
 	&__caret {
-		img {
+		svg {
 			position: absolute;
 			top: 50%;
 			right: 20px;

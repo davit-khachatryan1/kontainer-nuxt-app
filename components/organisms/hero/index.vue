@@ -81,14 +81,14 @@
 			<div v-if="data.hero_left.show_badges" class="badges">
 				<a href="https://www.g2.com/products/kontainer/" title="Write a review of Kontainer on G2"
 					target="_blank">
-					<NuxtImg loading="lazy" src="svg/g2-logo.svg" class="logo"/>
-					<NuxtImg loading="lazy" src="svg/5-stars.svg" class="rating"/>
+					<G2Logo class="logo" />
+					<Rating5Star class="rating" />
 				</a>
 
 				<a href="https://www.capterra.com/reviews/143730/Kontainer?utm_source=vendor&utm_medium=badge&utm_campaign=capterra_reviews_badge"
 					target="_blank">
-					<NuxtImg loading="lazy" src="svg/capterra-logo.svg" class="logo"/>
-					<NuxtImg loading="lazy" src="svg/4-5-stars.svg" class="rating"/>
+					<CapterraLogo class="logo" />
+					<Rating45Star class="rating" />
 				</a>
 			</div>
 			<PinElement v-if="data.show_social" :type="'2'" :socialPinSide="'1'"
@@ -115,6 +115,12 @@
 const SmartImage = defineAsyncComponent(() => import('~/components/helper/smartimage/index.vue'));
 const Button = defineAsyncComponent(() => import( '~/components/atoms/button/index.vue'));
 const PinElement = defineAsyncComponent(() => import( '~/components/atoms/pin/index.vue'));
+const LaptopMockup = defineAsyncComponent(() => import( '~/assets/svg/hero-laptop.svg'));
+const LaptopMockupShadow = defineAsyncComponent(() => import( '~/assets/svg/hero-laptop-shadow.svg'));
+const CapterraLogo = defineAsyncComponent(() => import( '~/assets/svg/capterra-logo.svg'));
+const Rating45Star = defineAsyncComponent(() => import( '~/assets/svg/4-5-stars.svg'));
+const G2Logo = defineAsyncComponent(() => import( '~/assets/svg/g2-logo.svg'));
+const Rating5Star = defineAsyncComponent(() => import( '~/assets/svg/5-stars.svg'));
 const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
 import { useAnimateOnLoad } from '~/components/composables/useAnimateOnLoad';
 import { useImgUrl } from '~/components/composables/useImgUrl';
@@ -130,7 +136,13 @@ export default {
 		SmartImage,
 		Button,
 		PinElement,
+		LaptopMockup,
+		LaptopMockupShadow,
 		Teaser,
+		CapterraLogo,
+		Rating45Star,
+		G2Logo,
+		Rating5Star,
 	},
 	props: {
 		data: { type: Object },
@@ -275,7 +287,7 @@ export default {
 				padding-left: 1rem;
 			}
 
-			a img {
+			a svg {
 				width: 180px;
 			}
 		}
@@ -314,7 +326,7 @@ export default {
 		@media (max-height: 800px) {
 			margin-top: 0;
 
-			img {
+			svg {
 				width: 150px;
 			}
 		}

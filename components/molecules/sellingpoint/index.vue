@@ -38,7 +38,8 @@ export default {
 
 		img {
 			display: block;
-			max-width: 75%;
+			max-width: 53%;
+			width: 100%;
 			height: auto;
 			margin: 0 auto;
 		}

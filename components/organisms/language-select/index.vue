@@ -17,6 +17,10 @@
 
 <script>
 const InputSelect = defineAsyncComponent(() => import('~/components/atoms/select/index.vue'));
+const FlagEN = defineAsyncComponent(() => import('~/assets/svg/flags/en.svg'));
+const FlagDA = defineAsyncComponent(() => import('~/assets/svg/flags/da.svg'));
+const FlagDE = defineAsyncComponent(() => import('~/assets/svg/flags/de.svg'));
+
 import {SELECT_STYLE_LANGUAGE} from "~/constants/styles"
 
 import useStore from '@/store'
@@ -25,6 +29,9 @@ import { getLocalUrl } from '~/components/composables/getLocalUrl';
 export default {
 	components: {
 		InputSelect,
+		FlagEN,
+		FlagDA,
+		FlagDE,
 	},
 	props: {
 		markup: {

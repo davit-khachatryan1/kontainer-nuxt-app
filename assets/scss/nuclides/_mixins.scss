@@ -1,6 +1,7 @@
 // =============================================================================
 // Font Face
 // =============================================================================
+@use "sass:math";
 
 @mixin font-face(
 	$name,
@@ -61,29 +62,29 @@
 ///  @include responsive-font(5vw, 35px, 150px, 50px);
 ///=============================================================================
 
-@mixin responsive-font($responsive, $min, $max: false, $fallback: false) {
-	$responsive-unitless: $responsive;
-	$dimension: if(unit($responsive) == 'vh', 'height', 'width');
-	$min-breakpoint: calc($min / $responsive-unitless * 100);
-
-	// @media (max-#{$dimension}: #{$min-breakpoint}) {
-	// 	font-size: $min;
-	// }
-
-	// @if $max {
-	// 	$max-breakpoint: calc($max / $responsive-unitless) * 100;
-
-	// 	@media (min-#{$dimension}: #{$max-breakpoint}) {
-	// 		font-size: $max;
-	// 	}
-	// }
-
-	@if $fallback {
-		font-size: $fallback;
+@mixin responsive-font($responsive, $min, $max: null, $fallback: null) {
+	$dimension: if(unitless($responsive), 'width', if(unit($responsive) == 'vh', 'height', 'width'));
+	$responsive-unitless: math.div($responsive, ($responsive - $responsive + 1));
+	$min-breakpoint: math.div($min, $responsive-unitless) * 100;
+  
+	@media (max-#{$dimension}: #{$min-breakpoint}) {
+	  font-size: $min;
 	}
-
+  
+	@if $max != null {
+	  $max-breakpoint: math.div($max, $responsive-unitless) * 100;
+  
+	  @media (min-#{$dimension}: #{$max-breakpoint}) {
+		font-size: $max;
+	  }
+	}
+  
+	@if $fallback != null {
+	  font-size: $fallback;
+	}
+  
 	font-size: $responsive;
-}
+  }
 
 ///=============================================================================
 

@@ -21,7 +21,7 @@
 										@click="toggleSubmenu(index)"
 									>
 										<span v-html="link.title"></span
-										><NuxtImg loading="lazy" class="has-dropdown__icon" src="svg/caret-select.svg"/>
+										><iconCaret class="has-dropdown__icon" />
 									</span>
 									<transition-expand>
 										<div>
@@ -116,6 +116,7 @@ import { prepareWPObjectsToLinks } from '~/components/composables/prepareWPObjec
 const TransitionExpand = defineAsyncComponent(() => import('~/components/helper/TransitionExpand.vue'));
 const Button = defineAsyncComponent(() => import('~/components/atoms/button/index.vue'));
 const LanguageSelect = defineAsyncComponent(() => import('~/components/organisms/language-select/index.vue'));
+const iconCaret = defineAsyncComponent(() => import('~/assets/svg/caret-select.svg'));
 const Hamburger = defineAsyncComponent(() => import('~/components/atoms/hamburger/index.vue'));
 const OffcanvasDimmer = defineAsyncComponent(() => import('./dimmer.vue'));
 import useStore from '@/store'
@@ -130,6 +131,7 @@ export default {
 		SmartLink,
 		Button,
 		LanguageSelect,
+		iconCaret,
 		TransitionExpand,
 		Hamburger,
 	},

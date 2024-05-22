@@ -4,7 +4,7 @@
 		<Teaser :class="'link-swiper__teaser'" :data="data" v-if="data.heading || data.text" :positionOnPage="positionOnPage" />
 		<div class="span-container">
 		  <div class="swiper-button-prev" @click="prevSlide">
-			<NuxtImg loading="lazy" src="svg/arrow-big.svg" />
+			<Arrow />
 		  </div>
 		  <div class="my-swiper" ref="mySwiper" :options="swiperOptions">
 			<div :class="['fade-before', `fade-before--${data.section_bg_color}`]"></div>
@@ -14,7 +14,7 @@
 			<div :class="['fade-after', `fade-after--${data.section_bg_color}`]"></div>
 		  </div>
 		  <div class="swiper-button-next" @click="nextSlide">
-			<NuxtImg loading="lazy" src="svg/arrow-big.svg" />
+			<Arrow />
 		  </div>
 		</div>
 		<div v-if="data.show_view_all && data.link_view_all_wrapper && data.link_view_all_wrapper.link_view_all" class="link-swiper__actions">
@@ -29,6 +29,7 @@
   const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
   const KardComponent = defineAsyncComponent(() => import('~/components/molecules/kard-inverted/index.vue'));
   const ButtonComponent = defineAsyncComponent(() => import('~/components/atoms/button/index.vue'));
+  const Arrow = defineAsyncComponent(() => import('~/assets/svg/arrow-big.svg'));
   const SmartLink = defineAsyncComponent(() => import('~/components/helper/smartlink/index.vue'));
   import Swiper from 'swiper';
   import 'swiper/swiper-bundle.css';
@@ -41,6 +42,7 @@
 	  KardComponent,
 	  ButtonComponent,
 	  SmartLink,
+	  Arrow,
 	},
 	props: {
 	  data: { type: Object },
@@ -195,7 +197,7 @@
 		outline: none;
 		z-index: 100;
 		top: 0;
-		img {
+		svg {
 			fill: $label-color;
 			min-width: 30px;
 			max-height: 45px

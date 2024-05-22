@@ -7,33 +7,73 @@
 </template>
 
 <script>
+const IconAddress = defineAsyncComponent(() => import('~/assets/svg/address.svg'));
+const IconCaret = defineAsyncComponent(() => import('~/assets/svg/caret.svg'));
+const IconCaretInput = defineAsyncComponent(() => import('~/assets/svg/caret-input.svg'));
+const IconCaretSelect = defineAsyncComponent(() => import('~/assets/svg/caret-select.svg'));
+const IconCompany = defineAsyncComponent(() => import('~/assets/svg/company.svg'));
+const IconEmail = defineAsyncComponent(() => import('~/assets/svg/email.svg'));
+const IconHome = defineAsyncComponent(() => import('~/assets/svg/home.svg'));
+const IconPassword = defineAsyncComponent(() => import('~/assets/svg/password.svg'));
+const IconPhone = defineAsyncComponent(() => import('~/assets/svg/phone.svg'));
+const IconTick = defineAsyncComponent(() => import('~/assets/svg/tick.svg'));
+const IconTickThin = defineAsyncComponent(() => import('~/assets/svg/tick-thin.svg'));
+const IconUser = defineAsyncComponent(() => import('~/assets/svg/user.svg'));
+const IconArrow = defineAsyncComponent(() => import('~/assets/svg/arrow.svg'));
+const IconCreate = defineAsyncComponent(() => import('~/assets/svg/create.svg'));
+const IconFacebook = defineAsyncComponent(() => import('~/assets/svg/facebook.svg'));
+const IconLinkedin = defineAsyncComponent(() => import('~/assets/svg/linkedin.svg'));
+const IconTwitter = defineAsyncComponent(() => import('~/assets/svg/twitter.svg'));
+const IconLogoText = defineAsyncComponent(() => import('~/assets/svg/logo-text.svg'));
+const IconLogoRobot = defineAsyncComponent(() => import('~/assets/svg/logo-robot.svg'));
 
 export default {
 	name: 'Icons',
 	data: function() {
 		return {
 			items: [
-				{ name: 'address', component: <NuxtImg loading="lazy" src='svg/address.svg'/> },
-				{ name: 'caret', component: <NuxtImg loading="lazy" src='svg/caret.svg'/> },
-				{ name: 'caret-input', component: <NuxtImg loading="lazy" src='svg/caret-input.svg'/> },
-				{ name: 'caret-select', component: <NuxtImg loading="lazy" src='svg/caret-select.svg'/> },
-				{ name: 'company', component: <NuxtImg loading="lazy" src='svg/company.svg'/> },
-				{ name: 'email', component: <NuxtImg loading="lazy" src='svg/email.svg'/> },
-				{ name: 'home', component: <NuxtImg loading="lazy" src='svg/home.svg'/> },
-				{ name: 'password', component: <NuxtImg loading="lazy" src='svg/password.svg'/> },
-				{ name: 'phone', component: <NuxtImg loading="lazy" src='svg/phone.svg'/> },
-				{ name: 'tick', component: <NuxtImg loading="lazy" src='svg/tick.svg'/> },
-				{ name: 'tick-thin', component: <NuxtImg loading="lazy" src='svg/tick-thin.svg'/> },
-				{ name: 'user', component: <NuxtImg loading="lazy" src='svg/user.svg'/> },
-				{ name: 'arrow', component: <NuxtImg loading="lazy" src='svg/arrow.svg'/> },
-				{ name: 'create', component: <NuxtImg loading="lazy" src='svg/create.svg'/> },
-				{ name: 'facebook', component: <NuxtImg loading="lazy" src='svg/facebook.svg'/> },
-				{ name: 'linkedin', component: <NuxtImg loading="lazy" src='svg/linkedin.svg'/> },
-				{ name: 'twitter', component: <NuxtImg loading="lazy" src='svg/twitter.svg'/> },
-				{ name: 'logo-text', component: <NuxtImg loading="lazy" src='svg/logo-text.svg'/> },
-				{ name: 'logo-robot', component: <NuxtImg loading="lazy" src='svg/logo-robot.svg'/> },
+				{ name: 'address', component: 'IconAddress' },
+				{ name: 'caret', component: 'IconCaret' },
+				{ name: 'caret-input', component: 'IconCaretInput' },
+				{ name: 'caret-select', component: 'IconCaretSelect' },
+				{ name: 'company', component: 'IconCompany' },
+				{ name: 'email', component: 'IconEmail' },
+				{ name: 'home', component: 'IconHome' },
+				{ name: 'password', component: 'IconPassword' },
+				{ name: 'phone', component: 'IconPhone' },
+				{ name: 'tick', component: 'IconTick' },
+				{ name: 'tick-thin', component: 'IconTickThin' },
+				{ name: 'user', component: 'IconUser' },
+				{ name: 'arrow', component: 'IconArrow' },
+				{ name: 'create', component: 'IconCreate' },
+				{ name: 'facebook', component: 'IconFacebook' },
+				{ name: 'linkedin', component: 'IconLinkedin' },
+				{ name: 'twitter', component: 'IconTwitter' },
+				{ name: 'logo-text', component: 'IconLogoText' },
+				{ name: 'logo-robot', component: 'IconLogoRobot' },
 			],
 		};
+	},
+	components: {
+		IconAddress,
+		IconCaret,
+		IconCaretInput,
+		IconCaretSelect,
+		IconCompany,
+		IconEmail,
+		IconHome,
+		IconPassword,
+		IconPhone,
+		IconTick,
+		IconTickThin,
+		IconUser,
+		IconArrow,
+		IconCreate,
+		IconFacebook,
+		IconLinkedin,
+		IconTwitter,
+		IconLogoText,
+		IconLogoRobot,
 	},
 };
 </script>

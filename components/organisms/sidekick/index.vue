@@ -232,6 +232,8 @@ const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser
 import { useImgUrl } from '~/components/composables/useImgUrl';
 const SmartFlash = defineAsyncComponent(() => import('~/components/helper/smartFlash/index.vue'));
 const CodeInserter = defineAsyncComponent(() => import('~/components/organisms/code-inserter/index.vue'));
+const LaptopMockup = defineAsyncComponent(() => import('~/assets/svg/hero-laptop.svg'));
+const LaptopMockupShadow = defineAsyncComponent(() => import('~/assets/svg/hero-laptop-shadow.svg'));
 
 export default {
 	name: 'Sidekick',
@@ -254,6 +256,8 @@ export default {
 		Teaser,
 		SmartFlash,
 		CodeInserter,
+		LaptopMockup,
+		LaptopMockupShadow,
 	},
 	props: {
 		data: { type: Object },

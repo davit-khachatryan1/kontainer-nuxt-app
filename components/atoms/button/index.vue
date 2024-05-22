@@ -34,7 +34,11 @@
 
 <script>
 const SmartLink = defineAsyncComponent(() => import('../../helper/smartlink/index.vue'));
-
+const IconFacebook = defineAsyncComponent(() => import('~/assets/svg/facebook.svg'));
+const IconLinkedin = defineAsyncComponent(() => import('~/assets/svg/linkedin.svg'));
+const IconTwitter = defineAsyncComponent(() => import('~/assets/svg/twitter.svg'));
+const IconArrow = defineAsyncComponent(() => import('~/assets/svg/arrow.svg'));
+const IconCaret = defineAsyncComponent(() => import('~/assets/svg/caret.svg'));
 
 import {
 	BUTTON_TYPE_DEFAULT,
@@ -80,6 +84,11 @@ export default {
 	},
 	components: {
 		SmartLink,
+		IconFacebook,
+		IconLinkedin,
+		IconTwitter,
+		IconArrow,
+		IconCaret,
 	},
 	computed: {
 		buttonTypeClassName() {

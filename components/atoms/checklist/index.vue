@@ -3,9 +3,12 @@
 </template>
 
 <script>
-
+const IconTick = defineAsyncComponent(() => import('~/assets/svg/tick.svg'));
 export default {
 	name: 'Checklist',
+	components: {
+		IconTick,
+	},
 	props: {
 		data: { type: String },
 	},

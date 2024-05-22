@@ -3,7 +3,7 @@
 		<div v-if="bookDemo.url && bookDemo.show" class="book-demo">
 			<div class="book-demo__inner">
 				<iframe @load="iframeLoaded = true" :class="{ 'loaded': iframeLoaded }" :src="bookDemo.url"></iframe>
-				<NuxtImg loading="lazy" src="svg/loader.svg" class="book-demo__loader" />
+				<IconLoader class="book-demo__loader" />
 				<button class="book-demo__close" @click="store.toggleBookDemo()">Close</button>
 			</div>
 		</div>
@@ -11,10 +11,15 @@
 </template>
 
 <script>
+const IconLoader = defineAsyncComponent(() => import('~/assets/svg/loader.svg'));
+
 import useStore from '@/store'
 
 export default {
 	name: 'bookDemo',
+	components: {
+		IconLoader
+	},
 	data: () => {
 		const store = useStore();
 
