@@ -1,33 +1,35 @@
 $z-map: (
-	default: 1,
-	pinStart: 12,
-	pinStrike: 12,
-	pinEnd: 12,
-	offcanvasDimmer: 997,
-	offcanvas: 998,
-	offscreenToggle: 999,
-	animationBox: 901,
-	heroLaptop: 2,
-	heroLaptopMockup: 2,
-	heroLaptopShadow: 1,
-	heroLaptopVideoOuter: 2,
-	heroLaptopVideo: 2,
-	heroLaptopImage: 1,
-	heroLaptopShadowBelowText: -1,
-	sidekickVideo: 1,
-	sidekickImage: 0,
-	header: 910,
-	inner-shadow: -2,
-	whitelabelImg: 2,
-	videoModal: 999,
-	bookDemoModal: 1000
+  default: 1,
+  pinStart: 12,
+  pinStrike: 12,
+  pinEnd: 12,
+  offcanvasDimmer: 997,
+  offcanvas: 998,
+  offscreenToggle: 999,
+  animationBox: 901,
+  heroLaptop: 2,
+  heroLaptopMockup: 2,
+  heroLaptopShadow: 1,
+  heroLaptopVideoOuter: 2,
+  heroLaptopVideo: 2,
+  heroLaptopImage: 1,
+  heroLaptopShadowBelowText: -1,
+  sidekickVideo: 1,
+  sidekickImage: 0,
+  header: 910,
+  inner-shadow: -2,
+  whitelabelImg: 2,
+  videoModal: 999,
+  bookDemoModal: 1000
 );
 
 @function z($name) {
-	@if map-has-key($z-map, $name) {
-		@return map-get($z-map, $name);
-	} @else {
-		@warn 'There is no item "#{$name}" available in the z-index map.';
-		@return '';
-	}
+  @if map-has-key($z-map, $name) {
+    @return map-get($z-map, $name);
+  }
+
+  @else {
+    @warn 'There is no item "#{$name}" available in the z-index map.';
+    @return '';
+  }
 }

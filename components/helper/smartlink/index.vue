@@ -9,10 +9,7 @@
 
 
 <script>
-import useStore from '@/store'
 import { getLocalUrl } from '~/components/composables/getLocalUrl';
-
-
 
 const getExternalUrl = (link, url) => {
 	if (link.url) {
@@ -21,8 +18,6 @@ const getExternalUrl = (link, url) => {
 
 	return '#';
 };
-
-
 
 
 export default {
@@ -40,8 +35,8 @@ export default {
 			return getExternalUrl(this);
 		},
 		localUrl() {
-			const store = useStore();
-			return getLocalUrl(this, store.locale);
+			const nuxtApp = useNuxtApp()
+			return getLocalUrl(this, nuxtApp._route.params.lang);
 		},
 	},
 	methods: {

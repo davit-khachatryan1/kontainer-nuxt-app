@@ -1,57 +1,53 @@
 <template>
   <section>
     <ContentSwitch :flexible="flexible" :kards="kards" />
+    <NuxtLayout name="default" />
   </section>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
-import useStore from '@/store';
-import { useAsyncData } from '#app';
-const ContentSwitch = defineAsyncComponent(() => import('~/components/organisms/content-switch/index.vue'));
+import { ref, onMounted } from "vue";
+import useStore from "@/store";
+const ContentSwitch = defineAsyncComponent(() =>
+  import("~/components/organisms/content-switch/index.vue")
+);
 
-import { useNuxtApp } from '#app';
-const { $myAppApi } = useNuxtApp()
-// Convert mixins to composables
+const { $myAppApi, $useMeta } = useNuxtApp();
 
 const store = useStore();
 
-// Fetching data with useAsyncData
-const { data: collectionData, error, refresh } = useAsyncData('newsCollection', () => {
-  return $myAppApi.getCollection('news'); // Adjust the API call according to your setup
-});
-
 const flexible = ref([]);
 
-// Computed properties
-const locale = computed(() => store.state.locale);
+onMounted(async () => {
+  try {
+    const data = await $myAppApi.getCollection({}, "news");
+    flexible.value = data.flexible;
+    $useMeta(data);
 
-// Processing the data structure for `kards`
-const kards = computed(() => {
-  return flexible.value.map((layout, index) => {
-    if (layout.acf_fc_layout === 'news_list') {
-      const lastestNews = collectionData.value.news.map((o) => {
-        // Adapt the structure as needed based on your actual data structure
-        const newDataStructure = { resource: o };
-        newDataStructure.resource.custom = {
-          kard_info: newDataStructure.resource.kard_info,
-          kard_image: newDataStructure.resource.kard_image,
-        };
-        return newDataStructure;
-      });
+    return flexible.value.map((layout, index) => {
+      if (layout.acf_fc_layout === "news_list") {
+        const lastestNews = data.posts.news.map((o) => {
+          const newDataStructure = { resource: o };
+          newDataStructure.resource.custom = {
+            kard_info: newDataStructure.resource.kard_info,
+            kard_image: newDataStructure.resource.kard_image,
+          };
+          return newDataStructure;
+        });
 
-      flexible.value[index] = { ...flexible.value[index], lastestNews };
-    }
-    return false;
-  });
+        flexible.value[index] = { ...flexible.value[index], lastestNews };
+      }
+      return false;
+    });
+  } catch (error) {
+    console.error("Error fetching collection item:", error);
+  }
 });
 
-// Handle transition manually if needed
 const transitionEnter = () => {
-  store.commit('menuHide', true);
+  store.commit("menuHide", true);
   setTimeout(() => {
-    store.commit('menuHide', false);
+    store.commit("menuHide", false);
   }, 10);
 };
 </script>
-

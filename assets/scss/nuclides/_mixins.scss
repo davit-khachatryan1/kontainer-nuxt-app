@@ -1,197 +1,182 @@
+@use "sass:math";
+
 // =============================================================================
 // Font Face
 // =============================================================================
-@use "sass:math";
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
+  $src: null;
 
-@mixin font-face(
-	$name,
-	$path,
-	$weight: null,
-	$style: null,
-	$exts: eot woff2 woff ttf svg
-) {
-	$src: null;
+  $extmods: (
+    eot: '?',
+    svg: '#' + str-replace($name, ' ', '_')
+  );
 
-	$extmods: (
-		eot: '?',
-		svg: '#' + str-replace($name, ' ', '_')
-	);
+$formats: (
+  otf: 'opentype',
+  ttf: 'truetype'
+);
 
-	$formats: (
-		otf: 'opentype',
-		ttf: 'truetype'
-	);
-
-	@each $ext in $exts {
-		$extmod: if(
-			map-has-key($extmods, $ext),
-			$ext + map-get($extmods, $ext),
-			$ext
-		);
-		$format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
-		$src: append(
-			$src,
-			url(quote($path + '.' + $extmod)) format(quote($format)),
-			comma
-		);
-	}
-
-	@font-face {
-		font-family: quote($name);
-		font-style: $style;
-		font-weight: $weight;
-		src: $src;
-		font-display: swap;
-	}
+@each $ext in $exts {
+  $extmod: if(map-has-key($extmods, $ext),
+      $ext + map-get($extmods, $ext),
+      $ext );
+  $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+  $src: append($src,
+      url(quote($path + '.' + $extmod)) format(quote($format)),
+    comma);
 }
 
-///=============================================================================
-/// Viewport sized typography with minimum and maximum values
-///
-/// @author Eduardo Boucas (@eduardoboucas)
-///
-/// @param {Number}   $responsive  - Viewport-based size
-/// @param {Number}   $min         - Minimum font size (px)
-/// @param {Number}   $max         - Maximum font size (px)
-///                                  (optional)
-/// @param {Number}   $fallback    - Fallback for viewport-
-///                                  based units (optional)
-///
-/// @example scss - 5vw font size (with 50px fallback),
-///                 minumum of 35px and maximum of 150px
-///  @include responsive-font(5vw, 35px, 150px, 50px);
-///=============================================================================
+@font-face {
+  font-family: quote($name);
+  font-style: $style;
+  font-weight: $weight;
+  src: $src;
+  font-display: swap;
+}
+}
 
+// =============================================================================
+// Viewport sized typography with minimum and maximum values
+// =============================================================================
+/// @param {Number} $responsive - Viewport-based size
+/// @param {Number} $min - Minimum font size (px)
+/// @param {Number} $max - Maximum font size (px) (optional)
+/// @param {Number} $fallback - Fallback for viewport-based units (optional)
+/// @example scss - 5vw font size (with 50px fallback), minimum of 35px and maximum of 150px
+///  @include responsive-font(5vw, 35px, 150px, 50px);
 @mixin responsive-font($responsive, $min, $max: null, $fallback: null) {
-	$dimension: if(unitless($responsive), 'width', if(unit($responsive) == 'vh', 'height', 'width'));
-	$responsive-unitless: math.div($responsive, ($responsive - $responsive + 1));
-	$min-breakpoint: math.div($min, $responsive-unitless) * 100;
-  
-	@media (max-#{$dimension}: #{$min-breakpoint}) {
-	  font-size: $min;
-	}
-  
-	@if $max != null {
-	  $max-breakpoint: math.div($max, $responsive-unitless) * 100;
-  
-	  @media (min-#{$dimension}: #{$max-breakpoint}) {
-		font-size: $max;
-	  }
-	}
-  
-	@if $fallback != null {
-	  font-size: $fallback;
-	}
-  
-	font-size: $responsive;
+  $dimension: if(unitless($responsive), 'width', if(unit($responsive)=='vh', 'height', 'width'));
+  $responsive-unitless: math.div($responsive, ($responsive - $responsive + 1));
+  $min-breakpoint: math.div($min, $responsive-unitless) * 100;
+
+  @media (max-#{$dimension}: #{$min-breakpoint}) {
+    font-size: $min;
   }
 
-///=============================================================================
+  @if $max !=null {
+    $max-breakpoint: math.div($max, $responsive-unitless) * 100;
 
-@mixin buttonShadowAndHover(
-	$currentColor,
-	$econdaryColor,
-	$inverse: false,
-	$shadowType: 1,
-	$speed: 1
-) {
-	background: none;
-	border: 0;
-	overflow: visible;
-	position: relative;
-	z-index: 0;
+    @media (min-#{$dimension}: #{$max-breakpoint}) {
+      font-size: $max;
+    }
+  }
 
-	&::before,
-	.background,
-	.background::after {
-		box-sizing: border-box;
-		content: '';
-		display: block;
-		position: absolute;
-	}
+  @if $fallback !=null {
+    font-size: $fallback;
+  }
 
-	&::before {
-		border-radius: inherit;
-		@if $shadowType == 1 {
-			box-shadow: 0 5px 15px 0 rgba($brand-green, 0.2),
-				0 5px 15px 0 rgba(0, 0, 0, 0.2);
-		}
+  font-size: $responsive;
+}
 
-		@else if $shadowType == 2 {
-			box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.25);
-		}
-		@else {
-			box-shadow: 0 0 0 0 rgba($black, 0);
-		}
-		height: calc(100% - 16px);
-		left: 15px;
-		top: 12px;
-		transition: box-shadow 0.3s ease;
-		width: calc(100% - 30px);
-		z-index: -2;
-	}
+// =============================================================================
+// Button Shadow and Hover Effect
+// =============================================================================
+/// @param {Color} $currentColor - Current color
+/// @param {Color} $secondaryColor - Secondary color
+/// @param {Boolean} $inverse - Inverse colors (optional)
+/// @param {Number} $shadowType - Shadow type (optional)
+/// @param {Number} $speed - Animation speed (optional)
+@mixin buttonShadowAndHover($currentColor, $secondaryColor, $inverse: false, $shadowType: 1, $speed: 1) {
+  background: none;
+  border: 0;
+  overflow: visible;
+  position: relative;
+  z-index: 0;
 
-	.background {
-		@if $inverse == true {
-			border: 1px solid $econdaryColor;
-		} @else {
-			border: 1px solid $currentColor;
-		}
-		background: $currentColor;
-		border-radius: inherit;
-		height: 100%;
-		left: 0;
-		overflow: hidden;
-		top: 0;
-		width: 100%;
-		z-index: -1;
+  &::before,
+  .background,
+  .background::after {
+    box-sizing: border-box;
+    content: '';
+    display: block;
+    position: absolute;
+  }
 
-		&::after {
-			background: $econdaryColor;
-			height: 176%;
-			left: -1%;
-			top: -32%;
-			transform: skewY(-4deg) translate(0, 100%);
-			@if $speed == 1 {
-				transition: transform .3s ease;
-			}
-			@else if $speed == 2 {
-				transition: transform .384s ease;
-			}
-			width: 102%;
-		}
-	}
+  &::before {
+    border-radius: inherit;
 
-	&:hover,
-	.over & {
-		color: $currentColor;
+    @if $shadowType ==1 {
+      box-shadow: 0 5px 15px 0 rgba($brand-green, 0.2), 0 5px 15px 0 rgba(0, 0, 0, 0.2);
+    }
 
-		// @if $shadowType == 1 {
-		&::before {
-			// has severe performance issue when scrolling
-			box-shadow: 0 0 0 0 rgba($black, 0.5);
-		}
-		// }
+    @else if $shadowType ==2 {
+      box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.25);
+    }
 
-		.background {
-			&::after {
-				transform: skewY(-4deg) translate3d(0, 0, 0);
-			}
-		}
-	}
+    @else {
+      box-shadow: 0 0 0 0 rgba($black, 0);
+    }
 
-	&:hover:active {
-		background-color: $currentColor;
-		color: $econdaryColor;
+    height: calc(100% - 16px);
+    left: 15px;
+    top: 12px;
+    transition: box-shadow 0.3s ease;
+    width: calc(100% - 30px);
+    z-index: -2;
+  }
 
-		.icon {
-			color: $econdaryColor;
-		}
+  .background {
+    @if $inverse ==true {
+      border: 1px solid $secondaryColor;
+    }
 
-		.background::after {
-			background-color: transparent;
-			transform: skewY(-4deg) translate(0, 0);
-			transition: background-color 0.1s ease-in;
-		}
-	}
+    @else {
+      border: 1px solid $currentColor;
+    }
+
+    background: $currentColor;
+    border-radius: inherit;
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+
+    &::after {
+      background: $secondaryColor;
+      height: 176%;
+      left: -1%;
+      top: -32%;
+      transform: skewY(-4deg) translate(0, 100%);
+
+      @if $speed ==1 {
+        transition: transform 0.3s ease;
+      }
+
+      @else if $speed ==2 {
+        transition: transform 0.384s ease;
+      }
+
+      width: 102%;
+    }
+  }
+
+  &:hover,
+  .over & {
+    color: $currentColor;
+
+    &::before {
+      box-shadow: 0 0 0 0 rgba($black, 0.5);
+    }
+
+    .background::after {
+      transform: skewY(-4deg) translate3d(0, 0, 0);
+    }
+  }
+
+  &:hover:active {
+    background-color: $currentColor;
+    color: $secondaryColor;
+
+    .icon {
+      color: $secondaryColor;
+    }
+
+    .background::after {
+      background-color: transparent;
+      transform: skewY(-4deg) translate(0, 0);
+      transition: background-color 0.1s ease-in;
+    }
+  }
 }

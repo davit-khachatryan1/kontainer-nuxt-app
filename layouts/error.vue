@@ -37,9 +37,6 @@ export default {
 			};
 		},
 		meta() {
-			// eslint-disable-next-line no-console
-			// console.dir(this.error);
-
 			return {
 				pinTopConnectsSameVisualElement: false,
 				pinBottomConnectsSameVisualElement: false,
@@ -57,7 +54,8 @@ export default {
 };
 </script>
 
-<!-- <style lang="scss">
+<style lang="scss">
+@import '../assets/scss/import';
 .error {
 	&__heading {
 		@extend %text-h1;
@@ -88,7 +86,8 @@ export default {
 
 		a {
 			text-decoration: none;
+			color: $blue;
 		}
 	}
 }
-</style> -->
+</style>

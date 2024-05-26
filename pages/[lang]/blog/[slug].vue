@@ -1,25 +1,27 @@
 <template>
-	<div>
-		<ContentSwitch :flexible="flexible" :type="type" />
-	</div>
+  <div>
+    <ContentSwitch :flexible="flexible" :type="type" />
+  </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import { useNuxtApp } from '#app';
-const ContentSwitch = defineAsyncComponent(() => import('~/components/organisms/content-switch/index.vue'));
+import { ref, onMounted } from "vue";
+const ContentSwitch = defineAsyncComponent(() =>
+  import("~/components/organisms/content-switch/index.vue")
+);
 
 const flexible = ref([]);
 const nuxtApp = useNuxtApp();
 const api = nuxtApp.$myAppApi;
 definePageMeta({
-	middleware: ['lang', 'global', 'cleanup'],
-	layout: false,
-})
+  middleware: ["lang", "global", "cleanup"],
+  layout: false,
+});
 onMounted(async () => {
-	const context = {}; // Define or get your context
-	const data = await api.getCollectionItem(context, 'blog');
-	flexible.value = data?.flexible || [];
-	posts.value = data?.posts || { blog: [] };
+  const context = {};
+  const data = await api.getCollectionItem(context, "blog");
+  flexible.value = data?.flexible || [];
+  posts.value = data?.posts || { blog: [] };
+  nuxtApp.$useMeta(data);
 });
 </script>

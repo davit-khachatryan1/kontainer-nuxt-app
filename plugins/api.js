@@ -78,7 +78,7 @@ class Api {
 	getCollectionItem(context, collection = false) {
 		const collectionType = collection || this.nuxtApp._route.params.collection;
 		return this.fetchData(
-			`${collectionType}/${this.nuxtApp._route.params.slug}`,
+			`${collectionType}/${this.nuxtApp._route.params.slug || ''}`,
 			context,
 			{ type: collectionType, slug: this.nuxtApp._route.params.slug }
 		).catch((resError) => {

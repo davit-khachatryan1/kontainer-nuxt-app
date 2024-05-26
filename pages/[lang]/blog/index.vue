@@ -6,13 +6,14 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { useNuxtApp } from "#app";
-import ContentSwitch from "~/components/organisms/content-switch/index.vue";
+const ContentSwitch = defineAsyncComponent(() =>
+  import("~/components/organisms/content-switch/index.vue")
+);
 import useStore from "@/store";
 definePageMeta({
-  middleware: ['lang', 'global', 'cleanup'],
+  middleware: ["lang", "global", "cleanup"],
   layout: false,
-})
+});
 const nuxtApp = useNuxtApp();
 const api = nuxtApp.$myAppApi; // Assuming your plugin is made available globally through Nuxt 3 plugins
 const flexible = ref([]); // Assuming flexible is a prop or needs to be fetched
@@ -24,6 +25,7 @@ onMounted(async () => {
   const data = await api.getCollection(context, "blog");
   flexible.value = data?.flexible || [];
   posts.value = data?.posts || { blog: [] };
+  nuxtApp.$useMeta(data);
 });
 
 const kards = computed(() => {

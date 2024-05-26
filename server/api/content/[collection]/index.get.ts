@@ -3,8 +3,8 @@ import { envConfigs, getUrlWithLangPrefix, prepareCollection, preparePage, wpapi
 const postTypes: any = envConfigs.env.postTypes;
 
 export default defineEventHandler(async (event) => {
-  const redisClient:any = event.context.redisClient
-   
+  const redisClient: any = event.context.redisClient
+
   const { collection } = event.context.params as any;
   const postType = postTypes[collection];
   const query = getQuery(event); // Assuming getQuery is a function to extract query parameters
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   const cacheKey = `content-${collection}-${JSON.stringify(query)}`;
   const cachedData = await redisClient.get(cacheKey);
 
-  if (cachedData) {
+  if (cachedData && cachedData != 'null') {
     return JSON.parse(cachedData);
   }
 
@@ -32,6 +32,10 @@ export default defineEventHandler(async (event) => {
       pageData.posts = { [collection]: prepareCollection(postsResponse.data) };
 
       await redisClient.setEx(cacheKey, 600, JSON.stringify(pageData));
+      if (!pageData) {
+        event.res.statusCode = 404;
+        return 'Not found';
+      }
 
       return pageData;
     } catch (error) {
@@ -46,6 +50,10 @@ export default defineEventHandler(async (event) => {
 
       await redisClient.setEx(cacheKey, 600, JSON.stringify(pageData));
 
+      if (!pageData) {
+        event.res.statusCode = 404;
+        return 'Not found';
+      }
       return pageData;
     } catch (error) {
       event.res.statusCode = 404;

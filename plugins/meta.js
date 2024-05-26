@@ -1,72 +1,72 @@
+import { useHead } from '@vueuse/head';
 import { getLocalUrl } from '~/components/composables/getLocalUrl';
 import { DEFAULT_LOCALE } from '~/constants/styles';
+import useStore from '@/store';
 
-// plugins/global-head.js
-export default defineNuxtPlugin((nuxtApp) => {
-	// Access Nuxt 3 app instance, router, etc., as needed
-	nuxtApp.vueApp.mixin({
-		head() {
-			let title = this.yoast_title || this.title;
-			title = title.replace('&amp;', '&');
-
-			const meta = [];
-			if (this.yoast_meta) {
-				this.yoast_meta.forEach((el) => {
-					meta.push({
-						hid: el.name || el.property,
-						name: el.name || el.property,
-						content: el.content,
-					});
+export default defineNuxtPlugin(nuxtApp => {
+	const store = useStore()
+	nuxtApp.provide('useMeta', (pageData) => {
+		let title = pageData.yoast_title || pageData.title;
+		title = title.replace('&amp;', '&');
+		const meta = [];
+		if (pageData.yoast_meta) {
+			pageData.yoast_meta.forEach(el => {
+				meta.push({
+					hid: el.name ? el.name : el.property,
+					name: el.name ? el.name : el.property,
+					content: el.content,
 				});
-			}
+			});
+		}
 
-			let script = [];
-			if (this.yoast_json_ld) {
-				const structuredData = this.yoast_json_ld[0];
-				script.push({ type: 'application/ld+json', hid: 'ldjson-schema', json: structuredData });
-			}
+		let script = [];
+		if (pageData.yoast_json_ld) {
+			const structuredData = pageData.yoast_json_ld[0];
+			script = [{ type: 'application/ld+json', hid: 'ldjson-schema', innerHTML: JSON.stringify(structuredData) }];
+		}
 
-			const link = [];
-			if (this.translated) {
-				this.translated?.forEach((slug, lang) => {
-					const linkObject = {
-						locale: lang,
-						slug,
-						type: this.type,
-						url: this.url,
-					};
+		const link = [];
+		if (pageData.translated) {
+			for (const key in pageData.translated) {
+				const lang = key;
+				const slug = pageData.translated[key];
+				const linkObject = {
+					locale: lang,
+					slug,
+					type: pageData.type,
+					url: pageData.url,
+				};
+				const siteUrl = useRuntimeConfig().public.siteUrl; // Using Nuxt 3 runtime config
+				link.push({
+					rel: 'alternate',
+					hreflang: lang,
+					href: siteUrl + getLocalUrl(linkObject)
+				});
 
-					const siteUrl = useRuntimeConfig().public.siteUrl; // Using Nuxt 3 runtime config
+				if (lang === DEFAULT_LOCALE) {
 					link.push({
 						rel: 'alternate',
-						hreflang: lang,
+						hreflang: 'x-default',
 						href: siteUrl + getLocalUrl(linkObject)
 					});
+				}
 
-					if (lang === DEFAULT_LOCALE) {
-						link.push({
-							rel: 'alternate',
-							hreflang: 'x-default',
-							href: siteUrl + getLocalUrl(linkObject)
-						});
-					}
-
-					// CANONICAL
-					if (nuxtApp.$i18n.locale === lang) { // Adapt based on i18n setup
-						link.push({
-							rel: 'canonical',
-							href: siteUrl + getLocalUrl(linkObject)
-						});
-					}
-				});
-			}
-
-			return {
-				title,
-				meta,
-				link,
-				script: script.map(s => ({ ...s, json: s.json ? JSON.stringify(s.json) : undefined })),
+				// CANONICAL
+				if (store.locale === lang) { // Adapt based on i18n setup
+					link.push({
+						rel: 'canonical',
+						href: siteUrl + getLocalUrl(linkObject)
+					});
+				}
 			};
-		},
+		}
+
+		useHead({
+			htmlAttrs: { lang: nuxtApp._route.params.lang },
+			title,
+			meta,
+			link,
+			script,
+		});
 	});
 });

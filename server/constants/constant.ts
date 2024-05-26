@@ -80,6 +80,7 @@ export const normalizePost = (post: any) => {
 
 export const preparePage = (data: any) => {
 	const acfData: any = data?.custom ? prepareAcf(data.custom) : null;
+	if (!data) return null;
 	const page: any = {
 		id: data.id,
 		title: data.title,

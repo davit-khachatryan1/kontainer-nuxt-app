@@ -1,15 +1,15 @@
 import { getUrlWithLangPrefix, prepTaxonomy, wpapi } from "~/server/constants/constant";
 
 export default defineEventHandler(async (event) => {
-  const redisClient:any = event.context.redisClient
-  
+  const redisClient: any = event.context.redisClient
+
   const { taxonomy } = event.context.params as any;
   const query = getQuery(event); // Ensure getQuery is properly defined
   const axiosOptions = { params: query };
   const cacheKey = `taxonomyData-${taxonomy}-${JSON.stringify(query)}`;
   const cachedData = await redisClient.get(cacheKey);
 
-  if (cachedData) {
+  if (cachedData && cachedData != 'null') {
     return JSON.parse(cachedData);
   }
 
@@ -20,7 +20,10 @@ export default defineEventHandler(async (event) => {
     const preparedData = prepTaxonomy(response.data);
 
     await redisClient.setEx(cacheKey, 600, JSON.stringify(preparedData)); // Using a TTL of 600 seconds (10 minutes)
-
+    if (!preparedData) {
+      event.res.statusCode = 404;
+      return 'Not found';
+    }
     return preparedData;
   } catch (error) {
     console.error("Error fetching taxonomy data:", error);

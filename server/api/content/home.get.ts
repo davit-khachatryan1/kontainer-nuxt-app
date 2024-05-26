@@ -1,13 +1,13 @@
 import { getUrlWithLangPrefix, preparePage, wpapi } from "../../constants/constant";
 
 export default defineEventHandler(async (event) => {
-  const redisClient:any = event.context.redisClient
-   
+  const redisClient: any = event.context.redisClient
+
   const query = getQuery(event);  // Ensure you have a method to extract query parameters
   const cacheKey = `frontpageData-${JSON.stringify(query)}`;
   const cachedData = await redisClient.get(cacheKey);
 
-  if (cachedData) {
+  if (cachedData && cachedData != 'null') {
     return JSON.parse(cachedData);
   }
 
@@ -22,7 +22,10 @@ export default defineEventHandler(async (event) => {
       const pageData = preparePage(pageResponse.data);
 
       await redisClient.setEx(cacheKey, 600, JSON.stringify(pageData));
-
+      if (!pageData) {
+        event.res.statusCode = 404;
+        return 'Not found';
+      }
       return pageData;
     }
   } catch (error) {

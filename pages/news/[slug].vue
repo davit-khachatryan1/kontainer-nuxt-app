@@ -1,10 +1,9 @@
 <template>
-  <div>
-    <Index />
-  </div>
+  <Index />
 </template>
 <script setup>
-const Index = defineAsyncComponent(() => import("./[slug].vue"));
+const Index = defineAsyncComponent(() => import("~/pages/[lang]/news/[slug].vue"));
+
 definePageMeta({
   middleware: ["lang", "global", "cleanup"],
   layout: false,

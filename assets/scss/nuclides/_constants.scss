@@ -1,55 +1,43 @@
+@use 'sass:math';
+
 $section-angle-height: 5.492vw;
 
 $pinLength: 100px;
 $pinLengthMobile: 60px;
 $pinLabelDistance: 36px;
 
-$section-padding-top: calc(#{$pinLength} - #{calc(calc($section-angle-height / 2))});
-$section-padding-bottom: calc(
-	#{calc(calc($section-angle-height / 2))} + #{$pinLength} + #{$pinLabelDistance}
-);
+$section-padding-top: calc(#{$pinLength} - #{math.div($section-angle-height, 2)});
+$section-padding-bottom: calc(#{math.div($section-angle-height, 2)} + #{$pinLength} + #{$pinLabelDistance});
 
-$section-padding-bottom-pin: calc(
-	#{calc(calc($section-angle-height / 2))} + #{$pinLength} + #{$pinLabelDistance} + 50px
-);
+$section-padding-bottom-pin: calc(#{math.div($section-angle-height, 2)} + #{$pinLength} + #{$pinLabelDistance} + 50px);
 
-$section-padding-top-mobile: calc(
-	#{$pinLengthMobile} - #{calc(calc($section-angle-height / 2))}
-);
-$section-padding-bottom-mobile: calc(
-	#{calc(calc($section-angle-height / 2))} + #{$pinLengthMobile} + #{$pinLabelDistance}
-);
+$section-padding-top-mobile: calc(#{$pinLengthMobile} - #{math.div($section-angle-height, 2)});
+$section-padding-bottom-mobile: calc(#{math.div($section-angle-height, 2)} + #{$pinLengthMobile} + #{$pinLabelDistance});
 
-$section-padding-top-negative: calc(
-	#{-$pinLength} + #{calc($section-angle-height / -2)}
-);
-$section-padding-bottom-negative: calc(
-	#{calc($section-angle-height / -2)} + #{-$pinLength} + #{-$pinLabelDistance}
-);
+$section-padding-top-negative: calc(#{math.div(-$pinLength, 1)} + #{math.div(-$section-angle-height, 3)});
+$section-padding-bottom-negative: calc(#{math.div(-$section-angle-height, 2)} + #{math.div(-$pinLength, 1)} + #{math.div(-$pinLabelDistance, 1)});
 
-$section-padding-top-mobile-negative: calc(
-	#{-$pinLengthMobile} + #{calc($section-angle-height / -2)}
-);
-$section-padding-bottom-mobile-negative: calc(
-	#{calc($section-angle-height / -2)} + #{-$pinLengthMobile} + #{-$pinLabelDistance}
-);
+$section-padding-top-mobile-negative: calc(#{math.div(-$pinLengthMobile, 1)} + #{math.div(-$section-angle-height, 2)});
+$section-padding-bottom-mobile-negative: calc(#{math.div(-$section-angle-height, 2)} + #{math.div(-$pinLengthMobile, 1)} + #{math.div(-$pinLabelDistance, 1)});
 
 $section-inner-padding: 5vw;
 $section-inner-padding-mobile: 100px;
 
 $desktopWidth: 80.555555556vw;
-$desktopMargin: 9.722222222vw; //9.722222222vw;
+$desktopMargin: math.div((100 - $desktopWidth), 2); // 9.722222222vw;
 $desktopSpanWidth: 4.4vw;
 $desktopSpanMargin: 2.013888889vw;
 $desktopHeight: 120px;
+
 $tabletWidth: 85.3515625vw;
-$tabletMargin: 7.32421875vw;
-$tabletSpanWidth: 5.76171875vw;
-$tabletSpanMargin: 1.46484375vw;
+$tabletMargin: math.div(7.32421875vw, 1);
+$tabletSpanWidth: math.div(5.76171875vw, 1);
+$tabletSpanMargin: math.div(1.46484375vw, 1);
+
 $mobileWidth: 81.25vw;
-$mobileMargin: 9.375vw;
-$mobileSpanWidth: 17.96875vw;
-$mobileSpanMargin: 3.125vw;
+$mobileMargin: math.div(9.375vw, 1);
+$mobileSpanWidth: math.div(17.96875vw, 1);
+$mobileSpanMargin: math.div(3.125vw, 1);
 $mobileHeight: 60px;
 
 $transformAnimationDistance: 20px;

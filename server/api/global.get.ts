@@ -2,12 +2,12 @@
 import { getUrlWithLangPrefix, prepareAcf, prepareCategories, wpapi } from "../constants/constant";
 
 export default defineEventHandler(async (event) => {
-  const redisClient:any = event.context.redisClient
+  const redisClient: any = event.context.redisClient
   const query = getQuery(event); // Assuming getQuery is a function you have defined to extract the query parameters
   const cacheKey = `globalData-${JSON.stringify(query)}`;
   const cachedData = await redisClient.get(cacheKey);
 
-  if (cachedData) {
+  if (cachedData && cachedData != 'null') {
     return JSON.parse(cachedData);
   }
 
@@ -33,7 +33,10 @@ export default defineEventHandler(async (event) => {
     };
 
     await redisClient.setEx(cacheKey, 600, JSON.stringify(responseData));
-
+    if (!responseData) {
+      event.res.statusCode = 404;
+      return 'Not found';
+    }
     return responseData;
   } catch (error) {
     console.error('Error in fetching data:', error);
