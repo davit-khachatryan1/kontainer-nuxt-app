@@ -60,7 +60,8 @@ const Arrow = defineAsyncComponent(() => import("~/assets/svg/arrow-big.svg"));
 const SmartLink = defineAsyncComponent(() =>
   import("~/components/helper/smartlink/index.vue")
 );
-const Swiper = defineAsyncComponent(() => import("swiper"));
+import Swiper from "swiper";
+
 import "swiper/swiper-bundle.css";
 import { useLangString } from "~/components/composables/useLangString";
 

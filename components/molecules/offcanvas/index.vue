@@ -67,6 +67,7 @@
 						</ol>
 					</template>
 					<Button
+						@click="closeMenu"
 						v-if="bookDemo.show && bookDemo.title"
 						:link="bookDemo.link"
 						:type="bookDemo.type"

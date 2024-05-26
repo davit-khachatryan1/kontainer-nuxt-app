@@ -94,7 +94,7 @@ const SmartLink = defineAsyncComponent(() =>
   import("~/components/helper/smartlink/index.vue")
 );
 import { useLangString } from "~/components/composables/useLangString";
-const Swiper = defineAsyncComponent(() => import("swiper"));
+import Swiper from "swiper";
 import "swiper/swiper-bundle.css";
 
 export default {
