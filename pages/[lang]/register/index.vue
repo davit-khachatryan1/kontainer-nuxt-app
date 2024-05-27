@@ -14,10 +14,10 @@ const SignupAccount = defineAsyncComponent(() =>
 
 const route = useRoute();
 const nuxtApp = useNuxtApp();
-const store = useStore();
 const error = useError();
 
 const handleEnter = () => {
+  const store = useStore();
   store.menuHide(true);
   setTimeout(() => {
     store.menuHide(false);

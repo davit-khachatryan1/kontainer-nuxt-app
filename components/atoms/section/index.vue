@@ -218,18 +218,21 @@ export default {
     }
 
     &--positive {
+      z-index: 1;
       &::before {
         transform: skewY(3deg) translateY(-50%) translateY(1px); //prevent gap
       }
     }
 
     &--negative {
+      z-index: 1;
       &::before {
         transform: skewY(-3deg) translateY(-50%) translateY(1px); //prevent gap
       }
     }
 
     &--strikethrough {
+      z-index: 1;
       &::before {
         border: 0;
       }
@@ -247,7 +250,7 @@ export default {
   &--bg {
     &--grey {
       background-color: $gray-concrete;
-
+      z-index: 1;
       &:before {
         background-color: $gray-concrete;
         border: 0;
@@ -255,6 +258,7 @@ export default {
     }
 
     &--bluedark {
+      z-index: 1;
       background-color: $blue-dark;
       color: $white;
 
@@ -267,6 +271,7 @@ export default {
       }
     }
     &--brown {
+      z-index: 1;
       background-color: $brown-light;
 
       &:before {

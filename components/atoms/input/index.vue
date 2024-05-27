@@ -147,7 +147,7 @@ input::-ms-clear {
 
   &__element {
     position: relative;
-
+    margin-bottom: 20px;
     $element: &;
 
     .icon {

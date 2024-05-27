@@ -25,7 +25,6 @@
             <template v-if="data.signup_right.content_type === 'html'">
               <CodeInserter :data="data.signup_right" />
             </template>
-            <template>
               <h1
                 v-if="data.signup_right.heading && positionOnPage === 0"
                 v-html="data.signup_right.heading"
@@ -97,7 +96,6 @@
                   </slot>
                 </div>
               </transition>
-            </template>
           </div>
         </div>
       </div>

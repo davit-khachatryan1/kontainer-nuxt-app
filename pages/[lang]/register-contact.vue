@@ -14,7 +14,6 @@ const SignupContactAccount = defineAsyncComponent(() =>
 
 const route = useRoute();
 const nuxtApp = useNuxtApp();
-const store = useStore();
 const error = useError();
 
 onMounted(async () => {
@@ -27,11 +26,15 @@ onMounted(async () => {
 });
 
 const handleEnter = () => {
+const store = useStore();
   store.menuHide(true);
   setTimeout(() => {
     store.menuHide(false);
   }, 10);
 };
+onMounted(() => {
+  handleEnter();
+});
 </script>
 
 <style lang="scss">

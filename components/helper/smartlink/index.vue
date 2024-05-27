@@ -40,9 +40,8 @@ export default {
 		},
 	},
 	methods: {
-		onClick(e) {
+		onClick() {
 			if (
-				e.target.classList.contains('nuxt-link-active') &&
 				typeof this.onActiveLinkClick === 'function'
 			) {
 				this.onActiveLinkClick();
