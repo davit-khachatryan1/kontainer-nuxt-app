@@ -7,7 +7,8 @@
         :pattern="pattern"
         v-slot="{ field, errors }"
         :rules="rules"
-      >
+        v-model="inputValue"
+        >
         <input
           v-bind="field"
           @input="
@@ -98,9 +99,15 @@ export default {
     "pattern",
     "required",
   ],
-  setup() {
+  setup(ev) {
+    console.log(ev);
+    const inputValue = computed({
+      get: () => ev.modelValue,
+      set: (val) => emit("update:modelValue", val),
+    });
+
     const { focused, hasValue, focusCheck, valueCheck } = useInputLabels();
-    return { focused, hasValue, focusCheck, valueCheck };
+    return { focused, hasValue, focusCheck, valueCheck, inputValue };
   },
   components: {
     IconUser,

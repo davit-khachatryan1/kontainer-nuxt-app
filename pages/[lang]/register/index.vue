@@ -32,10 +32,6 @@ onMounted(async () => {
     error({ statusCode: 404, message: "Page not found" });
   }
 });
-
-onMounted(() => {
-  handleEnter();
-});
 </script>
 
 <style lang="scss">
