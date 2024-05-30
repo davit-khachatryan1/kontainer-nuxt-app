@@ -6,6 +6,10 @@
 </template>
 
 <script setup>
+definePageMeta({
+  middleware: ["lang", "global", "cleanup"],
+  layout: false,
+});
 import { ref, onMounted } from "vue";
 import useStore from "@/store";
 const ContentSwitch = defineAsyncComponent(() =>

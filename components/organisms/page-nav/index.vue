@@ -28,7 +28,6 @@
                   ]"
                 >
                   <span v-html="item.title" />
-                  <IconCaret class="has-dropdown__icon" />
                 </span>
                 <transition name="fade">
                   <ol class="dropdown">

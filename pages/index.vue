@@ -1,7 +1,6 @@
 <template>
   <div>
     <Index />
-    <NuxtLayout name="default" />
   </div>
 </template>
 
