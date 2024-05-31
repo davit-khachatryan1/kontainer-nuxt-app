@@ -1195,11 +1195,17 @@ export default {
 
 				if (result) {
 					this.addToHubSpot(registrationData);
+					const formData = new FormData()
+					for (const key in registrationData) {
+						if (registrationData.hasOwnProperty(key)) {
+						formData.append(key, registrationData[key])
+						}
+					}
 					$fetch(
 							`${config.public.appUrl}/api/signup`,
 							{
 								method: 'POST',
-								body: qs.stringify(registrationData)
+								body: formData
 							},
 						)
 						.then(() => {

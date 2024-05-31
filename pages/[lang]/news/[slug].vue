@@ -34,6 +34,7 @@ onMounted(async () => {
     flexible.value = data.flexible;
     type.value = data?.type;
     $useMeta(data);
+    error.value = false;
   } catch (err) {
     error.value = err;
     console.error("Error fetching collection item:", err);

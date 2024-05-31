@@ -37,6 +37,7 @@ const fetchPageData = async (slug) => {
       nuxtApp.$useMeta(data);
       flexible.value = data.flexible || false; // Modify according to the actual structure of 'data'
     }
+    error.value = false;
   } catch (err) {
     error.value = err;
   }

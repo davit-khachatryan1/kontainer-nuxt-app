@@ -24,6 +24,7 @@
                 <span
                   :class="[
                     'link',
+                    'link-hover',
                     { 'nuxt-link-active': activeMenuParent === item.slug },
                   ]"
                 >
@@ -41,7 +42,7 @@
                         :class="[
                           'link',
                           {
-                            'nuxt-link-exact-active': activeMenuParent === item.slug,
+                            'nuxt-link-exact-active': activeMenuChild === sublink.slug,
                           },
                         ]"
                         v-html="sublink.title"
@@ -53,6 +54,11 @@
                         :type="sublink.type"
                         :slug="sublink.slug"
                         :url="sublink.url"
+                        :class="[
+                          {
+                            'nuxt-link-exact-active': activeMenuChild === sublink.slug,
+                          },
+                        ]"
                       >
                         <span v-html="sublink.title" />
                       </smart-link>
@@ -145,7 +151,7 @@ const IconLogoMark = defineAsyncComponent(() =>
 const hoverMenu = ref(false);
 const showLanguageMenu = ref(false);
 
-const store = useStore(); 
+const store = useStore();
 const nuxtApp = useNuxtApp();
 const logoLabel = computed(() => store.pageOptions.logo_label);
 const menuItems = computed(() => (store.menus ? store.menus.primary : []));
@@ -177,6 +183,11 @@ const activeMenuParent = computed(() => {
     }
   });
   return activeParent;
+});
+
+const activeMenuChild = computed(() => {
+  const route = useRoute();
+  return route.params.slug
 });
 
 // Methods
@@ -355,6 +366,17 @@ function handleLangMenuClick(e) {
     color: $label-color;
   }
 
+  .nuxt-link-exact-active {
+    &::before {
+      width: 16px !important;
+    }
+
+    span {
+      transform: translateX(26px);
+      color: #aeaeae;
+    }
+  }
+
   .has-dropdown {
     position: relative;
     cursor: pointer;
@@ -395,17 +417,6 @@ function handleLangMenuClick(e) {
       flex-direction: column;
       align-items: flex-start;
       transition: all 0.3s $easeInOut;
-
-      &::after {
-        content: "";
-        height: 22px;
-        width: 22px;
-        background-color: $white;
-        position: absolute;
-        top: -11px;
-        left: 52px;
-        transform: rotate(45deg);
-      }
 
       & > li:hover a {
         color: #aeaeae;
@@ -453,6 +464,23 @@ function handleLangMenuClick(e) {
           span {
             transform: translateX(26px);
           }
+        }
+      }
+    }
+
+    &:hover {
+      .link-hover {
+        &::after {
+          content: "";
+          height: 22px;
+          width: 22px;
+          background-color: $white;
+          position: absolute;
+          bottom: -37px;
+          left: calc(50% - 11px);
+          transform: rotate(45deg);
+          z-index: 10;
+          filter: drop-shadow(0 0 35px rgba(0, 0, 0, 0.15));
         }
       }
     }
