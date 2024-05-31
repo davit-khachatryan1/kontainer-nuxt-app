@@ -5,7 +5,7 @@ import useStore from '@/store'
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const store = useStore()
 
-  if (process.server) return
+  if (process.server || !to.params.lang) return
   try {
     const data = await $fetch(`${window.location.origin}/api/global`, {
       params: {

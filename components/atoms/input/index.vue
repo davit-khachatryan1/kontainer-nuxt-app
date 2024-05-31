@@ -100,7 +100,6 @@ export default {
     "required",
   ],
   setup(ev) {
-    console.log(ev);
     const inputValue = computed({
       get: () => ev.modelValue,
       set: (val) => emit("update:modelValue", val),
