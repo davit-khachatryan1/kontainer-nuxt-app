@@ -4,24 +4,25 @@ import axios, { type AxiosInstance } from 'axios';
 const LOCALES = ['en', 'da', 'de'];
 const DEFAULT_LOCALE = 'en';
 const RESOURCE_TYPES = ['page', 'news'];
-const BASE_ENDPOINTS:any = {
-	page: '/wp-json/wp/v2/pages/',
-	news: '/wp-json/wp/v2/news/',
+const BASE_ENDPOINTS: any = {
+  page: '/wp-json/wp/v2/pages/',
+  news: '/wp-json/wp/v2/news/',
 };
 const PATH_PREFIXES: any = {
-	page: '',
-	news: '/news'
+  page: '',
+  news: '/news'
 };
 const BANNED_SLUGS = [
-	'signup-alreadyactive',
-	'signup-erroruser',
-	'signup-done',
-	'register',
-	'complete',
-	'home',
+  'signup-alreadyactive',
+  'signup-erroruser',
+  'signup-done',
+  'register',
+  'complete',
+  'home',
 ];
 
 export default defineEventHandler(async (event) => {
+
   const config = useRuntimeConfig();
   const wpapi = axios.create({
     baseURL: config.public.apiUrl,  // Using runtime config to get API base URL
@@ -30,7 +31,18 @@ export default defineEventHandler(async (event) => {
 
   const resources = await getAllResources(wpapi);
   const routes = [...PRECONFIGURED_ROUTES, ...resources];
-  return routes;
+  const newRoutes = [];
+  for (let i = 0; i < routes.length; i++) {
+    const element = routes[i];
+    for (let j = 0; j < element.links.length; j++) {
+      const link = element.links[j];
+      newRoutes.push({
+        url: link.url + element.url 
+      })
+    }
+    
+  }
+  return newRoutes;
 });
 
 // Define constants

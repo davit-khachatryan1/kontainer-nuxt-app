@@ -144,10 +144,10 @@ export default defineNuxtConfig({
     
   // },
   sitemap: {
-    sources: ['/api/sitemap'],
     defaultSitemapsChunkSize: 1000 * 60 * 15,
     experimentalCompression: true,
     exclude: ['/register'],
+    dynamicUrlsApiEndpoint: '/api/sitemap'
   },
   srcDir: '.',
   image: {
