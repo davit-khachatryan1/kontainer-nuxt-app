@@ -38,7 +38,7 @@ export const config = {
   gtmId: gtmId,
   postTypes: {
     news: 'news',
-    blog: 'blog',
+    // blog: 'blog',
     prices: 'prices',
     prices_new: 'prices_new',
     cases: 'cases',
