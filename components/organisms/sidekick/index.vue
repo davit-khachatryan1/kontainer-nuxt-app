@@ -152,6 +152,8 @@
 								muted
 								loop
 								autoplay
+								width="754"
+								height="705"
 							></video>
 							<smart-image
 								v-if="sidekick.fallback_image"
@@ -210,8 +212,8 @@
 						controls
 						autoplay
 						ref="videoplayer"
-						width="1280"
-						height="720"
+						width="700"
+						height="400"
 						@keyup.esc="closeVideoModal"
 						tabindex="0"
 					>

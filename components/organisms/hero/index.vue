@@ -39,8 +39,8 @@
 			]
 			: ['sidekick']
 		" nocrop />
-									<video v-if="videoUrl" class="js-hero-video" :src="videoUrl" width="1280"
-										height="720" playsinline muted loop autoplay></video>
+									<video v-if="videoUrl" class="js-hero-video" :src="videoUrl" width="700"
+										height="400" playsinline muted loop autoplay></video>
 									<div class="video-url-container" v-if="video_url">
 										<iframe class="js-hero-video" :src="video_url + '?controls=0'"
 											title="YouTube video player" frameborder="0"
@@ -101,7 +101,7 @@
 					<button class="video-modal__close" @click.prevent="closeVideoModal">
 						close
 					</button>
-					<video playsinline controls autoplay ref="videoplayer" width="1280" height="720"
+					<video playsinline controls autoplay ref="videoplayer" width="700" height="400"
 					@keyup.esc="closeVideoModal" tabindex="0">
 					<source :src="videoModalFile" type="video/mp4" />
 					</video>
