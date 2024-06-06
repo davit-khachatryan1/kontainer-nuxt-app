@@ -80,16 +80,16 @@
 const Teaser = defineAsyncComponent(() =>
   import("~/components/molecules/teaser/index.vue")
 );
-const Arrow = defineAsyncComponent(() => import('~/assets/svg/arrow-big.svg'));
-const QuoteIcon = defineAsyncComponent(() => import('~/assets/svg/quote_icon.svg'));
+const Arrow = defineAsyncComponent(() => import("~/assets/svg/arrow-big.svg"));
+const QuoteIcon = defineAsyncComponent(() => import("~/assets/svg/quote_icon.svg"));
 const CapFourFiveStars = defineAsyncComponent(() =>
-  import('~/assets/svg/cap-4-5-stars.svg')
+  import("~/assets/svg/cap-4-5-stars.svg")
 );
-const CapFiveStars = defineAsyncComponent(() => import('~/assets/svg/cap-5-stars.svg'));
+const CapFiveStars = defineAsyncComponent(() => import("~/assets/svg/cap-5-stars.svg"));
 const G2FourFiveStars = defineAsyncComponent(() =>
-  import('~/assets/svg/g2-4-5-stars.svg')
+  import("~/assets/svg/g2-4-5-stars.svg")
 );
-const G2FiveStars = defineAsyncComponent(() => import('~/assets/svg/g2-5-stars.svg'));
+const G2FiveStars = defineAsyncComponent(() => import("~/assets/svg/g2-5-stars.svg"));
 const SmartLink = defineAsyncComponent(() =>
   import("~/components/helper/smartlink/index.vue")
 );
@@ -97,7 +97,7 @@ import { useLangString } from "~/components/composables/useLangString";
 import Swiper from "swiper";
 import "swiper/swiper-bundle.css";
 
-export default {
+export default defineComponent({
   name: "QuoteSlider",
   components: {
     Teaser,
@@ -116,7 +116,7 @@ export default {
   setup() {
     const mySwiper = ref(null);
     const swiperOptions = {
-      startSlide: 1,
+      startSlide: 2,
       slidesPerView: 1,
       spaceBetween: 20,
       navigation: {
@@ -155,7 +155,7 @@ export default {
     };
     return { mySwiper, swiperOptions, langString, nextSlide, prevSlide };
   },
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -198,7 +198,7 @@ export default {
   }
 
   .swiper-slide {
-    width: calc(33.3333% - (30px * 2 / 3)) !important;
+    width: calc(33.3333% - (30px * 2 / 3));
     margin-right: 30px;
     height: auto;
 
@@ -355,6 +355,8 @@ export default {
   padding: 60px 70px;
   width: calc(100% - 30px);
   overflow: hidden;
+  margin: 0 auto;
+
   .my-swiper {
     width: 100%;
   }
@@ -394,6 +396,17 @@ export default {
 
   .swiper-button-next {
     right: -7px;
+  }
+  @media (max-width: 1024px) {
+    padding: 60px 10px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 60px 20px;
+    margin: 0 auto;
+    .my-swiper {
+      width: 100% !important;
+    }
   }
 }
 </style>
