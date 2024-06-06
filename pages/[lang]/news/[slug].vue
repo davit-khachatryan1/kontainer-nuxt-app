@@ -1,7 +1,7 @@
 <template>
   <div>
     <Error v-if="error" :error="error" />
-    <ContentSwitch :flexible="flexible" :type="type" v-else />
+    <ContentSwitch v-else :flexible="flexible" :type="type"  :loaded="loaded" />
     <NuxtLayout name="default" />
   </div>
 </template>
@@ -20,17 +20,15 @@ const Error = defineAsyncComponent(() => import("~/layouts/error.vue"));
 const flexible = ref([]);
 const type = ref("");
 const error = ref();
+const loaded = ref(false);
 
 const { $myAppApi, $useMeta } = useNuxtApp();
 
 onMounted(async () => {
-  // Assuming the context you need is available or constructed here
-  // If context is derived from props or other sources, adjust accordingly
-  const context = {}; // Construct or derive the needed context
+  const context = {};
 
   try {
     const data = await $myAppApi.getCollectionItem(context, "news");
-    // Assuming data structure includes { flexible: [], type: '' }, adjust based on actual structure
     flexible.value = data.flexible;
     type.value = data?.type;
     $useMeta(data);
@@ -38,6 +36,8 @@ onMounted(async () => {
   } catch (err) {
     error.value = err;
     console.error("Error fetching collection item:", err);
+  } finally {
+    loaded.value = true;
   }
 });
 </script>

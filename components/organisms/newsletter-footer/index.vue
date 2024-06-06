@@ -95,7 +95,6 @@ export default {
 			if (data.Status === 400) {
 				console.warn(`Error: ${data.Message}`);
 			} else {
-				// 200
 				console.warn(`Succes: ${data.Message}`);
 			}
 		},

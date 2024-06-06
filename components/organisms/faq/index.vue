@@ -67,14 +67,12 @@ export default {
   computed: {},
 
   mounted() {
-    // accordion
     const { accordion } = this.$refs;
     const accordionItems = accordion.querySelectorAll(".accordion__item");
     accordionItems.forEach((item) => {
       const header = item.querySelector(".accordion__item__header");
 
       header.addEventListener("click", () => {
-        // Remove active class from all other items
         accordionItems.forEach((accordionItem) => {
           if (accordionItem !== item) {
             accordionItem.classList.remove("active");
@@ -86,7 +84,6 @@ export default {
     });
   },
 
-  // Reomove eventlister on destroy
   beforeDestroy() {
     const { accordion } = this.$refs;
     const accordionItems = accordion.querySelectorAll(".accordion__item");

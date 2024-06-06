@@ -1,7 +1,7 @@
 <template>
   <div>
     <Error :error="error" v-if="error" />
-    <ContentSwitch :flexible="flexible" v-else />
+    <ContentSwitch :flexible="flexible" v-else :loaded="loaded" />
     <NuxtLayout name="default" />
   </div>
 </template>
@@ -13,33 +13,30 @@ definePageMeta({
 });
 import { onMounted, ref, watch } from "vue";
 import useStore from "@/store";
-// Import components
+
 const ContentSwitch = defineAsyncComponent(() =>
   import("~/components/organisms/content-switch/index.vue")
 );
 
 const Error = defineAsyncComponent(() => import("~/layouts/error.vue"));
 
-// Import and use mixin as a composable if possible
-// Since mixins are not directly supported in <script setup>, consider converting `meta` to a composable if it's not already.
-// import useMeta from '~/composables/useMeta';
-// useMeta(); // This is an example of how you might use a converted mixin.
-
 const nuxtApp = useNuxtApp();
-const flexible = ref(false); // Assuming `flexible` is a property from your data
-const error = ref(false); // Assuming `flexible` is a property from your data
+const flexible = ref(false);
+const loaded = ref(false);
+const error = ref(false);
 
-// Example of an onMounted lifecycle hook
 const fetchPageData = async (slug) => {
   try {
     const data = await nuxtApp.$myAppApi.getPage(slug || "home");
     if (data) {
       nuxtApp.$useMeta(data);
-      flexible.value = data.flexible || false; // Modify according to the actual structure of 'data'
+      flexible.value = data.flexible || false;
     }
     error.value = false;
   } catch (err) {
     error.value = err;
+  } finally {
+    loaded.value = true;
   }
 };
 
@@ -73,5 +70,4 @@ const enterTransition = () => {
   }, 10);
 };
 
-// Watchers, Computed, and other Composition API features can be directly used here.
 </script>

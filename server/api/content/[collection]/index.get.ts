@@ -7,9 +7,9 @@ export default defineEventHandler(async (event) => {
 
   const { collection } = event.context.params as any;
   const postType = postTypes[collection];
-  const query = getQuery(event); // Assuming getQuery is a function to extract query parameters
+  const query = getQuery(event);
   const axiosOptions = { params: query };
-  const cacheKey = `content-${collection}-${JSON.stringify(query)}`;
+  const cacheKey = `${event.node.req.url}-${collection}-${JSON.stringify(query)}`;
   const cachedData = await redisClient.get(cacheKey);
 
   if (cachedData && cachedData != 'null') {

@@ -38,7 +38,6 @@ export default {
 			type: String,
 			default: 'select',
 			validator(value) {
-				// The markup value must match one of these strings
 				return ['select', 'list'].indexOf(value) !== -1;
 			}
 		},

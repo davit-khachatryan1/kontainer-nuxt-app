@@ -1128,7 +1128,6 @@ export default {
 		},
 		submit(validate) {
 			const config = useRuntimeConfig();
-			// this.checkDomainAvailability();
 			const store = useStore();
 
 			validate().then((result) => {
@@ -1209,7 +1208,7 @@ export default {
 							},
 						)
 						.then(() => {
-							this.success(); // redirect to success page
+							this.success();
 						})
 						.catch((error) => {
 							console.warn(error);
@@ -1244,10 +1243,10 @@ export default {
 				formId = "60bb0ed2-1ff2-4640-833a-7fcae7bfb389";
 			}
 
-			var hutk = document.cookie.replace(/(?:(?:^|.*;\s*)hubspotutk\s*\=\s*([^;]*).*$)|^.*$/, "$1"); // Get hubspot cookie
+			var hutk = document.cookie.replace(/(?:(?:^|.*;\s*)hubspotutk\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 			if (hutk) {
 				data.context = {
-					hutk: hutk, // include this parameter and set it to the hubspotutk cookie value to enable cookie tracking on your submission
+					hutk: hutk,
 					pageUri: `www.kontainer.com/${registrationData.locale}/register`,
 					pageName: "Register modal"
 				}
@@ -1298,7 +1297,7 @@ export default {
 
 					const self = this;
 					setTimeout(() => {
-						self.hostError = null; // reset error message
+						self.hostError = null;
 					}, 2000);
 				})
 				.catch((error) => {
@@ -1319,38 +1318,8 @@ export default {
 			let stored_packageInfo = store.packageInfo
 			if (stored_packageInfo && stored_packageInfo.package_id === slug) {
 				this.kontainerPackage = stored_packageInfo;
-				store.packageInfo = {}; // reset
+				store.packageInfo = {};
 			}
-			// Deprecated: CPT removed after new pricelist, so we cant get info by slug anymore. Instead it is saved in vuex.
-			// axios
-			// 	.get(
-			// 		`/api/content/list/prices?lang=${
-			// 			store.locale
-			// 		}&slug=${slug}`,
-			// 	)
-			// 	.then((response) => {
-			// 		if (response.data.length) {
-			// 			const {
-			// 				data: [kontainerPackage],
-			// 			} = response;
-
-			// 			this.kontainerPackage = kontainerPackage;
-			// 		} else {
-			// 			axios
-			// 				.get(
-			// 					`/api/content/list/prices_new?lang=${
-			// 						store.locale
-			// 					}&slug=${slug}`,
-			// 				)
-			// 				.then((response2) => {
-			// 					const {
-			// 						data: [kontainerPackage],
-			// 					} = response2;
-
-			// 					this.kontainerPackage = kontainerPackage;
-			// 				});
-			// 		}
-			// 	});
 		},
 		/* eslint-disable-next-line */
 		calculateTotals(slug) {

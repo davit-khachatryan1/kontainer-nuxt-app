@@ -31,7 +31,6 @@ export default {
 			if (process.browser && this.cleanHtml) {
 				const target = this.$refs.htmlcontainer;
 				if (target) {
-					// Add html to DOM - Store scripts and remove from DOM
 					const storescripts = [];
 					target.insertAdjacentHTML('beforeend', this.cleanHtml);
 					const scripts = target.getElementsByTagName('script');
@@ -42,11 +41,10 @@ export default {
 						storescripts.push(newScript);
 					}
 
-					// Add scripts again to DOM so they execute.
 					let i = 0;
 					while (i < storescripts.length) {
 						const newScript = document.createElement('script');
-						const DOMscript = storescripts[i]; // new DOMParser().parseFromString(storescripts[i], 'text/xml');
+						const DOMscript = storescripts[i];
 
 						if (DOMscript.id) {
 							newScript.id = DOMscript.id;

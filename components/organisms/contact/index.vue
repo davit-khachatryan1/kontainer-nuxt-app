@@ -203,7 +203,6 @@ export default {
         })
         .catch(() => {
           console.warn("Contact form failed");
-          // What to do on error
         });
     },
   },

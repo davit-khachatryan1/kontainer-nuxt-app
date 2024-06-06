@@ -367,7 +367,7 @@ export default {
 			z-index: z('heroLaptopVideo');
 			width: 100%;
 			height: auto;
-			min-height: 20.51406vw; // 16/9 format height to width of .span6
+			min-height: 20.51406vw;
 			max-height: 75vh;
 			visibility: visible;
 		}

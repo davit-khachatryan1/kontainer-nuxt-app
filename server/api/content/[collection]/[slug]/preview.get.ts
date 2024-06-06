@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     const { collection, slug } = event.context.params as any;
     const query = getQuery(event);
     const { key } = query;
-    const postType = postTypes[collection]; // Ensure 'postTypes' is defined or imported
+    const postType = postTypes[collection];
     const axiosOptions = {
       params: {
         ...query,

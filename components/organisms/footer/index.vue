@@ -289,7 +289,6 @@ export default {
     }
 
     .dropdown {
-      // ul
       font-size: 14px;
       transform: translate(calc(-50% + 10px), 20px);
       padding: 40px 30px !important;
@@ -299,7 +298,6 @@ export default {
       }
 
       &::before {
-        // for hover
         content: "";
         position: absolute;
         width: 100%;

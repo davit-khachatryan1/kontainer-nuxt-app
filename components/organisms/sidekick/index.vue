@@ -400,7 +400,6 @@ $margins: (
 		justify-content: space-between;
 	}
 	@include media('mobile') {
-		// stack media over text
 		.text + div:not(.text) {
 			order: -1;
 		}
@@ -465,7 +464,7 @@ $margins: (
 
 .video {
 	.media-container {
-		padding-bottom: 55.25%; // add correct aspect ratio
+		padding-bottom: 55.25%;
 		overflow: hidden;
 	}
 
@@ -499,13 +498,11 @@ $margins: (
 
 	@include media('mobile-ab') {
 		&.span6:first-child {
-			// image on left side
-			padding-right: 2vw; // temp approximation
+			padding-right: 2vw;
 		}
 
 		&.span6:last-child {
-			// image on right side
-			padding-left: 2vw; // temp approximation
+			padding-left: 2vw;
 		}
 	}
 }

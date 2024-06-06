@@ -15,13 +15,12 @@ definePageMeta({
   layout: false,
 });
 const nuxtApp = useNuxtApp();
-const api = nuxtApp.$myAppApi; // Assuming your plugin is made available globally through Nuxt 3 plugins
-const flexible = ref([]); // Assuming flexible is a prop or needs to be fetched
+const api = nuxtApp.$myAppApi;
+const flexible = ref([]);
 const posts = ref({ blog: [] });
 
-// Simulating the async setup behavior with onMounted in Vue 3
 onMounted(async () => {
-  const context = {}; // Define or get your context
+  const context = {};
   const data = await api.getCollection(context, "blog");
   flexible.value = data?.flexible || [];
   posts.value = data?.posts || { blog: [] };
@@ -33,7 +32,6 @@ const kards = computed(() => {
     .map((layout, index) => {
       if (layout.acf_fc_layout === "blog_list") {
         const lastestNews = posts.value.blog.map((o) => {
-          // Adaptation for different data structure
           const newDataStructure = {
             resource: {
               ...o,
@@ -49,7 +47,6 @@ const kards = computed(() => {
     .filter((layout) => layout.acf_fc_layout === "blog_list");
 });
 
-// Transition-related logic adapted for Vue 3
 const store = useStore();
 onMounted(() => {
   store.menuHide(true);

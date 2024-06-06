@@ -4,7 +4,7 @@ const postTypes: any = envConfigs.env.postTypes;
 
 export default defineEventHandler(async (event) => {
     const { collection } = event.context.params as any;
-    const postType = postTypes[collection];  // Define or import `postTypes` as necessary
+    const postType = postTypes[collection];
     const query = getQuery(event)
     const { key } = query;
     const axiosOptions = { params: { ...query } };

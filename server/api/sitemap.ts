@@ -1,5 +1,3 @@
-// server/api/sitemap.js
-
 import axios, { type AxiosInstance } from 'axios';
 const LOCALES = ['en', 'da', 'de'];
 const DEFAULT_LOCALE = 'en';
@@ -25,8 +23,8 @@ export default defineEventHandler(async (event) => {
 
   const config = useRuntimeConfig();
   const wpapi = axios.create({
-    baseURL: config.public.apiUrl,  // Using runtime config to get API base URL
-    params: { per_page: 100 } // Set the max per_page limit for WordPress
+    baseURL: config.public.apiUrl,
+    params: { per_page: 100 }
   });
 
   const resources = await getAllResources(wpapi);
@@ -45,9 +43,6 @@ export default defineEventHandler(async (event) => {
   return newRoutes;
 });
 
-// Define constants
-
-// Function to generate paths from data
 const preparePathsFromData = (data: any, resourceType: any) => {
   const excludedSlugs = resourceType === 'page' ? BANNED_SLUGS : [];
   const pathPrefix = PATH_PREFIXES[resourceType];
@@ -62,7 +57,6 @@ const preparePathsFromData = (data: any, resourceType: any) => {
     }));
 };
 
-// Utility to fetch all resources
 async function getAllResources(wpapi: AxiosInstance) {
   return Promise.all(RESOURCE_TYPES.map(async (type) => {
     const endpoint = BASE_ENDPOINTS[type];
@@ -71,7 +65,6 @@ async function getAllResources(wpapi: AxiosInstance) {
   })).then(res => res.flat());
 }
 
-// Utility to handle language prefixes
 const getLangPrefix = (locale: any, defaultPath = '') => locale === DEFAULT_LOCALE ? defaultPath : `/${locale}`;
 
 const PRECONFIGURED_ROUTES = [

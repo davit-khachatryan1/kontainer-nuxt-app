@@ -198,7 +198,6 @@ export default {
   }
 
   .swiper-slide {
-    // fix inline styling from swiper resetting on click, styles set from swiperOptions
     width: calc(33.3333% - (30px * 2 / 3)) !important;
     margin-right: 30px;
     height: auto;

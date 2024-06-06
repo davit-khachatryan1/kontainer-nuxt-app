@@ -125,7 +125,7 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import useStore from "@/store"; // Assuming you're using Vuex 4 for Nuxt 3
+import useStore from "@/store";
 const SmartLink = defineAsyncComponent(() =>
   import("~/components/helper/smartlink/index.vue")
 );
@@ -190,7 +190,6 @@ const activeMenuChild = computed(() => {
   return route.params.slug
 });
 
-// Methods
 function handleLangMenuHover(e) {
   const { type } = e;
   if (!window.matchMedia("(hover: none)").matches) {
@@ -487,7 +486,6 @@ function handleLangMenuClick(e) {
   }
 
   &__right__ctas {
-    // li
     margin-left: 19px;
     white-space: nowrap;
     display: flex !important;
@@ -570,18 +568,8 @@ function handleLangMenuClick(e) {
   }
 
   &__right__language {
-    // li
     flex-shrink: 0;
     margin: 20px;
-
-    /* 	@include media('desktop-1200') {
-			margin-right: calc(0px - #{$tabletMargin} / 2 + 30px);
-		}
-
-		@include media('mobile-sm') {
-			margin-right: 0;
-			margin-left: 20px;
-		} */
 
     svg {
       display: block;
@@ -598,7 +586,6 @@ function handleLangMenuClick(e) {
     }
 
     .dropdown {
-      // ul
       font-size: 14px;
       transform: translate(calc(-50% + 10px), 20px);
       padding: 40px 30px !important;
@@ -608,7 +595,6 @@ function handleLangMenuClick(e) {
       }
 
       &::before {
-        // for hover
         content: "";
         position: absolute;
         width: 100%;

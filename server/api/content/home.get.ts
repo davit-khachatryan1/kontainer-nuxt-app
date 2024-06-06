@@ -3,8 +3,8 @@ import { getUrlWithLangPrefix, preparePage, wpapi } from "../../constants/consta
 export default defineEventHandler(async (event) => {
   const redisClient: any = event.context.redisClient
 
-  const query = getQuery(event);  // Ensure you have a method to extract query parameters
-  const cacheKey = `frontpageData-${JSON.stringify(query)}`;
+  const query = getQuery(event);
+  const cacheKey = `${event.node.req.url}-${JSON.stringify(query)}`;
   const cachedData = await redisClient.get(cacheKey);
 
   if (cachedData && cachedData != 'null') {

@@ -152,9 +152,7 @@ export default defineComponent({
   }
 
   .swiper-slide {
-    // fix inline styling from swiper resetting on click, styles set from swiperOptions
     width: calc(33.3333% - (30px * 2 / 3));
-    // margin-right: 30px;
     height: auto;
 
     @include media("tablet") {
@@ -173,7 +171,6 @@ export default defineComponent({
 
       .bg {
         position: absolute;
-        // width: 100%;
       }
     }
   }

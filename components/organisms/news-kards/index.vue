@@ -103,7 +103,6 @@ export default {
 		kards() {
 			if (this.data.fetch_resource_type === 'latest') {
 				return this.lastestKards.map((o) => {
-					// hack for different data structure
 					const newDataStructure = { resource: o };
 					newDataStructure.resource.custom = {
 						kard_info: newDataStructure.resource.kard_info,

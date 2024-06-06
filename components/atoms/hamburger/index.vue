@@ -72,7 +72,6 @@ export default {
 	width: $actualSize * 1px;
 	overflow: hidden;
 
-	// button override
 	background-color: transparent;
 	border: 0;
 	padding: (calc(($actualSize - $iconSize) / 2)) * 1px;
@@ -138,7 +137,6 @@ export default {
 		$active: &;
 		color: $label-color;
 
-		// background-color: #333; // @debug
 		transition: transform 300ms, color 200ms linear,
 			background-color 200ms linear;
 

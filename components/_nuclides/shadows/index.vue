@@ -75,9 +75,3 @@ export default {
 	}
 }
 </style>
-
-// <docs>
-// ```jsx
-// <Shadows />
-// ```
-// </docs>

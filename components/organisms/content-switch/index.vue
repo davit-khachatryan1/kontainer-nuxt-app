@@ -162,7 +162,7 @@
     </template>
 
     <ContentSection
-      v-if="empty"
+      v-if="empty && loaded"
       angleTyp="0"
       bg="grey"
       :pin="{ top: false, bottom: false }"
@@ -254,17 +254,19 @@ const PageNav = defineAsyncComponent(() =>
 );
 const Faq = defineAsyncComponent(() => import("~/components/organisms/faq/index.vue"));
 
-// Define props with defineProps
 const props = defineProps({
   flexible: Array | Boolean,
   type: String,
+  loaded: Boolean
 });
 
-// Computed property for checking if the flexible content is empty
 const empty = computed(() => {
   return !props.flexible || props.flexible.length === 0;
 });
-// Refactoring the `blocks` computed property
+
+const loaded = computed(() => {
+  return props.loaded;
+});
 const blocks = computed(() =>
   (props.flexible || []).map((block, index) => {
     const {
@@ -298,7 +300,6 @@ const blocks = computed(() =>
   })
 );
 
-// Methods can be converted to regular functions or setup within onMounted/onUpdated lifecycle hooks as needed.
 function nextSectionSlant(index) {
   const blockArray = blocks.value;
   if (blockArray[index + 1]) {
@@ -381,7 +382,6 @@ function metaInfo(currentIndex) {
     currentBlock,
   };
 }
-// Example of processing data for the next angle. This demonstrates how to manage data transformations in Vue 3.
 function dataWithNextAngle(data, currentIndex) {
   return {
     ...data,

@@ -80,8 +80,8 @@ export default {
 		height: 100%;
 		opacity: 0;
 		transition: opacity 200ms;
-		position: relative; // for z-index
-		z-index: 1; // above loader
+		position: relative;
+		z-index: 1;
 
 		@include media('(max-width: 683px)') {
 			border-top: 1px solid #eee;
@@ -114,7 +114,7 @@ export default {
 		border: 0;
 		display: block;
 		background-color: transparent;
-		z-index: 2; // above iframe
+		z-index: 2;
 
 		&::before,
 		&::after {

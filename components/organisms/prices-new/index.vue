@@ -537,7 +537,6 @@ export default {
 			return `${langPrefix}/register-contact?kontainer=${slug}`;
 		},
 		setHeight(ref, sticky) {
-			// const elements = this.$refs[ref];
 			const elements = document.querySelectorAll(ref);
 			const elementsHeight = [];
 			elements?.forEach((el) => {
@@ -1049,7 +1048,6 @@ $pricePerMonthColor: #0e1029;
 		li {
 			display: inline-block;
 			padding: 5px 7px;
-			// margin: 2px;
 			margin: 15px 0;
 			border-radius: 14px;
 			border: 1px solid transparent;

@@ -1,6 +1,7 @@
 <template>
-  <section>
-    <ContentSwitch :flexible="flexible" :kards="kards" />
+  <Error :error="error" v-if="error" />
+  <section v-else>
+    <ContentSwitch :flexible="flexible" :loaded="loaded" />
     <NuxtLayout name="default" />
   </section>
 </template>
@@ -21,6 +22,8 @@ const { $myAppApi, $useMeta } = useNuxtApp();
 const store = useStore();
 
 const flexible = ref([]);
+const loaded = ref(false);
+const error = ref(false);
 
 onMounted(async () => {
   try {
@@ -43,8 +46,12 @@ onMounted(async () => {
       }
       return false;
     });
+    error.value = false;
   } catch (error) {
+    error.value = err;
     console.error("Error fetching collection item:", error);
+  } finally {
+    loaded.value = true;
   }
 });
 

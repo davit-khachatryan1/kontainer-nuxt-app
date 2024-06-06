@@ -83,7 +83,6 @@ export default {
 			return `${langPrefix}/register?kontainer=${this.data.slug}`;
 		},
 		priceActions(enter) {
-			// const price = this.$el;
 			const overOut = enter ? 'over' : 'out';
 			const isChanging = this.isHovered !== overOut;
 

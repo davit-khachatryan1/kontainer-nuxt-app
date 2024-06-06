@@ -180,7 +180,6 @@ input::-ms-clear {
     }
 
     &__placeholder {
-      // $input-placeholder-selector: & !global;
       @extend %text-input-placeholder;
       color: $black;
       left: 56px;

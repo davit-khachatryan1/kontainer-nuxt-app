@@ -6,15 +6,15 @@ export default defineEventHandler(async (event) => {
   const redisClient: any = event.context.redisClient
 
   const { collection, slug } = event.context.params as any;
-  const postType = postTypes[collection]; // Ensure 'postTypes' is defined or imported
-  const query = getQuery(event); // Ensure getQuery is properly implemented to extract query parameters
+  const postType = postTypes[collection];
+  const query = getQuery(event);
   const axiosOptions = {
     params: {
       ...query,
       slug,
     },
   };
-  const cacheKey = `content-${collection}-${slug}-${JSON.stringify(query)}`;
+  const cacheKey = `${event.node.req.url}-${collection}-${slug}-${JSON.stringify(query)}`;
   const cachedData = await redisClient.get(cacheKey);
 
   if (cachedData && cachedData != 'null') {
@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
     if (response.data && response.data.length > 0) {
       const preparedData = preparePage(response.data[0]);
 
-      await redisClient.setEx(cacheKey, 600, JSON.stringify(preparedData)); // Using a TTL of 600 seconds (10 minutes)
+      await redisClient.setEx(cacheKey, 600, JSON.stringify(preparedData));
       if (!preparedData) {
         event.res.statusCode = 404;
         return 'Not found';

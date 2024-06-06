@@ -133,9 +133,3 @@ export default {
 	}
 }
 </style>
-
-// <docs>
-// ```jsx
-// <Typography />
-// ```
-// </docs>

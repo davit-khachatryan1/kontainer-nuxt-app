@@ -85,7 +85,7 @@ export default {
 						(this.nextSectionSlant === SECTION_ANGLE_POSITIVE &&
 							this.alignment === 'left');
 					const slantAdjust = needsSlantAdjustment
-						? 0.03492 * window.innerWidth // magic number matches css-value
+						? 0.03492 * window.innerWidth
 						: 0;
 
 					this.height = containerRect.height - slantAdjust;
@@ -184,7 +184,7 @@ export default {
 	}
 
 	&__box {
-		$desktop-push-out: 92px; // 72px for box not to hit the margin when rotated 45deg
+		$desktop-push-out: 92px;
 		$tablet-push-out: 72px;
 
 		height: 270px;

@@ -1,10 +1,9 @@
-// Import necessary helpers and constants
 import { getUrlWithLangPrefix, prepareAcf, prepareCategories, wpapi } from "../constants/constant";
 
 export default defineEventHandler(async (event) => {
   const redisClient: any = event.context.redisClient
-  const query = getQuery(event); // Assuming getQuery is a function you have defined to extract the query parameters
-  const cacheKey = `globalData-${JSON.stringify(query)}`;
+  const query = getQuery(event);
+  const cacheKey = `${event.node.req.url}-${JSON.stringify(query)}`;
   const cachedData = await redisClient.get(cacheKey);
 
   if (cachedData && cachedData != 'null') {
