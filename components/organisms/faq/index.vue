@@ -46,7 +46,7 @@
 
 <script>
 import { useLangString } from "~/components/composables/useLangString";
-const IconCaret = defineAsyncComponent(() => import("~/assets/svg/caret.svg"));
+const IconCaret = defineAsyncComponent(() => import('~/assets/svg/caret.svg'));
 
 export default {
   name: "Faq",

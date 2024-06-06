@@ -56,7 +56,7 @@ const KardComponent = defineAsyncComponent(() =>
 const ButtonComponent = defineAsyncComponent(() =>
   import("~/components/atoms/button/index.vue")
 );
-const Arrow = defineAsyncComponent(() => import("~/assets/svg/arrow-big.svg"));
+const Arrow = defineAsyncComponent(() => import('~/assets/svg/arrow-big.svg'));
 const SmartLink = defineAsyncComponent(() =>
   import("~/components/helper/smartlink/index.vue")
 );

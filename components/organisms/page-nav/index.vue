@@ -139,13 +139,13 @@ const ButtonComp = defineAsyncComponent(() =>
 const Hamburger = defineAsyncComponent(() =>
   import("~/components/atoms/hamburger/index.vue")
 );
-const IconCaret = defineAsyncComponent(() => import("~/assets/svg/caret-select.svg"));
-const LanguageIcon = defineAsyncComponent(() => import("~/assets/svg/language.svg"));
+const IconCaret = defineAsyncComponent(() => import('~/assets/svg/caret-select.svg'));
+const LanguageIcon = defineAsyncComponent(() => import('~/assets/svg/language.svg'));
 const IconLogoText = defineAsyncComponent(() =>
-  import("~/assets/svg/kontainer-logo-text.svg")
+  import('~/assets/svg/kontainer-logo-text.svg')
 );
 const IconLogoMark = defineAsyncComponent(() =>
-  import("~/assets/svg/kontainer-logo-mark.svg")
+  import('~/assets/svg/kontainer-logo-mark.svg')
 );
 
 const hoverMenu = ref(false);

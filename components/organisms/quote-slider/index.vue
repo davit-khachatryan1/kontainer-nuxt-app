@@ -80,16 +80,16 @@
 const Teaser = defineAsyncComponent(() =>
   import("~/components/molecules/teaser/index.vue")
 );
-const Arrow = defineAsyncComponent(() => import("~/assets/svg/arrow-big.svg"));
-const QuoteIcon = defineAsyncComponent(() => import("~/assets/svg/quote_icon.svg"));
+const Arrow = defineAsyncComponent(() => import('~/assets/svg/arrow-big.svg'));
+const QuoteIcon = defineAsyncComponent(() => import('~/assets/svg/quote_icon.svg'));
 const CapFourFiveStars = defineAsyncComponent(() =>
-  import("~/assets/svg/cap-4-5-stars.svg")
+  import('~/assets/svg/cap-4-5-stars.svg')
 );
-const CapFiveStars = defineAsyncComponent(() => import("~/assets/svg/cap-5-stars.svg"));
+const CapFiveStars = defineAsyncComponent(() => import('~/assets/svg/cap-5-stars.svg'));
 const G2FourFiveStars = defineAsyncComponent(() =>
-  import("~/assets/svg/g2-4-5-stars.svg")
+  import('~/assets/svg/g2-4-5-stars.svg')
 );
-const G2FiveStars = defineAsyncComponent(() => import("~/assets/svg/g2-5-stars.svg"));
+const G2FiveStars = defineAsyncComponent(() => import('~/assets/svg/g2-5-stars.svg'));
 const SmartLink = defineAsyncComponent(() =>
   import("~/components/helper/smartlink/index.vue")
 );

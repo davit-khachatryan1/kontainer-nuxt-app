@@ -119,7 +119,7 @@
 </template>
 
 <script>
-const IconCaret = defineAsyncComponent(() => import("~/assets/svg/caret-select.svg"));
+const IconCaret = defineAsyncComponent(() => import('~/assets/svg/caret-select.svg'));
 const LinkList = defineAsyncComponent(() =>
   import("~/components/atoms/linklist/index.vue")
 );
@@ -127,11 +127,11 @@ const SmartLink = defineAsyncComponent(() =>
   import("~/components/helper/smartlink/index.vue")
 );
 import { prepareWPObjectsToLinks } from "~/components/composables/prepareWPObjectsToLinks";
-const OfficesLogo = defineAsyncComponent(() => import("~/assets/svg/office.svg"));
+const OfficesLogo = defineAsyncComponent(() => import('~/assets/svg/office.svg'));
 const CapterraBadge = defineAsyncComponent(() =>
-  import("~/assets/svg/cap-4-5-stars.svg")
+  import('~/assets/svg/cap-4-5-stars.svg')
 );
-const G2Badge = defineAsyncComponent(() => import("~/assets/svg/g2-5-stars.svg"));
+const G2Badge = defineAsyncComponent(() => import('~/assets/svg/g2-5-stars.svg'));
 const LanguageSelect = defineAsyncComponent(() =>
   import("~/components/organisms/language-select/index.vue")
 );

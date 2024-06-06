@@ -69,15 +69,15 @@
 
 <script>
 import { useInputLabels } from "~/components/composables/useInputLabels";
-const IconUser = defineAsyncComponent(() => import("~/assets/svg/user.svg"));
-const IconEmail = defineAsyncComponent(() => import("~/assets/svg/email.svg"));
-const IconCompany = defineAsyncComponent(() => import("~/assets/svg/company.svg"));
-const IconAddress = defineAsyncComponent(() => import("~/assets/svg/address.svg"));
-const IconPhone = defineAsyncComponent(() => import("~/assets/svg/phone.svg"));
-const IconCity = defineAsyncComponent(() => import("~/assets/svg/city.svg"));
-const IconCountry = defineAsyncComponent(() => import("~/assets/svg/country.svg"));
-const IconVat = defineAsyncComponent(() => import("~/assets/svg/vat.svg"));
-const IconZip = defineAsyncComponent(() => import("~/assets/svg/zip.svg"));
+const IconUser = defineAsyncComponent(() => import('~/assets/svg/user.svg'));
+const IconEmail = defineAsyncComponent(() => import('~/assets/svg/email.svg'));
+const IconCompany = defineAsyncComponent(() => import('~/assets/svg/company.svg'));
+const IconAddress = defineAsyncComponent(() => import('~/assets/svg/address.svg'));
+const IconPhone = defineAsyncComponent(() => import('~/assets/svg/phone.svg'));
+const IconCity = defineAsyncComponent(() => import('~/assets/svg/city.svg'));
+const IconCountry = defineAsyncComponent(() => import('~/assets/svg/country.svg'));
+const IconVat = defineAsyncComponent(() => import('~/assets/svg/vat.svg'));
+const IconZip = defineAsyncComponent(() => import('~/assets/svg/zip.svg'));
 
 export default {
   name: "Input",
