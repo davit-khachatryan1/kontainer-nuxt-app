@@ -15,7 +15,7 @@
         v-else-if="loaded && !crop"
         :title="image.title"
         :alt="image.alt"
-        :src="src"
+        :src="src.replace('.png', '.webp').replace('.jpg', '.webp').replace('.jpeg', '.webp')"
         :class="{ inlineimage: true }"
         :width="image.sizes['mobile-width']"
         :height="image.sizes['mobile-width'] / image.ratio"

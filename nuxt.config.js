@@ -86,6 +86,8 @@ export default defineNuxtConfig({
     '~/plugins/fonts.js',
     '~/plugins/vue-select.js',
     '~/plugins/googletagmanager.js',
+    '~/plugins/vue-lazyload.js',
+    '~/plugins/intersectionObserver.js'
   ],
   css: ['~/assets/scss/framework.scss', '~/assets/scss/import.scss'],
   ssr: true,

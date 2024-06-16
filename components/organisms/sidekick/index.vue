@@ -147,7 +147,7 @@
 						<template v-else>
 							<video
 								v-if="sidekick.video.url"
-								:src="sidekick.video.url"
+								v-lazy-load-video="sidekick.video.url"
 								playsinline
 								muted
 								loop
@@ -216,6 +216,7 @@
 						height="400"
 						@keyup.esc="closeVideoModal"
 						tabindex="0"
+						v-lazy-load-video
 					>
 						<source :src="videoModalFile" type="video/mp4" />
 					</video>

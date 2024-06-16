@@ -36,7 +36,7 @@
                     v-if="entry.image"
                     width="90"
                     height="90"
-                    :src="entry.image.url"
+                    :src="entry.image.url.replace('.png', '.webp').replace('.jpg', '.webp').replace('.jpeg', '.webp')"
                   />
                   <p v-else class="intitals">{{ entry.content.initials }}</p>
                 </div>

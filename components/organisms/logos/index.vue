@@ -16,7 +16,7 @@
 						<NuxtImg
 							loading="lazy"
 							:title="logo.logo_title"
-							:src="logo.logo_img.url"
+							:src="logo.logo_img.url.replace('.png', '.webp').replace('.jpg', '.webp').replace('.jpeg', '.webp')"
 							:alt="logo.logo_img.alt"
 						/>
 					</SmartLink>
@@ -25,7 +25,7 @@
 						width="150"
 						:height="150 / logo.logo_img.ratio"
 						:title="logo.logo_title"
-						:src="logo.logo_img.url"
+						:src="logo.logo_img.url.replace('.png', '.webp').replace('.jpg', '.webp').replace('.jpeg', '.webp')"
 						:alt="logo.logo_img.alt"
 						v-else
 					/>

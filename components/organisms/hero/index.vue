@@ -39,7 +39,7 @@
 			]
 			: ['sidekick']
 		" nocrop />
-									<video v-if="videoUrl" class="js-hero-video" :src="videoUrl" width="700"
+									<video v-if="videoUrl" class="js-hero-video" v-lazy-load-video="videoUrl" width="700"
 										height="400" playsinline muted loop autoplay></video>
 									<div class="video-url-container" v-if="video_url">
 										<iframe class="js-hero-video" :src="video_url + '?controls=0'"
@@ -102,6 +102,7 @@
 						close
 					</button>
 					<video playsinline controls autoplay ref="videoplayer" width="700" height="400"
+					v-lazy-load-video
 					@keyup.esc="closeVideoModal" tabindex="0">
 					<source :src="videoModalFile" type="video/mp4" />
 					</video>
