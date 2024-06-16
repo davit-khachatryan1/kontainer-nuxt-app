@@ -7,12 +7,12 @@
 </template>
 
 <script setup>
+import useStore from "@/store";
+
 definePageMeta({
   middleware: ["lang", "global", "cleanup"],
   layout: false,
 });
-import { onMounted, ref, watch } from "vue";
-import useStore from "@/store";
 
 const ContentSwitch = defineAsyncComponent(() =>
   import("~/components/organisms/content-switch/index.vue")
@@ -23,7 +23,7 @@ const Error = defineAsyncComponent(() => import("~/layouts/error.vue"));
 const nuxtApp = useNuxtApp();
 const flexible = ref(false);
 const loaded = ref(false);
-const error = ref(false);
+const error = ref(null);
 
 const fetchPageData = async (slug) => {
   try {
@@ -32,7 +32,7 @@ const fetchPageData = async (slug) => {
       nuxtApp.$useMeta(data);
       flexible.value = data.flexible || false;
     }
-    error.value = false;
+    error.value = null;
   } catch (err) {
     error.value = err;
   } finally {
@@ -45,19 +45,10 @@ onMounted(() => {
 });
 
 watch(
-  () => nuxtApp._route.params.slug,
-  (newSlug, oldSlug) => {
-    if (newSlug !== oldSlug) {
+  () => [nuxtApp._route.params.slug, nuxtApp._route.params.lang],
+  ([newSlug, newLang], [oldSlug, oldLang]) => {
+    if (newSlug !== oldSlug || newLang !== oldLang) {
       fetchPageData(newSlug);
-    }
-  }
-);
-
-watch(
-  () => nuxtApp._route.params.lang,
-  (newSlug, oldSlug) => {
-    if (newSlug !== oldSlug) {
-      fetchPageData(nuxtApp._route.params.slug);
     }
   }
 );
@@ -69,5 +60,4 @@ const enterTransition = () => {
     store.menuHide(false);
   }, 10);
 };
-
 </script>

@@ -14,7 +14,7 @@
         v-bind:key="index + '111'"
       />
       <AnimationBox
-        v-else
+        v-else-if="animationBoxData(block.data)"
         v-bind:key="index + '222'"
         v-bind="animationBoxData(block.data)"
         :nextSectionSlant="nextSectionSlant(blocks, index)"
