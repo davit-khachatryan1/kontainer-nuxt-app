@@ -1,8 +1,7 @@
 <template>
 	<div ref="parallaxContainer" class="animationbox">
-		<div class="animationbox__overflower">
+		<div class="animationbox__overflower" v-if="enabled">
 			<div
-				v-if="enabled"
 				:class="['animationbox__box', boxColorClass, boxAlignmentClass]"
 				ref="parallaxBox"
 			></div>
