@@ -15,7 +15,7 @@
         v-else-if="loaded && !crop"
         :title="image.title"
         :alt="image.alt"
-        :src="src.replace('.png', '.webp').replace('.jpg', '.webp').replace('.jpeg', '.webp')"
+        :src="src"
         :class="{ inlineimage: true }"
         :width="image.sizes['mobile-width']"
         :height="image.sizes['mobile-width'] / image.ratio"
@@ -69,26 +69,25 @@ export default {
       let biggest = 0;
       let smallestSize = null;
       let biggestSize = defaultCurrent;
-
+      
       for (let i = 0; i < this.sizes.length; i += 1) {
         const width = this.image.sizes[`${this.sizes[i]}-width`];
         const height = this.image.sizes[`${this.sizes[i]}-height`];
         if (width < smallest && width >= minSize) {
           smallestSize = {
-            url: this.image.sizes[this.sizes[i]],
+            url: this.image.sizes[this.sizes[i] + "_webp"] || this.image.sizes[this.sizes[i] + "_avif"] || this.image.sizes[this.sizes[i]],
             ratio: width / height,
           };
           smallest = width;
         }
         if (width > biggest) {
           biggestSize = {
-            url: this.image.sizes[this.sizes[i]],
+            url: this.image.sizes[this.sizes[i] + "_webp"] || this.image.sizes[this.sizes[i] + "_avif"] || this.image.sizes[this.sizes[i]],
             ratio: width / height,
           };
           biggest = width;
         }
       }
-
       return smallestSize || biggestSize;
     },
     src() {

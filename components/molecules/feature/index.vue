@@ -1,7 +1,7 @@
 <template>
 	<div class="feature">
 		<div class="feature__icon">
-			<NuxtImg loading="lazy" v-if="feature.icon && feature.icon.url" :src="feature.icon.url.replace('.png', '.webp').replace('.jpg', '.webp').replace('.jpeg', '.webp')" :alt="feature.icon.alt" />
+			<NuxtImg loading="lazy" v-if="feature.icon && feature.icon.url" :src="feature.icon.url_webp || feature.icon.url" :alt="feature.icon.alt" />
 		</div>
 		<h3 :class="titleStyle" v-html="feature.heading" />
 		<div class="feature__subtitle" v-if="feature.subheading" v-html="feature.subheading" />

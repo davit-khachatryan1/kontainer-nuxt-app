@@ -17,7 +17,7 @@
 						loading="lazy"
 						:title="feature.custom.icon.title"
 						:alt="feature.custom.icon.alt"
-						:src="feature.custom.icon.url.replace('.png', '.webp').replace('.jpg', '.webp').replace('.jpeg', '.webp')"
+						:src="eature.custom.icon.url_webp || feature.custom.icon.url"
 					/>
 				</div>
 				<div class="feature-item__text">

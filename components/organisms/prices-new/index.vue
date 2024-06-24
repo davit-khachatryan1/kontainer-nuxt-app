@@ -107,7 +107,7 @@
 											>
 												<a
 													@click.prevent="addUsers(option, column.slug, $event)"
-													>{{ option.users }} users (+{{ option.price }},-
+													>{{ option.users }} {{langString('_users')}} (+{{ option.price }},-
 													{{ option.currency }})</a
 												>
 											</li>
@@ -306,7 +306,7 @@
 														@click.prevent="
 															addUsers(option, column.slug, $event)
 														"
-														>{{ option.users }} users (+{{ option.price }},-
+														>{{ option.users }} {{langString('_users')}} (+{{ option.price }},-
 														{{ option.currency }})</a
 													>
 												</li>
