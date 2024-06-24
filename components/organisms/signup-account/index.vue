@@ -1709,12 +1709,13 @@ const checkDomainAvailability = () => {
       }, 2000);
     })
     .catch((error) => {
+      console.log(error);
+      const oldDomain = domain;
       const urlSuggestion = error.response.data.suggestion;
       hostStatus.value = false;
       registration.value.host = urlSuggestion;
-
-      if (urlSuggestion) {
-        hostError.value = `${domain} ${langString("_is_taken_how_about_this?")}`;
+      if (!hostError.value && urlSuggestion) {
+        hostError.value = `${oldDomain} ${langString("_is_taken_how_about_this?")}`;
       }
     });
 };

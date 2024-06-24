@@ -8,7 +8,7 @@
         v-slot="{ field, errors }"
         :rules="rules"
         v-model="inputValue"
-        >
+      >
         <input
           v-bind="field"
           @input="
@@ -22,10 +22,10 @@
             form__element__input: true,
             'form__element__input--no-icon': noIcon,
             'form__element__input--hide': hidePlaceholder,
-            error: errors.length > 0,
+            error: errorMessage || errors.length > 0,
             focus: focused,
             filled: field.value,
-            valid: !errors.length && field.value,
+            valid: errorMessage ? errorMessage : !errors.length && field.value,
           }"
         />
         <span
@@ -47,14 +47,14 @@
           <span
             class="error-message"
             :class="{ 'error-message--no-icon': noIcon }"
-            v-if="errors?.length"
+            v-if="errorMessage || errors?.length"
           >
             <div
-              :class="{ before: errors?.length }"
-              v-if="errors?.length ? errors[0] : ''"
+              :class="{ before: errorMessage || errors?.length }"
+              v-if="errorMessage ? errorMessage : (errors?.length ? errors[0] : '')"
             />
             <span>
-              {{ errors?.length ? errors[0] : "" }}
+              {{ errorMessage ? errorMessage : (errors?.length ? errors[0] : "") }}
             </span>
           </span>
         </transition>
@@ -69,15 +69,15 @@
 
 <script>
 import { useInputLabels } from "~/components/composables/useInputLabels";
-const IconUser = defineAsyncComponent(() => import('~/assets/svg/user.svg'));
-const IconEmail = defineAsyncComponent(() => import('~/assets/svg/email.svg'));
-const IconCompany = defineAsyncComponent(() => import('~/assets/svg/company.svg'));
-const IconAddress = defineAsyncComponent(() => import('~/assets/svg/address.svg'));
-const IconPhone = defineAsyncComponent(() => import('~/assets/svg/phone.svg'));
-const IconCity = defineAsyncComponent(() => import('~/assets/svg/city.svg'));
-const IconCountry = defineAsyncComponent(() => import('~/assets/svg/country.svg'));
-const IconVat = defineAsyncComponent(() => import('~/assets/svg/vat.svg'));
-const IconZip = defineAsyncComponent(() => import('~/assets/svg/zip.svg'));
+const IconUser = defineAsyncComponent(() => import("~/assets/svg/user.svg"));
+const IconEmail = defineAsyncComponent(() => import("~/assets/svg/email.svg"));
+const IconCompany = defineAsyncComponent(() => import("~/assets/svg/company.svg"));
+const IconAddress = defineAsyncComponent(() => import("~/assets/svg/address.svg"));
+const IconPhone = defineAsyncComponent(() => import("~/assets/svg/phone.svg"));
+const IconCity = defineAsyncComponent(() => import("~/assets/svg/city.svg"));
+const IconCountry = defineAsyncComponent(() => import("~/assets/svg/country.svg"));
+const IconVat = defineAsyncComponent(() => import("~/assets/svg/vat.svg"));
+const IconZip = defineAsyncComponent(() => import("~/assets/svg/zip.svg"));
 
 export default {
   name: "Input",
@@ -104,7 +104,7 @@ export default {
       get: () => ev.modelValue,
       set: (val) => emit("update:modelValue", val),
     });
-
+    
     const { focused, hasValue, focusCheck, valueCheck } = useInputLabels();
     return { focused, hasValue, focusCheck, valueCheck, inputValue };
   },
