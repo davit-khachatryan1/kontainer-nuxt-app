@@ -25,7 +25,7 @@ const flexible = ref([]);
 const loaded = ref(false);
 const error = ref(false);
 
-onMounted(async () => {
+onBeforeMount(async () => {
   try {
     const data = await $myAppApi.getCollection({}, "news");
     flexible.value = data.flexible;

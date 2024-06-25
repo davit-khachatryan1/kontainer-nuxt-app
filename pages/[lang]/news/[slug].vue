@@ -24,7 +24,7 @@ const loaded = ref(false);
 
 const { $myAppApi, $useMeta } = useNuxtApp();
 
-onMounted(async () => {
+onBeforeMount(async () => {
   const context = {};
 
   try {

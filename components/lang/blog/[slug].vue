@@ -17,7 +17,7 @@ definePageMeta({
   middleware: ["lang", "global", "cleanup"],
   layout: false,
 });
-onMounted(async () => {
+onBeforeMount(async () => {
   const context = {};
   const data = await api.getCollectionItem(context, "blog");
   flexible.value = data?.flexible || [];

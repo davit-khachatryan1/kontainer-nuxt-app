@@ -24,7 +24,7 @@ const handleEnter = () => {
   }, 10);
 };
 
-onMounted(async () => {
+onBeforeMount(async () => {
   try {
     const data = await nuxtApp.$myAppApi.getPage(route.params.slug || "Register");
     nuxtApp.$useMeta(data);

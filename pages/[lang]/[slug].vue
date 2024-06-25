@@ -40,7 +40,7 @@ const fetchPageData = async (slug) => {
   }
 };
 
-onMounted(() => {
+onBeforeMount(() => {
   fetchPageData(nuxtApp._route.params.slug);
 });
 

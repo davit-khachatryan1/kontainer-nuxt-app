@@ -19,7 +19,7 @@ const api = nuxtApp.$myAppApi;
 const flexible = ref([]);
 const posts = ref({ blog: [] });
 
-onMounted(async () => {
+onBeforeMount(async () => {
   const context = {};
   const data = await api.getCollection(context, "blog");
   flexible.value = data?.flexible || [];

@@ -16,7 +16,7 @@ const route = useRoute();
 const nuxtApp = useNuxtApp();
 const error = useError();
 
-onMounted(async () => {
+onBeforeMount(async () => {
   try {
     const data = await nuxtApp.$myAppApi.getPage(route.params.slug || "Register");
     nuxtApp.$useMeta(data);
