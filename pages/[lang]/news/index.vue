@@ -25,11 +25,11 @@ const flexible = ref([]);
 const loaded = ref(false);
 const error = ref(false);
 
-onBeforeMount(async () => {
+onMounted(async () => {
   try {
     const data = await $myAppApi.getCollection({}, "news");
     flexible.value = data.flexible;
-    $useMeta(data);
+    // $useMeta(data);
 
     return flexible.value.map((layout, index) => {
       if (layout.acf_fc_layout === "news_list") {

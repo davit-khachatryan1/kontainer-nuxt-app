@@ -24,14 +24,14 @@ const loaded = ref(false);
 
 const { $myAppApi, $useMeta } = useNuxtApp();
 
-onBeforeMount(async () => {
+onMounted(async () => {
   const context = {};
 
   try {
     const data = await $myAppApi.getCollectionItem(context, "news");
     flexible.value = data.flexible;
     type.value = data?.type;
-    $useMeta(data);
+    // $useMeta(data);
     error.value = false;
   } catch (err) {
     error.value = err;

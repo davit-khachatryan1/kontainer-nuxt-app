@@ -19,12 +19,12 @@ const api = nuxtApp.$myAppApi;
 const flexible = ref([]);
 const posts = ref({ blog: [] });
 
-onBeforeMount(async () => {
+onMounted(async () => {
   const context = {};
   const data = await api.getCollection(context, "blog");
   flexible.value = data?.flexible || [];
   posts.value = data?.posts || { blog: [] };
-  nuxtApp.$useMeta(data);
+  // nuxtApp.$useMeta(data);
 });
 
 const kards = computed(() => {

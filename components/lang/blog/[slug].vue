@@ -17,11 +17,11 @@ definePageMeta({
   middleware: ["lang", "global", "cleanup"],
   layout: false,
 });
-onBeforeMount(async () => {
+onMounted(async () => {
   const context = {};
   const data = await api.getCollectionItem(context, "blog");
   flexible.value = data?.flexible || [];
   posts.value = data?.posts || { blog: [] };
-  nuxtApp.$useMeta(data);
+  // nuxtApp.$useMeta(data);
 });
 </script>

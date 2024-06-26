@@ -16,10 +16,10 @@ const route = useRoute();
 const nuxtApp = useNuxtApp();
 const error = useError();
 
-onBeforeMount(async () => {
+onMounted(async () => {
   try {
     const data = await nuxtApp.$myAppApi.getPage(route.params.slug || "Register");
-    nuxtApp.$useMeta(data);
+    // nuxtApp.$useMeta(data);
   } catch (e) {
     error({ statusCode: 404, message: "Page not found" });
   }

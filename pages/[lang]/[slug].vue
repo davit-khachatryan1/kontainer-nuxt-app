@@ -29,7 +29,7 @@ const fetchPageData = async (slug) => {
   try {
     const data = await nuxtApp.$myAppApi.getPage(slug || "home");
     if (data) {
-      nuxtApp.$useMeta(data);
+      // nuxtApp.$useMeta(data);
       flexible.value = data.flexible || false;
     }
     error.value = null;
@@ -40,7 +40,7 @@ const fetchPageData = async (slug) => {
   }
 };
 
-onBeforeMount(() => {
+onMounted(() => {
   fetchPageData(nuxtApp._route.params.slug);
 });
 
