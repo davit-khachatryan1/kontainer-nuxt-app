@@ -6,9 +6,9 @@ class Api {
 		this.nuxtApp = nuxtApp;
 	}
 
-	fetchData(path, context, pageInfo) {
-		const store = useStore()
-		const route = this.nuxtApp._route
+	async fetchData(path, context, pageInfo) {
+		const store = useStore();
+		const route = this.nuxtApp._route;
 		let requestPath = path;
 		const params = {
 			lang: this.nuxtApp._route.params.lang,
@@ -19,12 +19,17 @@ class Api {
 			params.key = route.query.previewkey;
 		}
 
-		return $fetch(`${window.location.origin}/api/content/${requestPath}`, {
-			params: {
-				...params, cache: 1 // remove cache: 1 in 2025
-			}
-		}).then((data) => {
-			const pageInfoProper = pageInfo;
+		const config = useRuntimeConfig()
+		console.log(config.public.baseUr);
+		try {
+			const { data } = await this.nuxtApp.$api.get(`${config.public.baseUrl}/api/content/${requestPath}`, {
+				params: {
+					...params,
+					cache: 1 // remove cache: 1 in 2025
+				}
+			});
+
+			const pageInfoProper = { ...pageInfo };
 			if (data.translated && pageInfo.slug) {
 				const untranslated = {};
 				untranslated[route.params.lang] = pageInfo.slug;
@@ -37,7 +42,10 @@ class Api {
 			store.savePageInfo(pageInfoProper);
 
 			return data;
-		});
+		} catch (error) {
+			console.error("Error fetching data:", error);
+			throw error;
+		}
 	}
 
 	getHomepage(context) {

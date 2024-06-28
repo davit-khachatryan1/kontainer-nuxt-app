@@ -4,10 +4,11 @@ import useStore from '@/store'
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const store = useStore()
-
-  if (process.server || !to.params.lang) return
+  const nuxtApp = useNuxtApp();
+  const config = useRuntimeConfig()
+  console.log(config.public.baseUrl);
   try {
-    const data = await $fetch(`${window.location.origin}/api/global`, {
+    const { data } = await nuxtApp.$api.get(config.public.baseUrl + '/api/global', {
       params: {
         lang: to.params.lang,
         cache: 1, // Note for removal in 2025

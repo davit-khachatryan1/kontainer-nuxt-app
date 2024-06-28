@@ -17,7 +17,7 @@
 						loading="lazy"
 						:title="feature.custom.icon.title"
 						:alt="feature.custom.icon.alt"
-						:src="eature.custom.icon.url_webp || feature.custom.icon.url"
+						:src="feature?.custom.icon.url_webp || feature.custom.icon.url"
 					/>
 				</div>
 				<div class="feature-item__text">

@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-import { defineAsyncComponent, onMounted, ref } from "vue";
 import useStore from "@/store";
 
 const SignupAccount = defineAsyncComponent(() =>
@@ -14,7 +13,6 @@ const SignupAccount = defineAsyncComponent(() =>
 
 const route = useRoute();
 const nuxtApp = useNuxtApp();
-const error = useError();
 
 const handleEnter = () => {
   const store = useStore();
@@ -24,13 +22,14 @@ const handleEnter = () => {
   }, 10);
 };
 
-onMounted(async () => {
-  try {
-    const data = await nuxtApp.$myAppApi.getPage(route.params.slug || "Register");
-    // nuxtApp.$useMeta(data);
-  } catch (e) {
-    error({ statusCode: 404, message: "Page not found" });
-  }
+const { data, error } = await useAsyncData("fetchData", async () =>
+  nuxtApp.$myAppApi.getPage(route.params.slug || "Register")
+);
+
+useHead(() => {
+  return {
+    ...nuxtApp.$useMeta(data?.value),
+  };
 });
 </script>
 

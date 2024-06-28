@@ -1,7 +1,7 @@
 <template>
   <div>
     <Error v-if="error" :error="error" />
-    <ContentSwitch v-else :flexible="flexible" :type="type"  :loaded="loaded" />
+    <ContentSwitch v-else :flexible="flexible" :type="type" :loaded="loaded" />
     <NuxtLayout name="default" />
   </div>
 </template>
@@ -11,33 +11,25 @@ definePageMeta({
   middleware: ["lang", "global", "cleanup"],
   layout: false,
 });
-import { ref, onMounted } from "vue";
+
 const ContentSwitch = defineAsyncComponent(() =>
   import("~/components/organisms/content-switch/index.vue")
 );
 const Error = defineAsyncComponent(() => import("~/layouts/error.vue"));
 
-const flexible = ref([]);
-const type = ref("");
-const error = ref();
-const loaded = ref(false);
+const nuxtApp = useNuxtApp();
 
-const { $myAppApi, $useMeta } = useNuxtApp();
+const { data, pending, error } = await useAsyncData("fetchData", async () =>
+  nuxtApp.$myAppApi.getCollectionItem({}, "news")
+);
 
-onMounted(async () => {
-  const context = {};
+const flexible = computed(() => data.value?.flexible || []);
+const type = computed(() => data.value?.type || "");
+const loaded = computed(() => !pending.value);
 
-  try {
-    const data = await $myAppApi.getCollectionItem(context, "news");
-    flexible.value = data.flexible;
-    type.value = data?.type;
-    // $useMeta(data);
-    error.value = false;
-  } catch (err) {
-    error.value = err;
-    console.error("Error fetching collection item:", err);
-  } finally {
-    loaded.value = true;
-  }
+useHead(() => {
+  return {
+    ...nuxtApp.$useMeta(data?.value),
+  };
 });
 </script>

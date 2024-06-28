@@ -77,6 +77,7 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: false },
   plugins: [
+    '~/plugins/axios.js',
     '~/plugins/swiper.js',
     '~/plugins/vuex-store.js',
     '~/plugins/directives.js',

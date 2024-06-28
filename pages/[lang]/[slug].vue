@@ -1,7 +1,11 @@
 <template>
   <div>
     <Error :error="error" v-if="error" />
-    <ContentSwitch :flexible="flexible" v-else :loaded="loaded" />
+    <ContentSwitch
+      v-if="flexible && !pending && !error"
+      :flexible="flexible"
+      :loaded="loaded"
+    />
     <NuxtLayout name="default" />
   </div>
 </template>
@@ -22,33 +26,27 @@ const Error = defineAsyncComponent(() => import("~/layouts/error.vue"));
 
 const nuxtApp = useNuxtApp();
 const flexible = ref(false);
-const loaded = ref(false);
-const error = ref(null);
+const { data, pending, error, refresh } = await useAsyncData("fetchData", async () =>
+  nuxtApp.$myAppApi.getPage(nuxtApp._route.params.slug || "home")
+);
 
-const fetchPageData = async (slug) => {
-  try {
-    const data = await nuxtApp.$myAppApi.getPage(slug || "home");
-    if (data) {
-      // nuxtApp.$useMeta(data);
-      flexible.value = data.flexible || false;
-    }
-    error.value = null;
-  } catch (err) {
-    error.value = err;
-  } finally {
-    loaded.value = true;
-  }
-};
+onMounted(async () => {
+  flexible.value = data.value?.flexible || false;
+});
 
-onMounted(() => {
-  fetchPageData(nuxtApp._route.params.slug);
+const loaded = computed(() => !pending.value);
+
+useHead(() => {
+  return {
+    ...nuxtApp.$useMeta(data?.value),
+  };
 });
 
 watch(
   () => [nuxtApp._route.params.slug, nuxtApp._route.params.lang],
   ([newSlug, newLang], [oldSlug, oldLang]) => {
     if (newSlug !== oldSlug || newLang !== oldLang) {
-      fetchPageData(newSlug);
+      refresh();
     }
   }
 );

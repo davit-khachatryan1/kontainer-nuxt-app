@@ -23,36 +23,35 @@ const store = useStore();
 
 const flexible = ref([]);
 const loaded = ref(false);
-const error = ref(false);
+
+const { data, error } = await useAsyncData("fetchData", async () =>
+  $myAppApi.getCollection({}, "news")
+);
 
 onMounted(async () => {
-  try {
-    const data = await $myAppApi.getCollection({}, "news");
-    flexible.value = data.flexible;
-    // $useMeta(data);
+  flexible.value = data.value.flexible;
 
-    return flexible.value.map((layout, index) => {
-      if (layout.acf_fc_layout === "news_list") {
-        const lastestNews = data.posts.news.map((o) => {
-          const newDataStructure = { resource: o };
-          newDataStructure.resource.custom = {
-            kard_info: newDataStructure.resource.kard_info,
-            kard_image: newDataStructure.resource.kard_image,
-          };
-          return newDataStructure;
-        });
+  flexible.value.map((layout, index) => {
+    if (layout.acf_fc_layout === "news_list") {
+      const lastestNews = data.value.posts.news.map((o) => {
+        const newDataStructure = { resource: o };
+        newDataStructure.resource.custom = {
+          kard_info: newDataStructure.resource.kard_info,
+          kard_image: newDataStructure.resource.kard_image,
+        };
+        return newDataStructure;
+      });
 
-        flexible.value[index] = { ...flexible.value[index], lastestNews };
-      }
-      return false;
-    });
-    error.value = false;
-  } catch (error) {
-    error.value = err;
-    console.error("Error fetching collection item:", error);
-  } finally {
-    loaded.value = true;
-  }
+      flexible.value[index] = { ...flexible.value[index], lastestNews };
+    }
+    return false;
+  });
+});
+
+useHead(() => {
+  return {
+    ...$useMeta(data?.value),
+  };
 });
 
 const transitionEnter = () => {

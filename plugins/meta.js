@@ -1,4 +1,3 @@
-import { useHead } from '@vueuse/head';
 import { getLocalUrl } from '~/components/composables/getLocalUrl';
 import { DEFAULT_LOCALE } from '~/constants/styles';
 import useStore from '@/store';
@@ -36,7 +35,7 @@ export default defineNuxtPlugin(nuxtApp => {
 					type: pageData.type,
 					url: pageData.url,
 				};
-				const siteUrl = useRuntimeConfig().public.siteUrl; // Using Nuxt 3 runtime config
+				const siteUrl = 'http://localhost:3000'; // Using Nuxt 3 runtime config
 				link.push({
 					rel: 'alternate',
 					hreflang: lang,
@@ -61,12 +60,12 @@ export default defineNuxtPlugin(nuxtApp => {
 			};
 		}
 
-		useHead({
+		return {
 			htmlAttrs: { lang: nuxtApp._route.params.lang },
 			title,
 			meta,
 			link,
 			script,
-		});
+		};
 	});
 });

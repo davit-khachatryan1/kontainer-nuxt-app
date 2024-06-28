@@ -1,11 +1,12 @@
 <template>
   <div class="content-grid-container">
-    <SignupContactAccount />
+    <SignupContactAccount v-if="!pending && !error" />
+    <div v-if="pending">Loading...</div>
+    <div v-if="error">Error loading page</div>
   </div>
 </template>
 
 <script setup>
-import { defineAsyncComponent, onMounted } from "vue";
 import useStore from "@/store";
 
 const SignupContactAccount = defineAsyncComponent(() =>
@@ -16,17 +17,21 @@ const route = useRoute();
 const nuxtApp = useNuxtApp();
 const error = useError();
 
-onMounted(async () => {
-  try {
-    const data = await nuxtApp.$myAppApi.getPage(route.params.slug || "Register");
-    // nuxtApp.$useMeta(data);
-  } catch (e) {
+const { data, pending, refresh } = await useAsyncData("fetchPageData", () =>
+  nuxtApp.$myAppApi.getPage(route.params.slug || "Register").catch((e) => {
     error({ statusCode: 404, message: "Page not found" });
-  }
+    return null;
+  })
+);
+
+useHead(() => {
+  return {
+    ...nuxtApp.$useMeta(data?.value),
+  };
 });
 
 const handleEnter = () => {
-const store = useStore();
+  const store = useStore();
   store.menuHide(true);
   setTimeout(() => {
     store.menuHide(false);
