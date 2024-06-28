@@ -5,6 +5,9 @@ import useStore from '@/store';
 export default defineNuxtPlugin(nuxtApp => {
 	const store = useStore()
 	nuxtApp.provide('useMeta', (pageData) => {
+		if(!pageData){
+			return {}
+		}
 		let title = pageData.yoast_title || pageData.title;
 		title = title.replace('&amp;', '&');
 		const meta = [];
