@@ -24,9 +24,10 @@ const { data, pending, refresh } = await useAsyncData("fetchPageData", () =>
   })
 );
 
+const config = useRuntimeConfig();
 useHead(() => {
   return {
-    ...nuxtApp.$useMeta(data?.value),
+    ...nuxtApp.$useMeta(data?.value, config.public.baseUrl),
   };
 });
 

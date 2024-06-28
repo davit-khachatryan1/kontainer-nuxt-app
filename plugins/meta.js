@@ -4,7 +4,7 @@ import useStore from '@/store';
 
 export default defineNuxtPlugin(nuxtApp => {
 	const store = useStore()
-	nuxtApp.provide('useMeta', (pageData) => {
+	nuxtApp.provide('useMeta', (pageData, baseUrl) => {
 		if(!pageData){
 			return {}
 		}
@@ -38,7 +38,7 @@ export default defineNuxtPlugin(nuxtApp => {
 					type: pageData.type,
 					url: pageData.url,
 				};
-				const siteUrl = 'http://localhost:3000'; // Using Nuxt 3 runtime config
+				const siteUrl = baseUrl;
 				link.push({
 					rel: 'alternate',
 					hreflang: lang,

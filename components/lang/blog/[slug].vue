@@ -24,9 +24,10 @@ const { data, pending, error } = await useAsyncData("fetchData", async () => {
   api.getCollectionItem({}, "blog");
 });
 
+const config = useRuntimeConfig();
 useHead(() => {
   return {
-    ...nuxtApp.$useMeta(data?.value),
+    ...nuxtApp.$useMeta(data?.value, config.public.baseUrl),
   };
 });
 </script>

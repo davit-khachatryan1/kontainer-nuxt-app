@@ -36,9 +36,10 @@ onMounted(async () => {
 
 const loaded = computed(() => !pending.value);
 
+const config = useRuntimeConfig();
 useHead(() => {
   return {
-    ...nuxtApp.$useMeta(data?.value),
+    ...nuxtApp.$useMeta(data?.value, config.public.baseUrl),
   };
 });
 

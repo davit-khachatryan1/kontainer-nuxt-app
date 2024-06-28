@@ -48,9 +48,10 @@ onMounted(async () => {
   });
 });
 
+const config = useRuntimeConfig();
 useHead(() => {
   return {
-    ...$useMeta(data?.value),
+    ...$useMeta(data?.value, config.public.baseUrl),
   };
 });
 

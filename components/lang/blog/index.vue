@@ -50,9 +50,10 @@ const kards = computed(() => {
     .filter((layout) => layout.acf_fc_layout === "blog_list");
 });
 
+const config = useRuntimeConfig();
 useHead(() => {
   return {
-    ...nuxtApp.$useMeta(data?.value),
+    ...nuxtApp.$useMeta(data?.value, config.public.baseUrl),
   };
 });
 

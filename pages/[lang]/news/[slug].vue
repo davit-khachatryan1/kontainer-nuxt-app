@@ -27,9 +27,10 @@ const flexible = computed(() => data.value?.flexible || []);
 const type = computed(() => data.value?.type || "");
 const loaded = computed(() => !pending.value);
 
+const config = useRuntimeConfig();
 useHead(() => {
   return {
-    ...nuxtApp.$useMeta(data?.value),
+    ...nuxtApp.$useMeta(data?.value, config.public.baseUrl),
   };
 });
 </script>

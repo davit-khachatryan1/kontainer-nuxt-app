@@ -26,9 +26,10 @@ const { data, error } = await useAsyncData("fetchData", async () =>
   nuxtApp.$myAppApi.getPage(route.params.slug || "Register")
 );
 
+const config = useRuntimeConfig();
 useHead(() => {
   return {
-    ...nuxtApp.$useMeta(data?.value),
+    ...nuxtApp.$useMeta(data?.value, config.public.baseUrl),
   };
 });
 </script>
