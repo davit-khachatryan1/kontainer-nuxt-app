@@ -1,11 +1,7 @@
 <template>
   <div>
     <Error :error="error" v-if="error" />
-    <ContentSwitch
-      v-if="flexible && !pending && !error"
-      :flexible="flexible"
-      :loaded="loaded"
-    />
+    <ContentSwitch v-if="flexible && !error" :flexible="flexible" :loaded="loaded" />
     <NuxtLayout name="default" />
   </div>
 </template>
@@ -45,9 +41,10 @@ useHead(() => {
 
 watch(
   () => [nuxtApp._route.params.slug, nuxtApp._route.params.lang],
-  ([newSlug, newLang], [oldSlug, oldLang]) => {
+  async ([newSlug, newLang], [oldSlug, oldLang]) => {
     if (newSlug !== oldSlug || newLang !== oldLang) {
-      refresh();
+      await refresh();
+      flexible.value = data.value?.flexible || false;
     }
   }
 );

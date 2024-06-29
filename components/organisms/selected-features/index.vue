@@ -14,6 +14,7 @@
 			>
 				<div class="feature-item__icon">
 					<NuxtImg
+						v-if="feature?.custom.icon.url_webp || feature.custom.icon.ur"
 						loading="lazy"
 						:title="feature.custom.icon.title"
 						:alt="feature.custom.icon.alt"

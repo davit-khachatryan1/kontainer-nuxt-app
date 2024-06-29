@@ -14,6 +14,7 @@
 						v-if="!!logo.logo_link"
 					>
 						<NuxtImg
+							v-if="logo.logo_img.url_webp || logo.logo_img.url"
 							loading="lazy"
 							:title="logo.logo_title"
 							:src="logo.logo_img.url_webp || logo.logo_img.url"
@@ -27,7 +28,7 @@
 						:title="logo.logo_title"
 						:src="logo.logo_img.url_webp || logo.logo_img.url"
 						:alt="logo.logo_img.alt"
-						v-else
+						v-else-if="logo.logo_img.url_webp || logo.logo_img.url"
 					/>
 				</div>
 			</div>

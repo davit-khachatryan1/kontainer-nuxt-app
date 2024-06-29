@@ -12,7 +12,7 @@
     <transition name="image-fade" v-on:after-enter="transitionedEnd">
       <div v-if="loaded && crop" :style="{ backgroundImage: bg }" class="cropimage"></div>
       <NuxtImg
-        v-else-if="loaded && !crop"
+        v-else-if="loaded && !crop && src"
         :title="image.title"
         :alt="image.alt"
         :src="src"

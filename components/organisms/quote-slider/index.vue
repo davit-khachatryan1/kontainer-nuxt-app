@@ -33,7 +33,7 @@
                   <NuxtImg
                     :alt="entry.content.name"
                     loading="lazy"
-                    v-if="entry.image"
+                    v-if="entry.image && entry.image.url_webp || entry.image.url"
                     width="90"
                     height="90"
                     :src="entry.image.url_webp || entry.image.url"

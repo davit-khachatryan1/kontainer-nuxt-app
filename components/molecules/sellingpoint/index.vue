@@ -1,7 +1,7 @@
 <template>
 	<div class="sellingpoint">
 		<div class="sellingpoint__icon">
-			<NuxtImg loading="lazy" :src="sellingpoint.icon.url_webp || sellingpoint.icon.url" :alt="sellingpoint.icon.alt" />
+			<NuxtImg loading="lazy" v-if="sellingpoint.icon.url_webp || sellingpoint.icon.url"  :src="sellingpoint.icon.url_webp || sellingpoint.icon.url" :alt="sellingpoint.icon.alt" />
 		</div>
 		<div class="sellingpoint__text" v-html="sellingpoint.description"></div>
 	</div>
