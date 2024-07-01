@@ -1772,7 +1772,7 @@ watch(
   () => registration.value.host,
   (host) => {
     const regex = /[^a-z0-9-]+/;
-    if (host && regex.test(host)) {
+    if (registration.value.host != host && host && regex.test(host)) {
       registration.value.host = host
         .toLowerCase()
         .replace("æ", "ae")

@@ -8,11 +8,7 @@
 
 <script setup>
 import useStore from "@/store";
-
-definePageMeta({
-  middleware: ["lang", "global", "cleanup"],
-  layout: false,
-});
+const route = useRoute();
 
 const ContentSwitch = defineAsyncComponent(() =>
   import("~/components/organisms/content-switch/index.vue")
@@ -23,10 +19,11 @@ const Error = defineAsyncComponent(() => import("~/layouts/error.vue"));
 const nuxtApp = useNuxtApp();
 const flexible = ref(false);
 const { data, pending, error, refresh } = await useAsyncData("fetchData", async () =>
-  nuxtApp.$myAppApi.getPage(nuxtApp._route.params.slug || "home")
+  nuxtApp.$myAppApi.getPage(route.params.slug || "home")
 );
 
 onMounted(async () => {
+  // await refresh({ dedupe: true });
   flexible.value = data.value?.flexible || false;
 });
 
@@ -40,10 +37,10 @@ useHead(() => {
 });
 
 watch(
-  () => [nuxtApp._route.params.slug, nuxtApp._route.params.lang],
-  async ([newSlug, newLang], [oldSlug, oldLang]) => {
+  () => [route.params.slug, route.params.lang],
+  ([newSlug, newLang], [oldSlug, oldLang]) => {
     if (newSlug !== oldSlug || newLang !== oldLang) {
-      await refresh();
+      // refresh();
       flexible.value = data.value?.flexible || false;
     }
   }

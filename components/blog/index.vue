@@ -4,9 +4,4 @@
 <script setup>
 const Index = defineAsyncComponent(() => import('~/pages/[lang]/blog/index.vue'));
 
-definePageMeta({
-    middleware: ['lang', 'global', 'cleanup'],
-    layout: false,
-})
-
 </script>

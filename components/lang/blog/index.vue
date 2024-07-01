@@ -15,11 +15,6 @@ const ContentSwitch = defineAsyncComponent(() =>
   import("~/components/organisms/content-switch/index.vue")
 );
 
-definePageMeta({
-  middleware: ["lang", "global", "cleanup"],
-  layout: false,
-});
-
 const nuxtApp = useNuxtApp();
 const route = useRoute();
 const store = useStore();

@@ -15,11 +15,6 @@ const ContentSwitch = defineAsyncComponent(() =>
 const nuxtApp = useNuxtApp();
 const api = nuxtApp.$myAppApi;
 
-definePageMeta({
-  middleware: ["lang", "global", "cleanup"],
-  layout: false,
-});
-
 const { data, pending, error } = await useAsyncData("fetchData", async () => {
   api.getCollectionItem({}, "blog");
 });

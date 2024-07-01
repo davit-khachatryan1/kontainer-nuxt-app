@@ -56,7 +56,6 @@ export default {
 		this.parralaxBegin = 0;
 		this.parralaxEnd = 0;
 		this.percentTravelled = 0;
-		console.log(this.enabled, 'this.enabled')
 
 		if (this.enabled && window.matchMedia('(max-width: 768px)')) {
 			this.init();

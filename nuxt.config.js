@@ -165,4 +165,27 @@ export default defineNuxtConfig({
   build: {
     analyze: true
   },
+  hooks: {
+    'pages:extend'(pages) {
+      function setMiddleware(pages) {
+        for (const page of pages) {
+          // Add your condition for specific pages here
+          if (true) { // Replace this condition as needed
+            page.meta ||= {};
+            // This will override any middleware set in `definePageMeta` in the page
+            page.meta.middleware = ['lang', 'global', 'cleanup'];
+          }
+          if (page.children) {
+            setMiddleware(page.children);
+          }
+        }
+      }
+      setMiddleware(pages);
+      const rootPage = pages.find(page => page.path === '/' || page.path === '');
+      if (rootPage) {
+        rootPage.meta ||= {};
+        rootPage.meta.middleware = ['lang', 'global', 'cleanup'];
+      }
+    }
+  }
 })
