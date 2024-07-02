@@ -1,7 +1,11 @@
 <template>
   <div>
     <Error :error="error" v-if="error" />
-    <ContentSwitch v-if="flexible && !error" :flexible="flexible" :loaded="loaded" />
+    <ContentSwitch
+      v-if="data?.flexible && !error"
+      :flexible="data?.flexible"
+      :loaded="loaded"
+    />
     <NuxtLayout name="default" />
   </div>
 </template>
@@ -18,14 +22,9 @@ const Error = defineAsyncComponent(() => import("~/layouts/error.vue"));
 
 const nuxtApp = useNuxtApp();
 const flexible = ref(false);
-const { data, pending, error, refresh } = await useAsyncData("fetchData", async () =>
+const { data, pending, error } = await useAsyncData("fetchData", async () =>
   nuxtApp.$myAppApi.getPage(route.params.slug || "home")
 );
-
-onMounted(async () => {
-  // await refresh({ dedupe: true });
-  flexible.value = data.value?.flexible || false;
-});
 
 const loaded = computed(() => !pending.value);
 
@@ -38,9 +37,9 @@ useHead(() => {
 
 watch(
   () => [route.params.slug, route.params.lang],
-  ([newSlug, newLang], [oldSlug, oldLang]) => {
+  async ([newSlug, newLang], [oldSlug, oldLang]) => {
     if (newSlug !== oldSlug || newLang !== oldLang) {
-      // refresh();
+      await refresh();
       flexible.value = data.value?.flexible || false;
     }
   }

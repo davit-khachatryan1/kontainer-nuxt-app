@@ -20,7 +20,6 @@ class Api {
 		}
 
 		const config = useRuntimeConfig()
-		console.log(config.public.baseUr);
 		try {
 			const { data } = await this.nuxtApp.$api.get(`${config.public.baseUrl}/api/content/${requestPath}`, {
 				params: {
@@ -40,7 +39,6 @@ class Api {
 			}
 
 			store.savePageInfo(pageInfoProper);
-
 			return data;
 		} catch (error) {
 			console.error("Error fetching data:", error);

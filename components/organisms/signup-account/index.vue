@@ -1702,8 +1702,8 @@ const checkDomainAvailability = () => {
       },
     });
 
-    if (error) {
-      throw error;
+    if (error.value) {
+      throw error.value;
     }
 
     registration.value.host = domain;
@@ -1713,7 +1713,6 @@ const checkDomainAvailability = () => {
       hostError.value = null;
     }, 2000);
   } catch (error) {
-    console.log(error);
     const oldDomain = domain;
     const urlSuggestion = error.value?.data?.suggestion;
     hostStatus.value = false;

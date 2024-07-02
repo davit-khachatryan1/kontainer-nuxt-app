@@ -7,7 +7,6 @@
 </template>
 
 <script setup>
-
 import { ref, onMounted } from "vue";
 import useStore from "@/store";
 const ContentSwitch = defineAsyncComponent(() =>
@@ -25,24 +24,22 @@ const { data, error } = await useAsyncData("fetchData", async () =>
   $myAppApi.getCollection({}, "news")
 );
 
-onMounted(async () => {
-  flexible.value = data.value.flexible;
+flexible.value = data.value.flexible;
 
-  flexible.value.map((layout, index) => {
-    if (layout.acf_fc_layout === "news_list") {
-      const lastestNews = data.value.posts.news.map((o) => {
-        const newDataStructure = { resource: o };
-        newDataStructure.resource.custom = {
-          kard_info: newDataStructure.resource.kard_info,
-          kard_image: newDataStructure.resource.kard_image,
-        };
-        return newDataStructure;
-      });
+flexible.value.map((layout, index) => {
+  if (layout.acf_fc_layout === "news_list") {
+    const lastestNews = data.value.posts.news.map((o) => {
+      const newDataStructure = { resource: o };
+      newDataStructure.resource.custom = {
+        kard_info: newDataStructure.resource.kard_info,
+        kard_image: newDataStructure.resource.kard_image,
+      };
+      return newDataStructure;
+    });
 
-      flexible.value[index] = { ...flexible.value[index], lastestNews };
-    }
-    return false;
-  });
+    flexible.value[index] = { ...flexible.value[index], lastestNews };
+  }
+  return false;
 });
 
 const config = useRuntimeConfig();
