@@ -79,7 +79,7 @@ const languageSelect = (locale) => {
     document.cookie = `preferredLang=${locale}; expires=${expires}; path=/`;
 
     store.setLang(locale);
-    router.push(`${link}`);
+    window.location.href = `${link}`;
   }
 };
 </script>

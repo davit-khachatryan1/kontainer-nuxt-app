@@ -7,7 +7,6 @@
 </template>
 
 <script setup>
-
 const route = useRoute();
 
 const ContentSwitch = defineAsyncComponent(() =>
@@ -29,11 +28,9 @@ onMounted(async () => {
 });
 
 watch(
-  () => [route.params.slug, route.params.lang],
-  async ([newSlug, newLang], [oldSlug, oldLang]) => {
-    if (newSlug !== oldSlug || newLang !== oldLang) {
-      await refresh();
-    }
+  () => route.fullPath,
+  (newPath, oldPath) => {
+    refresh();
   }
 );
 

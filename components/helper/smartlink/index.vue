@@ -1,12 +1,12 @@
 <template>
-  <nuxt-link
+  <NuxtLink
     :to="localUrl"
     v-if="localUrl"
     v-on:click.native="onClick"
     :aria-label="ariaLabel"
   >
     <slot></slot>
-  </nuxt-link>
+  </NuxtLink>
   <a
     v-else
     :href="externalUrl"

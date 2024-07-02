@@ -2,15 +2,10 @@
   <div class="header">
     <nav class="content-grid-container nav">
       <div class="nav__left">
-        <smart-link
-          class="nav__left__logo"
-          type="page"
-          slug="home"
-          :ariaLabel="logoLabel"
-        >
+        <SmartLink class="nav__left__logo" type="page" slug="home" :ariaLabel="logoLabel">
           <IconLogoMark class="icon--logo-mark" />
           <IconLogoText class="icon--logo-text" />
-        </smart-link>
+        </SmartLink>
       </div>
       <div class="nav__right">
         <ol
@@ -48,7 +43,7 @@
                         v-html="sublink.title"
                       />
 
-                      <smart-link
+                      <SmartLink
                         v-else
                         class="link"
                         :type="sublink.type"
@@ -61,13 +56,13 @@
                         ]"
                       >
                         <span v-html="sublink.title" />
-                      </smart-link>
+                      </SmartLink>
                     </li>
                   </ol>
                 </transition>
               </template>
 
-              <smart-link
+              <SmartLink
                 v-else
                 class="link"
                 :type="item.type"
@@ -75,7 +70,7 @@
                 :url="item.url"
               >
                 <span v-html="item.title" />
-              </smart-link>
+              </SmartLink>
             </li>
           </div>
 
@@ -139,13 +134,13 @@ const ButtonComp = defineAsyncComponent(() =>
 const Hamburger = defineAsyncComponent(() =>
   import("~/components/atoms/hamburger/index.vue")
 );
-const IconCaret = defineAsyncComponent(() => import('~/assets/svg/caret-select.svg'));
-const LanguageIcon = defineAsyncComponent(() => import('~/assets/svg/language.svg'));
+const IconCaret = defineAsyncComponent(() => import("~/assets/svg/caret-select.svg"));
+const LanguageIcon = defineAsyncComponent(() => import("~/assets/svg/language.svg"));
 const IconLogoText = defineAsyncComponent(() =>
-  import('~/assets/svg/kontainer-logo-text.svg')
+  import("~/assets/svg/kontainer-logo-text.svg")
 );
 const IconLogoMark = defineAsyncComponent(() =>
-  import('~/assets/svg/kontainer-logo-mark.svg')
+  import("~/assets/svg/kontainer-logo-mark.svg")
 );
 
 const hoverMenu = ref(false);
@@ -187,7 +182,7 @@ const activeMenuParent = computed(() => {
 
 const activeMenuChild = computed(() => {
   const route = useRoute();
-  return route.params.slug
+  return route.params.slug;
 });
 
 function handleLangMenuHover(e) {

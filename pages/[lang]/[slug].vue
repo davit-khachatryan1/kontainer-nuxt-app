@@ -22,7 +22,7 @@ const Error = defineAsyncComponent(() => import("~/layouts/error.vue"));
 
 const nuxtApp = useNuxtApp();
 const flexible = ref(false);
-const { data, pending, error } = await useAsyncData("fetchData", async () =>
+const { data, pending, error, refresh } = await useAsyncData("fetchData", async () =>
   nuxtApp.$myAppApi.getPage(route.params.slug || "home")
 );
 
@@ -36,15 +36,11 @@ useHead(() => {
 });
 
 watch(
-  () => [route.params.slug, route.params.lang],
-  async ([newSlug, newLang], [oldSlug, oldLang]) => {
-    if (newSlug !== oldSlug || newLang !== oldLang) {
-      await refresh();
-      flexible.value = data.value?.flexible || false;
-    }
+  () => route.fullPath,
+  (newPath, oldPath) => {
+    refresh();
   }
 );
-
 const enterTransition = () => {
   const store = useStore();
   store.menuHide(true);
