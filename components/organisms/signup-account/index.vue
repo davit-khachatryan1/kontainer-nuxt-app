@@ -1683,7 +1683,7 @@ const success = () => {
   });
 };
 
-const checkDomainAvailability = () => {
+const checkDomainAvailability = async () => {
   const config = useRuntimeConfig();
 
   let domain;
@@ -1696,12 +1696,13 @@ const checkDomainAvailability = () => {
   }
 
   try {
-    const { error } = useFetch(`${config.public.appUrl}/api/signup/availability`, {
+    const { error } = await useFetch(`${config.public.appUrl}/api/signup/availability`, {
       params: {
         clientHost: domain,
       },
     });
 
+    console.log(error.value, 'error.value');
     if (error.value) {
       throw error.value;
     }
