@@ -79,7 +79,7 @@ export default defineNuxtConfig({
   plugins: [
     '~/plugins/axios.js',
     '~/plugins/swiper.js',
-    '~/plugins/vuex-store.js',
+    // '~/plugins/vuex-store.js',
     '~/plugins/directives.js',
     '~/plugins/vee-validate.js',
     '~/plugins/api.js',
@@ -135,7 +135,8 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap',
     '@vee-validate/nuxt',
     '@nuxt/image',
-    'nuxt-delay-hydration'
+    'nuxt-delay-hydration',
+    '@pinia/nuxt'
     // '@nuxt/content'
   ],
   delayHydration: {
