@@ -1678,7 +1678,7 @@ const addToHubSpot = (registrationData) => {
 };
 
 const success = () => {
-  router.replace({
+  router.push({
     path: `/${store.locale}/signup-done`,
   });
 };
@@ -1702,7 +1702,6 @@ const checkDomainAvailability = async () => {
       },
     });
 
-    console.log(error.value, 'error.value');
     if (error.value) {
       throw error.value;
     }
@@ -1715,7 +1714,7 @@ const checkDomainAvailability = async () => {
     }, 2000);
   } catch (error) {
     const oldDomain = domain;
-    const urlSuggestion = error.value?.data?.suggestion;
+    const urlSuggestion = error.data?.suggestion;
     hostStatus.value = false;
     registration.value.host = urlSuggestion;
 
