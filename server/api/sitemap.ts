@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
     for (let j = 0; j < element.links.length; j++) {
       const link = element.links[j];
       newRoutes.push({
-        url: link.url + element.url 
+        url: link.url
       })
     }
     
