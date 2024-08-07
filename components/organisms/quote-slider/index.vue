@@ -52,17 +52,13 @@
                 </p>
                 <div class="user_rating">
                   <template v-if="entry.content.rating === 'cap-5'"
-                    ><CapFiveStars
-                  /></template>
+                    ><CapFiveStars /></template>
                   <template v-else-if="entry.content.rating === 'cap-4-5'"
-                    ><CapFourFiveStars
-                  /></template>
+                    ><CapFourFiveStars /></template>
                   <template v-else-if="entry.content.rating === 'g2-5'"
-                    ><G2FiveStars
-                  /></template>
+                    ><G2FiveStars /></template>
                   <template v-else-if="entry.content.rating === 'g2-4-5'"
-                    ><G2FourFiveStars
-                  /></template>
+                    ><G2FourFiveStars /></template>
                 </div>
               </div>
             </div>
