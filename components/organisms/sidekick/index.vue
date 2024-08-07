@@ -216,9 +216,8 @@
 						height="400"
 						@keyup.esc="closeVideoModal"
 						tabindex="0"
-						v-lazy-load-video
+						v-lazy-load-video="videoModalFile"
 					>
-						<source :src="videoModalFile" type="video/mp4" />
 					</video>
 				</div>
 			</div>

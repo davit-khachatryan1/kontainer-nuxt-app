@@ -1696,7 +1696,7 @@ const checkDomainAvailability = async () => {
   }
 
   try {
-    const { error } = await useFetch(`${config.public.appUrl}/api/signup/availability`, {
+    const { error, data } = await useFetch(`${config.public.appUrl}/api/signup/availability`, {
       params: {
         clientHost: domain,
       },
@@ -1705,8 +1705,8 @@ const checkDomainAvailability = async () => {
     if (error.value) {
       throw error.value;
     }
-
-    registration.value.host = domain;
+    console.log(data);
+    registration.value.host = data?.value?.suggestion;
     hostStatus.value = true;
 
     setTimeout(() => {

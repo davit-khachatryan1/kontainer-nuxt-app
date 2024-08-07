@@ -347,6 +347,8 @@ export default {
 
 		.btn {
 			margin-right: 15px;
+			width: 55px;
+    		padding: 0 10px;
 		}
 	}
 

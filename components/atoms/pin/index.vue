@@ -239,6 +239,8 @@ $strokeDistance: 25px;
 		.btn {
 			opacity: 1;
 			transform: translate(0, 0);
+			width: 55px;
+			padding: 0 10px;
 
 			&:not(:last-child) {
 				margin-right: 14px;

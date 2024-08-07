@@ -35,33 +35,40 @@ export default defineEventHandler(async (event) => {
     for (let j = 0; j < element.links.length; j++) {
       const link = element.links[j];
       newRoutes.push({
-        url: link.url
+        url: link.url,
+        lastmod: new Date('2024-07-23 19:56 Z')
       })
     }
-    
   }
   return newRoutes;
 });
 
-const preparePathsFromData = (data: any, resourceType: any) => {
+const preparePathsFromData = (data: any, resourceType: any, locale: string) => {
   const excludedSlugs = resourceType === 'page' ? BANNED_SLUGS : [];
   const pathPrefix = PATH_PREFIXES[resourceType];
 
   return data.filter((page: any) => !excludedSlugs.includes(page.slug))
     .map((page: any) => ({
       url: `${pathPrefix}/${page.slug}`,
-      links: LOCALES.map(locale => ({
+      links: [{
         lang: locale,
-        url: `${getLangPrefix(locale)}${pathPrefix}/${page.slug}`
-      })).concat([{ lang: 'x-default', url: `${getLangPrefix(DEFAULT_LOCALE)}${pathPrefix}/${page.slug}` }])
+        url: `${getLangPrefix(locale)}${pathPrefix}/${page.slug}`,
+      }]
     }));
 };
 
 async function getAllResources(wpapi: AxiosInstance) {
   return Promise.all(RESOURCE_TYPES.map(async (type) => {
-    const endpoint = BASE_ENDPOINTS[type];
-    const response = await wpapi.get(endpoint);
-    return preparePathsFromData(response.data, type);
+    let data: any = [];
+    for (let i = 0; i < LOCALES.length; i++) {
+      const lang = LOCALES[i];
+      const pathPlus = lang == DEFAULT_LOCALE ? '' : `?lang=${lang}`
+      const endpoint = BASE_ENDPOINTS[type] + pathPlus;
+      const res = await wpapi.get(endpoint);
+      data = [...data, ...preparePathsFromData(res.data, type, lang)]
+    }
+
+    return data;
   })).then(res => res.flat());
 }
 
