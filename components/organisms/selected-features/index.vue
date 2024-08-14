@@ -24,7 +24,6 @@
 				<div class="feature-item__text">
 					<div class="feature-item__text__title">
 						<span v-html="feature.title" />
-						<div class="pro" v-if="feature.custom.pro_badge">PRO+</div>
 					</div>
 					<div class="feature-item__text__desc" v-html="feature.custom.intro" />
 				</div>
@@ -89,18 +88,6 @@ export default {
 
 		@include media('mobile') {
 			margin-top: 40px;
-		}
-
-		.pro {
-			color: $yellow-dark;
-			background-color: $gray-concrete;
-			display: inline-block;
-			font-size: 10px;
-			font-weight: 500;
-			line-height: 11px;
-			padding: 3px 6px;
-			vertical-align: middle;
-			margin-left: 12px;
 		}
 
 		.feature-item {
