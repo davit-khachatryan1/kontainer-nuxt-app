@@ -352,6 +352,10 @@ function handleLangMenuClick(e) {
     }
 
     @include media("desktop-1200") {
+      padding: 27px 8px;
+    }
+
+    @include media("desktop-1100") {
       display: none;
     }
   }
