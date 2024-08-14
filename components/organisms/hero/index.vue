@@ -54,6 +54,7 @@
                     v-if="videoUrl"
                     class="js-hero-video"
                     v-lazy-load-video="videoUrl"
+                    :src="videoUrl"
                     width="700"
                     height="400"
                     playsinline
@@ -148,7 +149,8 @@
             height="400"
             @keyup.esc="closeVideoModal"
             tabindex="0"
-			v-lazy-load-video="videoModalFile"
+            v-lazy-load-video="videoModalFile"
+            :src="videoModalFile"
           >
           </video>
         </div>

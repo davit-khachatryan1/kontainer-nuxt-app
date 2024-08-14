@@ -148,6 +148,7 @@
 							<video
 								v-if="sidekick.video.url"
 								v-lazy-load-video="sidekick.video.url"
+								:src="sidekick.video.url"
 								playsinline
 								muted
 								loop
@@ -217,6 +218,7 @@
 						@keyup.esc="closeVideoModal"
 						tabindex="0"
 						v-lazy-load-video="videoModalFile"
+						:src="videoModalFilel"
 					>
 					</video>
 				</div>
