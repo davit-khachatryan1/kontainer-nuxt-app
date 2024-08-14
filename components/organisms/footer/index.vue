@@ -53,11 +53,6 @@
         </div>
         <div class="footer__middle">
           <div class="footer__middle__content">
-            <NewsletterSignup :class="'form--footer'" class="newsletter-footer">
-              <div class="newsletter-footer--heading">
-                {{ langString("_newsletter_signup_title") }}
-              </div>
-            </NewsletterSignup>
             <div class="footer__middle__lang"  @click="handleLangMenuClick">
               <label for="language">
                 {{ langString("_footer_languagechooser_title") }}
@@ -136,9 +131,7 @@ const LanguageSelect = defineAsyncComponent(() =>
   import("~/components/organisms/language-select/index.vue")
 );
 const PinElement = defineAsyncComponent(() => import("~/components/atoms/pin/index.vue"));
-const NewsletterSignup = defineAsyncComponent(() =>
-  import("~/components/organisms/newsletter-footer/index.vue")
-);
+
 const ContentSection = defineAsyncComponent(() =>
   import("~/components/atoms/section/index.vue")
 );
@@ -157,7 +150,6 @@ export default {
     SmartLink,
     ContentSection,
     PinElement,
-    NewsletterSignup,
     IconCaret,
   },
   data() {
@@ -613,18 +605,6 @@ export default {
         display: flex;
         flex-direction: column;
       }
-
-      .newsletter-footer {
-        order: 2;
-
-        @include media("tablet-sm") {
-          margin: 30px 0 30px;
-        }
-
-        @include media("mobile") {
-          margin: 30px 0 10px;
-        }
-      }
     }
 
     label {
@@ -639,7 +619,6 @@ export default {
       justify-content: space-between;
       position: relative;
       order: 3;
-      padding-left: 45px;
 
       @include media("tablet-sm") {
         justify-content: flex-start;
@@ -648,20 +627,6 @@ export default {
 
       .form__element {
         display: inline-block;
-      }
-
-      &:before {
-        content: "";
-        position: absolute;
-        left: -1px;
-        top: 50%;
-        height: 30px;
-        transform: translateY(-50%);
-        border-left: 2px solid rgba($label-color, 0.15);
-
-        @include media("tablet-sm") {
-          display: none;
-        }
       }
 
       &:after {
@@ -971,16 +936,6 @@ export default {
     }
   }
 
-  .newsletter-footer--heading {
-    margin-right: 20px;
-    white-space: nowrap;
-
-    @include media("tablet-sm") {
-      flex-basis: 100%;
-      margin-bottom: 20px;
-    }
-  }
-
   .checkmark {
     height: 55px;
     width: 55px;
@@ -1083,17 +1038,6 @@ export default {
     &__response {
       font-size: 26px;
       font-weight: $type-light;
-    }
-  }
-
-  .newsletter-footer--heading {
-    margin-right: 20px;
-    align-items: center;
-    display: flex;
-
-    @include media("tablet-sm") {
-      flex-basis: 100%;
-      margin-bottom: 20px;
     }
   }
 
