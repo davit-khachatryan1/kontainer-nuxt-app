@@ -9,11 +9,13 @@
 				<div class="span6 span6--tablet span4--mobile signup">
 					<Parallax class="form-container">
 						<SignupForm :type="'block'" :btn-submit-text="data.signup_right.submit_button_text">
-							<div slot="teaser">
+							<template v-slot:teaser>
 								<h2 v-if="data.signup_right.heading">{{data.signup_right.heading}}</h2>
 								<p v-if="data.signup_right.text">{{data.signup_right.text}}</p>
-							</div>
-							<div slot="terms" class="terms" v-if="data.signup_right.terms" v-html="data.signup_right.terms" />
+							</template>
+							<template v-slot:terms>
+								<div class="terms" v-if="data.signup_right.terms" v-html="data.signup_right.terms" />
+							</template>
 						</SignupForm>
 					</Parallax>
 				</div>
@@ -28,13 +30,12 @@ import SellingpointComponent from '~/components/molecules/sellingpoint/index.vue
 import FormComponent from '~/components/molecules/form/index.vue';
 import InputComponent from '~/components/atoms/input/index.vue';
 import SignupForm from '~/components/organisms/signup-account/index.vue';
-import langstring from '~/components/mixins/langstring.js';
-import preplink from '~/components/mixins/preplink.js';
+import { useLangString } from '~/components/composables/useLangString';
+import { usePrepLink } from '~/components/composables/usePrepLink';
 import Parallax from '~/components/_nuclides/parallax/index.vue';
 
 export default {
 	name: 'SignupSection',
-	mixins: [langstring, preplink],
 	components: {
 		ButtonComponent,
 		SellingpointComponent,
@@ -43,6 +44,11 @@ export default {
 		SignupForm,
 		Parallax,
 	},
+	setup() {
+		const { prepLink } = usePrepLink()
+		const { langString } = useLangString()
+		return { langString, prepLink };
+  	},
 	props: {
 		data: { type: Object },
 	},

@@ -1,5 +1,7 @@
 <template>
-    <Index />
+    <div>
+        <Index />
+    </div>
 </template>
 <script setup>
 import Index from '~/pages/[lang]/register/index.vue';

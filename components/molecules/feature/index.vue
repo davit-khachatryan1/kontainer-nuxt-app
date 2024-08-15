@@ -19,14 +19,16 @@
 
 <script>
 import ButtonComponent from '~/components/atoms/button/index.vue';
-import preplink from '~/components/mixins/preplink.js';
-
+import { usePrepLink } from '~/components/composables/usePrepLink';
 export default {
 	name: 'FeatureComponent',
-	mixins: [preplink],
 	components: {
 		ButtonComponent,
 	},
+	setup() {
+		const { prepLink } = usePrepLink()
+		return { prepLink };
+  	},
 	props: {
 		feature: { type: Object },
 	},

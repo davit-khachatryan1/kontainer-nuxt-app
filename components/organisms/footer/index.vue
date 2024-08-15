@@ -34,11 +34,9 @@
 				<div class="footer__middle">
 					<div class="footer__middle__content">
 						<NewsletterSignup :class="'form--footer'" class="newsletter-footer">
-							<template slot="footer-heading">
-								<div class="newsletter-footer--heading">
+							<div class="newsletter-footer--heading">
 									{{langString('_newsletter_signup_title')}}
-								</div>
-							</template>
+							</div>
 						</NewsletterSignup>
 						<div class="footer__middle__lang">
 							<label for="language">
@@ -93,7 +91,7 @@ import NewsletterSignup from '~/components/organisms/newsletter-footer/index.vue
 import ContentSection, {
 	SECTION_PADDING_BOTTOM_NONE,
 } from '~/components/atoms/section/index.vue';
-import langstring from '~/components/mixins/langstring';
+import { useLangString } from '~/components/composables/useLangString';
 import useStore from '@/store'
 
 export default {
@@ -108,7 +106,10 @@ export default {
 		PinElement,
 		NewsletterSignup,
 	},
-	mixins: [langstring],
+	setup() {
+		const { langString } = useLangString()
+		return { langString };
+  	},
 	computed: {
 		consts() {
 			return {
@@ -850,6 +851,8 @@ export default {
 
 	.newsletter-footer--heading {
 		margin-right: 20px;
+		align-items: center;
+		display: flex;
 
 		@include media('tablet-sm') {
 			flex-basis: 100%;

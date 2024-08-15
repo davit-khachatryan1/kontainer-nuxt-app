@@ -96,14 +96,16 @@
 		</div>
 
 		<transition name="fade">
-			<div class="video-modal" v-if="videoModalActive" @click.prevent="closeVideoModal">
-				<button class="video-modal__close" @click.prevent="closeVideoModal">
-					close
-				</button>
-				<video playsinline controls autoplay ref="videoplayer" width="1280" height="720"
+			<div>
+				<div class="video-modal" v-if="videoModalActive" @click.prevent="closeVideoModal">
+					<button class="video-modal__close" @click.prevent="closeVideoModal">
+						close
+					</button>
+					<video playsinline controls autoplay ref="videoplayer" width="1280" height="720"
 					@keyup.esc="closeVideoModal" tabindex="0">
 					<source :src="videoModalFile" type="video/mp4" />
-				</video>
+					</video>
+				</div>
 			</div>
 		</transition>
 	</section>
@@ -116,16 +118,20 @@ import PinElement from '~/components/atoms/pin/index.vue';
 import LaptopMockup from '~/assets/svg/hero-laptop.svg';
 import LaptopMockupShadow from '~/assets/svg/hero-laptop-shadow.svg';
 import Teaser from '~/components/molecules/teaser/index.vue';
-import imgurl from '~/components/mixins/imgurl.js';
 import CapterraLogo from '~/assets/svg/capterra-logo.svg';
 import Rating45Star from '~/assets/svg/4-5-stars.svg';
 import G2Logo from '~/assets/svg/g2-logo.svg';
 import Rating5Star from '~/assets/svg/5-stars.svg';
-import animateOnload from '../../mixins/animate-onload';
+import { useAnimateOnLoad } from '~/components/composables/useAnimateOnLoad';
+import { useImgUrl } from '~/components/composables/useImgUrl';
 
 export default {
 	name: 'Hero',
-	mixins: [animateOnload, imgurl],
+	setup() {
+		const { initAnimations } = useAnimateOnLoad()
+		const { imgUrl } = useImgUrl()
+		return { initAnimations, imgUrl };
+  	},
 	components: {
 		SmartImage,
 		Button,

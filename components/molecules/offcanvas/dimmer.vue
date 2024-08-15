@@ -1,6 +1,8 @@
 <template>
 	<transition name="fade">
-		<div v-if="isOpen" class="dimmer" v-on:click="closeMenu"></div>
+		<div>
+			<div v-if="isOpen" class="dimmer" v-on:click="closeMenu"></div>
+		</div>
 	</transition>
 </template>
 

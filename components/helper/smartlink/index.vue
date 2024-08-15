@@ -107,7 +107,8 @@ export default {
 	props: ['url', 'type', 'slug', 'target', 'onActiveLinkClick', 'ariaLabel', 'locale'],
 	computed: {
 		baseUrl() {
-			return process.env.siteUrl;
+			const config = useRuntimeConfig();
+			return config.public.siteUrl;
 		},
 		linkTarget() {
 			return this.target || '_self';
