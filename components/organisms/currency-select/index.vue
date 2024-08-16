@@ -17,7 +17,7 @@
       <div class="particle" />
       <div class="dropdown">
         <div
-          v-for="(lang, index) in Object.values(languageOptions)"
+          v-for="(lang, index) in Object.values(currencyOptions)"
           :key="index"
           v-intersect="{
             handler: () => loadIcon(lang.selected),
@@ -58,9 +58,9 @@ const props = defineProps({
   setActiveCurrency: Function,
 });
 
-const languageOptions = computed(() => DEFAULT_CURRENCIES);
+const currencyOptions = computed(() => DEFAULT_CURRENCIES);
 
-const activeCurrency = ref(languageOptions.value[store.locale]);
+const activeCurrency = ref(currencyOptions.value[store.locale]);
 
 const changeValue = (currency) => {
   activeCurrency.value = currency;
