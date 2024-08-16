@@ -9,6 +9,7 @@
 						v-if="data.heading || data.text"
 						:positionOnPage="positionOnPage"
 					/>
+					<CurrencySelect :setActiveCurrency="setActiveCurrency"/>
 					<template v-if="tableLayout === 'desktop'">
 						<table class="prices">
 							<thead>
@@ -35,7 +36,7 @@
 											>{{ langString('_contact_account_cta') }}</Button
 										>
 										<template v-else>
-											<h2>{{ column.price }},-</h2>
+											<h2>{{ activeCurrency.symbol }}{{ column[activeCurrency.value] }},-</h2>
 											<p v-text="column.per_month" />
 										</template>
 										<div class="badge" v-if="column.popular">
@@ -107,8 +108,8 @@
 											>
 												<a
 													@click.prevent="addUsers(option, column.slug, $event)"
-													>{{ option.users }} {{langString('_users')}} (+{{ option.price }},-
-													{{ option.currency }})</a
+													>{{ option.users }} {{langString('_users')}} (+{{ column[activeCurrency.value] }},-
+													{{ activeCurrency.name }})</a
 												>
 											</li>
 										</ul>
@@ -144,8 +145,8 @@
 														addStorage(option, column.slug, $event)
 													"
 													>{{ option.storage }} {{ option.storage_unit }} (+{{
-														option.price
-													}},- {{ option.currency }})</a
+														column[activeCurrency.value]
+													}},- {{ activeCurrency.name }})</a
 												>
 											</li>
 											<li class="other" v-if="column.contact">
@@ -182,8 +183,8 @@
 												:key="index"
 											>
 												<a @click.prevent="addSKUs(option, column.slug, $event)"
-													>{{ option.skus }} (+{{ option.price }},-
-													{{ option.currency }})</a
+													>{{ option.skus }} (+{{ column[activeCurrency.value] }},-
+													{{ activeCurrency.name }})</a
 												>
 											</li>
 											<li class="other" v-if="column.contact">
@@ -225,7 +226,7 @@
 												>{{ langString('_contact_account_cta') }}</Button
 											>
 											<template v-else>
-												<h2>{{ column.price }},-</h2>
+												<h2>{{ activeCurrency.symbol + column[activeCurrency.value] }},-</h2>
 												<p v-text="column.per_month" />
 											</template>
 											<div class="badge" v-if="column.popular">
@@ -306,8 +307,8 @@
 														@click.prevent="
 															addUsers(option, column.slug, $event)
 														"
-														>{{ option.users }} {{langString('_users')}} (+{{ option.price }},-
-														{{ option.currency }})</a
+														>{{ option.users }} {{langString('_users')}} (+{{ column[activeCurrency.value] }},-
+														{{ activeCurrency.name }})</a
 													>
 												</li>
 											</ul>
@@ -335,8 +336,8 @@
 															addStorage(option, column.slug, $event)
 														"
 														>{{ option.storage }} {{ option.storage_unit }} (+{{
-															option.price
-														}},- {{ option.currency }})</a
+															column[activeCurrency.value]
+														}},- {{ activeCurrency.name }})</a
 													>
 												</li>
 											</ul>
@@ -363,8 +364,8 @@
 														@click.prevent="
 															addSKUs(option, column.slug, $event)
 														"
-														>{{ option.skus }} (+{{ option.price }},-
-														{{ option.currency }})</a
+														>{{ option.skus }} (+{{ column[activeCurrency.value] }},-
+														{{ activeCurrency.name }})</a
 													>
 												</li>
 											</ul>
@@ -423,14 +424,17 @@
 </template>
 
 <script>
-import { DEFAULT_LOCALE } from '~/constants/styles';
+import { DEFAULT_CURRENCIES, DEFAULT_LOCALE } from '~/constants/styles';
 const SmartLink = defineAsyncComponent(() => import('~/components/helper/smartlink/index.vue'));
 import { useGetClosest } from '~/components/composables/useGetClosest';
 import { useLangString } from '~/components/composables/useLangString';
 const Button = defineAsyncComponent(() => import( '~/components/atoms/button/index.vue'));
 const Teaser = defineAsyncComponent(() => import( '~/components/molecules/teaser/index.vue'));
 const IconBookmark = defineAsyncComponent(() => import( '~/assets/svg/bookmark.svg'));
-import useStore from '@/store'
+const CurrencySelect = defineAsyncComponent(() =>
+  import("~/components/organisms/currency-select/index.vue")
+);
+import useStore from '@/store';
 
 export default {
 	name: 'PriceSection',
@@ -439,6 +443,7 @@ export default {
 		Button,
 		SmartLink,
 		IconBookmark,
+		CurrencySelect
 	},
 	props: {
 		data: { type: Object },
@@ -450,6 +455,7 @@ export default {
 		return { langString, getClosest };
   	},
 	data: () => {
+		const store = useStore()
 		return {
 			pricingTableHeadPosition: 0,
 			pricingTableHeight: 0,
@@ -462,6 +468,7 @@ export default {
 			windowWidth: 0,
 			tableLayout: null,
 			mobileTablePositions: [],
+			activeCurrency: DEFAULT_CURRENCIES[store.locale]
 		};
 	},
 
@@ -483,6 +490,9 @@ export default {
 	},
 
 	methods: {
+		setActiveCurrency(val){
+			this.activeCurrency = val
+		},
 		formatToReadable(val) {
 			if (val.substring(0, 2) === '--') return val.substring(2);
 			return val;
