@@ -53,7 +53,7 @@
 									v-for="(column, index) in data.prices"
 									:key="index"
 								>
-									{{ column.users }}
+									{{ !data.hide_useraccounts ? column.users : '' }}
 								</td>
 							</tr>
 							<tr class="row">
@@ -63,7 +63,7 @@
 									v-for="(column, index) in data.prices"
 									:key="index"
 								>
-									{{ column.storage }} {{ column.storage_unit }}
+									{{!data.hide_storage ?  column.storage + ' ' + column.storage_unit : '' }}
 								</td>
 							</tr>
 							<tr
