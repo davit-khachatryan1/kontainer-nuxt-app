@@ -620,6 +620,9 @@ export default {
 		},
 	},
 	mounted() {
+		this.data.prices = this.data.prices.slice(0,4)
+		const newBody = this.data.table.body.map(el=> el.slice(0, 5))
+		this.data.table.body = newBody;
 		const store = useStore();
 		store.resetExtras();
 
