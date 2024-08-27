@@ -1,34 +1,23 @@
 <template>
   <div class="currency">
-    <div
-      class="selected"
-      v-intersect="{
-        handler: () => loadIcon(activeCurrency.selected),
-        options: { rootMargin: '0px', threshold: 0.1 },
-      }"
-    >
-      <component
-        :is="iconComponent[activeCurrency.selected.toUpperCase()] || 'div'"
-      ></component>
-      <span>{{ activeCurrency.name }}</span>
+    <div class="selected">
+      <div>
+        <span class="short-name">({{ activeCurrency.short_name }}) </span>
+        <span class="long-name">{{ activeCurrency.name }}</span>
+      </div>
       <IconCaret />
     </div>
     <div class="dropdown-block">
-      <div class="particle" />
       <div class="dropdown">
         <div
           v-for="(lang, index) in Object.values(currencyOptions)"
           :key="index"
-          v-intersect="{
-            handler: () => loadIcon(lang.selected),
-            options: { rootMargin: '0px', threshold: 0.1 },
-          }"
           @click="changeValue(lang)"
         >
-          <component
-            :is="iconComponent[lang.selected.toUpperCase()] || 'div'"
-          ></component>
-          <span>{{ lang.name }}</span>
+          <div :class="{ 'dropdown-selected': lang.selected == activeCurrency.selected }">
+            <span class="short-name">({{ lang.short_name }}) </span>
+            <span class="long-name">{{ lang.name }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -43,16 +32,6 @@ const store = useStore();
 import { defineAsyncComponent } from "vue";
 import { DEFAULT_CURRENCIES } from "~/constants/styles";
 const IconCaret = defineAsyncComponent(() => import("~/assets/svg/caret-select.svg"));
-
-const iconComponent = ref({});
-
-const loadIcon = async (lang) => {
-  if (!iconComponent.value[lang.toUpperCase()]) {
-    iconComponent.value[lang.toUpperCase()] = (
-      await import(`~/assets/svg/flags/${lang}.svg?component`)
-    ).default;
-  }
-};
 
 const props = defineProps({
   setActiveCurrency: Function,
@@ -73,48 +52,58 @@ const changeValue = (currency) => {
 
 .dropdown-block {
   position: absolute;
-  top: 100%;
-  left: 6px;
+  top: calc(100% + 4px);
+  left: 0;
   z-index: 10;
+  width: 100%;
   display: none;
 
   .dropdown {
     box-shadow: 0 2px 50px 0 rgba(0, 0, 0, 0.1);
     background: #ffffff;
     padding: 20px;
-    width: max-content;
+    width: 100%;
     display: flex;
     height: max-content;
     flex-direction: column;
-    row-gap: 10px;
+    row-gap: 20px;
     div {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 5px;
     }
     transition: 1s;
   }
-  .particle {
-    width: 20px;
-    height: 20px;
-    rotate: 45deg;
-    background: #ffffff;
-    margin-bottom: -10px;
-    margin-left: calc(50% - 10px);
-    margin-top: 10px;
-    position: relative;
-    box-shadow: 0 2px 50px 0 rgba(0, 0, 0, 0.1);
-    z-index: 10;
-  }
 }
 .selected {
-  box-shadow: 0 2px 50px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.1);
   display: flex;
   gap: 10px;
-  padding: 8px 16px;
+  padding: 18px 24px;
   align-items: center;
   background: #ffffff;
   width: max-content;
+}
+.short-name {
+  font-weight: 300;
+}
+.long-name {
+  font-weight: 500;
+}
+
+.dropdown-selected {
+  color: #00f595;
+  &::after {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 11px;
+    border: 1px solid #00f595;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    margin-left: 13px;
+    margin-bottom: 4px;
+  }
 }
 .currency {
   width: max-content;
