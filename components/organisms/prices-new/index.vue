@@ -36,7 +36,7 @@
 											>{{ langString('_contact_account_cta') }}</Button
 										>
 										<template v-else>
-											<h2>{{ activeCurrency.symbol }}{{ column[activeCurrency.value] }},-</h2>
+											<h2>{{ activeCurrency.symbol }} {{ column[activeCurrency.value] }},-</h2>
 											<p v-text="column.per_month" />
 										</template>
 										<div class="badge" v-if="column.popular">
@@ -226,7 +226,7 @@
 												>{{ langString('_contact_account_cta') }}</Button
 											>
 											<template v-else>
-												<h2>{{ activeCurrency.symbol + column[activeCurrency.value] }},-</h2>
+												<h2>{{ activeCurrency.symbol }} {{ column[activeCurrency.value] }},-</h2>
 												<p v-text="column.per_month" />
 											</template>
 											<div class="badge" v-if="column.popular">

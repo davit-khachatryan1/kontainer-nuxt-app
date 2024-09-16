@@ -14,7 +14,8 @@
                       <strong>{{ office.city }}</strong
                       ><br />
                       {{ office.address }}<br />
-                      {{ office.phone }}
+                      {{ office.phone }}<br />
+                      {{ office["e-mail"] }}
                     </p>
                   </li>
                 </ul>
@@ -199,6 +200,8 @@ export default {
 
     offices() {
       const store = useStore();
+      console.log(store.pageOptions.offices);
+      
       return store.pageOptions.offices || [];
     },
 
