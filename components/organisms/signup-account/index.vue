@@ -1705,7 +1705,6 @@ const checkDomainAvailability = async () => {
     if (error.value) {
       throw error.value;
     }
-    console.log(data);
     registration.value.host = data?.value?.suggestion;
     hostStatus.value = true;
 

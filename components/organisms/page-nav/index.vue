@@ -6,27 +6,31 @@
           <IconLogoMark class="icon--logo-mark" />
           <IconLogoText class="icon--logo-text" />
         </SmartLink>
-      </div>
-      <div class="nav__right">
-        <ol
-          @mouseover="hoverMenu = true"
-          @mouseleave="hoverMenu = false"
-          :class="{ hover: hoverMenu }"
-        >
-          <div v-for="(item, index) in menuItems" :key="index">
-            <li :class="{ 'has-dropdown': item.children }" class="nav__right__menu-item">
-              <template v-if="item.children">
-                <span
+        <div v-for="(item, index) in menuItems" :key="index">
+          <li :class="{ 'has-dropdown': item.children }" class="nav__right__menu-item">
+            <template v-if="item.children">
+              <span
+                :class="[
+                  'link',
+                  'link-hover',
+                  { 'nuxt-link-active': activeMenuParent === item.slug },
+                ]"
+              >
+                <span v-html="item.title" />
+              </span>
+              <transition name="fade">
+                <div
                   :class="[
-                    'link',
-                    'link-hover',
-                    { 'nuxt-link-active': activeMenuParent === item.slug },
+                    'dropdown',
+                    {
+                      'has-first-only': item.box_image_1 && !item.box_image_2,
+                    },
+                    {
+                      'has-both': item.box_image_1 && item.box_image_2,
+                    },
                   ]"
                 >
-                  <span v-html="item.title" />
-                </span>
-                <transition name="fade">
-                  <ol class="dropdown">
+                  <ol>
                     <li
                       v-for="(sublink, index) in item.children"
                       :key="index"
@@ -55,25 +59,174 @@
                           },
                         ]"
                       >
-                        <span v-html="sublink.title" />
+                        <SmartImage
+                          v-if="sublink?.icon"
+                          class="sub-icon"
+                          :image="sublink?.icon"
+                          :srcset="
+                            sublink.icon.sizes.mobile_min &&
+                            sublink.icon.sizes.mobile_sm &&
+                            sublink.icon.sizes.mobile &&
+                            sublink.icon.sizes.tablet_sm &&
+                            sublink.icon.sizes.tablet
+                              ? [
+                                  sublink.icon.url + ' 1025w',
+                                  sublink.icon.sizes.tablet + ' 1024w',
+                                  sublink.icon.sizes.tablet_sm + ' 950w',
+                                  sublink.icon.sizes.mobile + ' 768w',
+                                  sublink.icon.sizes.mobile_sm + ' 567w',
+                                  sublink.icon.sizes.mobile_min + ' 320w',
+                                ]
+                              : []
+                          "
+                          :sizes="
+                            sublink.icon.sizes.mobile_min &&
+                            sublink.icon.sizes.mobile_sm &&
+                            sublink.icon.sizes.mobile &&
+                            sublink.icon.sizes.tablet_sm &&
+                            sublink.icon.sizes.tablet
+                              ? [
+                                  '(min-width: 1025px) 40vw',
+                                  '(max-width: 1024px) 40vw',
+                                  '(max-width: 950px) 40vw',
+                                  '(max-width: 768px) 70vw',
+                                  '(max-width: 567px) 70vw',
+                                  '(max-width: 320px) 70vw',
+                                ]
+                              : ['sidekick_inline']
+                          "
+                          nocrop
+                        />
+                        <div class="info">
+                          <span v-html="sublink.title" />
+                          <p v-if="sublink?.sub_text" v-html="sublink.sub_text" />
+                        </div>
                       </SmartLink>
                     </li>
                   </ol>
-                </transition>
-              </template>
+                  <div v-if="item.box_image_1 || item.box_image_2" class="first_line" />
+                  <div :class="[{ first_card: item.box_image_1 && item.box_image_2 }]">
+                    <div v-if="item.box_image_1">
+                      <SmartImage
+                        v-if="item?.box_image_1"
+                        class="box_image"
+                        :image="item?.box_image_1"
+                        :srcset="
+                          item.box_image_1.sizes.mobile_min &&
+                          item.box_image_1.sizes.mobile_sm &&
+                          item.box_image_1.sizes.mobile &&
+                          item.box_image_1.sizes.tablet_sm &&
+                          item.box_image_1.sizes.tablet
+                            ? [
+                                item.box_image_1.url + ' 1025w',
+                                item.box_image_1.sizes.tablet + ' 1024w',
+                                item.box_image_1.sizes.tablet_sm + ' 950w',
+                                item.box_image_1.sizes.mobile + ' 768w',
+                                item.box_image_1.sizes.mobile_sm + ' 567w',
+                                item.box_image_1.sizes.mobile_min + ' 320w',
+                              ]
+                            : []
+                        "
+                        :sizes="
+                          item.box_image_1.sizes.mobile_min &&
+                          item.box_image_1.sizes.mobile_sm &&
+                          item.box_image_1.sizes.mobile &&
+                          item.box_image_1.sizes.tablet_sm &&
+                          item.box_image_1.sizes.tablet
+                            ? [
+                                '(min-width: 1025px) 40vw',
+                                '(max-width: 1024px) 40vw',
+                                '(max-width: 950px) 40vw',
+                                '(max-width: 768px) 70vw',
+                                '(max-width: 567px) 70vw',
+                                '(max-width: 320px) 70vw',
+                              ]
+                            : ['sidekick_inline']
+                        "
+                        nocrop
+                      />
+                      <div class="card_info">
+                        <span v-html="item.box_title_1" />
+                        <p v-html="item.box_text_1" />
+                        <span
+                          @click="handleRedirect(item.box_page_link_1)"
+                          :class="['link', 'link-hover', 'nuxt-link-active']"
+                          >Read more</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div v-if="item.box_image_2">
+                      <SmartImage
+                        v-if="item?.box_image_2"
+                        class="box_image"
+                        :image="item?.box_image_2"
+                        :srcset="
+                          item.box_image_2.sizes.mobile_min &&
+                          item.box_image_2.sizes.mobile_sm &&
+                          item.box_image_2.sizes.mobile &&
+                          item.box_image_2.sizes.tablet_sm &&
+                          item.box_image_2.sizes.tablet
+                            ? [
+                                item.box_image_2.url + ' 1025w',
+                                item.box_image_2.sizes.tablet + ' 1024w',
+                                item.box_image_2.sizes.tablet_sm + ' 950w',
+                                item.box_image_2.sizes.mobile + ' 768w',
+                                item.box_image_2.sizes.mobile_sm + ' 567w',
+                                item.box_image_2.sizes.mobile_min + ' 320w',
+                              ]
+                            : []
+                        "
+                        :sizes="
+                          item.box_image_2.sizes.mobile_min &&
+                          item.box_image_2.sizes.mobile_sm &&
+                          item.box_image_2.sizes.mobile &&
+                          item.box_image_2.sizes.tablet_sm &&
+                          item.box_image_2.sizes.tablet
+                            ? [
+                                '(min-width: 1025px) 40vw',
+                                '(max-width: 1024px) 40vw',
+                                '(max-width: 950px) 40vw',
+                                '(max-width: 768px) 70vw',
+                                '(max-width: 567px) 70vw',
+                                '(max-width: 320px) 70vw',
+                              ]
+                            : ['sidekick_inline']
+                        "
+                        nocrop
+                      />
+                      <div class="card_info">
+                        <span v-html="item.box_title_2" />
+                        <p v-html="item.box_text_2" />
+                        <span :class="['link', 'link-hover', 'nuxt-link-active']"
+                          >Read more</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </transition>
+            </template>
 
-              <SmartLink
-                v-else
-                class="link"
-                :type="item.type"
-                :slug="item.slug"
-                :url="item.url"
-              >
-                <span v-html="item.title" />
-              </SmartLink>
-            </li>
-          </div>
-
+            <SmartLink
+              v-else
+              class="link"
+              :type="item.type"
+              :slug="item.slug"
+              :url="item.url"
+            >
+              <span v-html="item.title" />
+            </SmartLink>
+          </li>
+        </div>
+      </div>
+      <div class="nav__right">
+        <ol
+          @mouseover="hoverMenu = true"
+          @mouseleave="hoverMenu = false"
+          :class="{ hover: hoverMenu }"
+        >
           <li class="nav__right__ctas">
             <button-comp
               v-if="bookDemo.show"
@@ -123,6 +276,9 @@ import { ref, computed } from "vue";
 import useStore from "@/store";
 const SmartLink = defineAsyncComponent(() =>
   import("~/components/helper/smartlink/index.vue")
+);
+const SmartImage = defineAsyncComponent(() =>
+  import("~/components/helper/smartimage/index.vue")
 );
 import { prepareWPObjectsToLinks } from "~/components/composables/prepareWPObjectsToLinks";
 const LanguageSelect = defineAsyncComponent(() =>
@@ -184,12 +340,31 @@ const activeMenuChild = computed(() => {
   const route = useRoute();
   return route.params.slug;
 });
+console.log(menuItems);
+
+const activeMenuElement = computed(() => {
+  let activeParent = "";
+  menuItems.value?.forEach((item) => {
+    if (item.children) {
+      item.children?.forEach((child) => {
+        if (child.slug === activeMenuChild.value) {
+          activeParent = item;
+        }
+      });
+    }
+  });
+  return activeParent;
+});
 
 function handleLangMenuHover(e) {
   const { type } = e;
   if (!window.matchMedia("(hover: none)").matches) {
     showLanguageMenu.value = type === "mouseenter";
   }
+}
+
+function handleRedirect(link) {
+  window.open(link);
 }
 
 function handleLangMenuClick(e) {
@@ -278,10 +453,13 @@ function handleLangMenuClick(e) {
   }
 
   &__left {
+    display: flex;
+    align-items: center;
     &__logo {
       text-decoration: none;
       outline: none;
       position: relative;
+      margin-right: 40px;
 
       .icon--logo-text {
         width: 200px;
@@ -407,14 +585,26 @@ function handleLangMenuClick(e) {
     .dropdown {
       visibility: hidden;
       opacity: 0;
-      padding: 40px 20px;
+      padding: 40px;
       filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.15));
       background: $white;
       position: absolute;
       top: 38px;
-      flex-direction: column;
-      align-items: flex-start;
+      display: flex;
+      flex-direction: row;
       transition: all 0.3s $easeInOut;
+
+      ol {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .box_image {
+        width: 220px;
+        height: 130px;
+        object-fit: cover;
+      }
 
       & > li:hover a {
         color: #aeaeae;
@@ -428,14 +618,60 @@ function handleLangMenuClick(e) {
         display: block;
       }
 
+      .card_info {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 8px;
+        span {
+          text-transform: none;
+          font-weight: 600;
+          @include responsive-font(1.26vw, 12px, 14px, 14px);
+          line-height: 20px;
+        }
+
+        p {
+          text-transform: none;
+          @extend %text-paragraph1;
+          @include responsive-font(1.26vw, 10px, 12px, 14px);
+          line-height: 20px;
+        }
+        .link-hover {
+          padding: 0;
+        }
+      }
+
+      .first_line {
+        width: 3px;
+        background: #c0a17c;
+        display: flex;
+        margin: 0 40px;
+        opacity: 0.5;
+      }
+
+      .first_card {
+        margin-right: 20px;
+      }
+
       a {
         white-space: nowrap;
         color: $text-color;
-        padding: 18px 20px;
-        display: block;
+        padding: 18px 0;
+        display: flex;
+        column-gap: 10px;
         line-height: 1;
         position: relative;
+        align-items: center;
 
+        .sub-icon {
+          width: 30px;
+          height: 30px;
+        }
+        &:has(.sub-icon) {
+          &::before {
+            display: none;
+          }
+        }
         &::before {
           transition: all 0.2s ease;
           content: "";
@@ -448,9 +684,16 @@ function handleLangMenuClick(e) {
           top: calc(50% - 1px);
         }
 
-        span {
+        .info {
           transition: transform 0.2s ease;
           display: block;
+          p {
+            margin-top: 4px;
+            text-transform: none;
+            @extend %text-paragraph1;
+            @include responsive-font(1.26vw, 10px, 12px, 14px);
+            line-height: normal;
+          }
         }
 
         &.link.nuxt-link-active,
@@ -458,11 +701,39 @@ function handleLangMenuClick(e) {
           &::before {
             width: 16px;
           }
-
-          span {
+          .info {
             transform: translateX(26px);
           }
+          &:has(.sub-icon) {
+            .info {
+              transform: translateX(5px);
+            }
+          }
         }
+      }
+    }
+
+    .has-first-only {
+      @include media("desktop-1400") {
+        transform: translateX(-13%);
+      }
+
+      @include media("desktop-1200") {
+        transform: translateX(-22%);
+      }
+    }
+
+    .has-both {
+      @include media("desktop-1600") {
+        transform: translateX(-22%);
+      }
+
+      @include media("desktop-1400") {
+        transform: translateX(-36%);
+      }
+
+      @include media("desktop-1200") {
+        transform: translateX(-43%);
       }
     }
 
