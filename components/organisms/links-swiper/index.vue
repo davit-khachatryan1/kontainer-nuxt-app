@@ -14,12 +14,13 @@
         <div class="my-swiper" ref="mySwiper" :options="swiperOptions">
           <div :class="['fade-before', `fade-before--${data.section_bg_color}`]"></div>
           <div class="swiper-wrapper">
-            <KardComponent
+            <div
               :class="['swiper-slide']"
-              v-for="(kard, index) in data.links_repeater"
-              :key="index"
-              :kard="kard"
-            />
+              v-for="(kard, index) in data.links_repeater" :key="index">
+              <KardComponent
+                :kard="kard"
+              />
+            </div>
           </div>
           <div :class="['fade-after', `fade-after--${data.section_bg_color}`]"></div>
         </div>
@@ -56,7 +57,7 @@ const KardComponent = defineAsyncComponent(() =>
 const ButtonComponent = defineAsyncComponent(() =>
   import("~/components/atoms/button/index.vue")
 );
-const Arrow = defineAsyncComponent(() => import('~/assets/svg/arrow-big.svg'));
+const Arrow = defineAsyncComponent(() => import("~/assets/svg/arrow-big.svg"));
 const SmartLink = defineAsyncComponent(() =>
   import("~/components/helper/smartlink/index.vue")
 );
@@ -153,6 +154,7 @@ export default defineComponent({
   .swiper-slide {
     width: calc(33.3333% - (30px * 2 / 3));
     height: auto;
+    display: flex;
 
     @include media("tablet") {
       width: calc(50% - (20px / 2));

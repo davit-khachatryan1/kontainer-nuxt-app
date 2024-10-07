@@ -2,7 +2,11 @@
 	<div class="latest-news">
 		<div class="content-grid-container">
 			<div class="span-container">
-				<KardComponent :class="['span4', 'span6--tablet', 'span4--mobile']" v-for="(kard, index) in data.lastestNews" :key="index" :kard="kard" />
+				<div
+					:class="['span4', 'span6--tablet', 'span4--mobile', 'swiper-slider']" v-for="(kard, index) in data.lastestNews" :key="index" 
+				>
+					<KardComponent :kard="kard" />
+				</div>
 			</div>
 			<!-- TODO add pagination? -->
 		</div>
@@ -28,6 +32,10 @@ h1 {
 	@extend %text-h1;
 	text-align: center;
 	margin: 50px 0 100px;
+}
+
+.swiper-slider {
+	display: flex;
 }
 
 .latest-news {

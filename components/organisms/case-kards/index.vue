@@ -3,7 +3,11 @@
 		<div class="content-grid-container">
 			<Teaser :class="'case-kards__teaser'" :data="data" v-if="data.heading || data.text" :positionOnPage="positionOnPage" />
 			<div class="span-container">
-				<KardComponent :class="['span6', 'span6--tablet', 'span4--mobile']" v-for="(kard, index) in data.resource_repeater" :key="index" :kard="kard" />
+				<div
+					:class="['span6', 'span6--tablet', 'span4--mobile', 'swiper-slider']" v-for="(kard, index) in data.resource_repeater" :key="index" 
+				>
+					<KardComponent :kard="kard" />
+				</div>
 			</div>
 			<div class="case-kards__actions">
 				<ButtonComponent :link="prepLink('cases')" :type="'outline'">{{langString('_view_all_cases')}}</ButtonComponent>
@@ -96,6 +100,10 @@ export default {
 	&__actions {
 		margin-top: 60px;
 		text-align: center;
+	}
+	
+	.swiper-slider {
+		display: flex;
 	}
 }
 </style>

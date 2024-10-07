@@ -6,8 +6,10 @@
 			<div class="span-container">
 				<div class="my-swiper swiper-no-swiping" v-swiper:mySwiper="swiperOptions()">
 					<div class="swiper-wrapper">
-						<KardComponent :class="['span4', 'swiper-slide']" v-for="(kard, index) in kards" :key="index"
+						<div  :class="['span4', 'swiper-slide']" v-for="(kard, index) in kards" :key="index">
+							<KardComponent
 							:kard="kard" />
+						</div>
 					</div>
 				</div>
 			</div>
@@ -145,6 +147,7 @@ export default {
 
 	.swiper-slide {
 		width: calc(#{$mobileWidth} - 10px);
+		display: flex;
 	}
 }
 

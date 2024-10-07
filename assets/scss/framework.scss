@@ -11,6 +11,10 @@ body {
 	color: $text-color;
 }
 
+#__nuxt {
+	overflow-x: hidden;
+}
+
 strong {
 	font-weight: bold;
 }

@@ -1,7 +1,6 @@
 <template>
   <div class="default">
     <OffcanvasMenu />
-    <nuxt />
     <div class="page-leave-overlay" />
     <FooterComponent />
     <BookDemoModal />

@@ -3,7 +3,9 @@
 		<div class="content-grid-container">
 			<Teaser :class="'link-kards__teaser'" :data="data" v-if="data.heading || data.text" :positionOnPage="positionOnPage" />
 			<div class="span-container">
-				<KardComponent :class="{'span4': data.links_per_row === '3', 'span6': data.links_per_row === '2', 'kard--link': true}" v-for="(kard, index) in data.links_repeater" :key="index" :kard="kard" />
+				<div :class="{'span4': data.links_per_row === '3', 'span6': data.links_per_row === '2', 'kard--link': true}, 'swiper-slider'" v-for="(kard, index) in data.links_repeater" :key="index">
+					<KardComponent :kard="kard" />
+				</div>
 			</div>
 		</div>
 	</section>
@@ -59,6 +61,10 @@ export default {
 			justify-content: center;
 			margin-left: auto;
 			margin-right: auto;
+		}
+
+		.swiper-slider {
+			display: flex;
 		}
 	}
 
