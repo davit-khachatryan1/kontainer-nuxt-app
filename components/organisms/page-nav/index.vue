@@ -347,7 +347,6 @@ const activeMenuChild = computed(() => {
   const route = useRoute();
   return route.params.slug;
 });
-console.log(menuItems);
 
 const activeMenuElement = computed(() => {
   let activeParent = "";

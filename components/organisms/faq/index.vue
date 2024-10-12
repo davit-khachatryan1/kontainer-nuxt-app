@@ -1,52 +1,50 @@
 <template>
-  <section class="faq" itemscope itemtype="https://schema.org/FAQPage">
-    <div class="content-grid-container">
-      <div class="span-container">
-        <div class="span6 span6--tablet span4--mobile">
-          <p
-            class="teaser__heading"
-            v-if="data.title && data.title.length"
-            ref="title"
-            :class="data.alternate_headline ? 'alternative' : ''"
+  <div class="content-grid-container">
+    <div class="span-container">
+      <div class="span6 span6--tablet span4--mobile">
+        <p
+          class="teaser__heading"
+          v-if="data.title && data.title.length"
+          ref="title"
+          :class="data.alternate_headline ? 'alternative' : ''"
+        >
+          {{ data.title }}
+        </p>
+      </div>
+      <div class="span6 span6--tablet span4--mobile">
+        <div class="accordion" ref="accordion">
+          <div
+            class="accordion__item"
+            v-for="(item, index) in data.accordion"
+            :key="index"
+            itemscope
+            itemprop="mainEntity"
+            itemtype="https://schema.org/Question"
           >
-            {{ data.title }}
-          </p>
-        </div>
-        <div class="span6 span6--tablet span4--mobile">
-          <div class="accordion" ref="accordion">
+            <div class="accordion__item__header">
+              <div class="accordion__item__header__title teaser__text">
+                <span itemprop="name">{{ item.question }}</span>
+                <IconCaret />
+              </div>
+            </div>
             <div
-              class="accordion__item"
-              v-for="(item, index) in data.accordion"
-              :key="index"
+              class="accordion__item__content"
               itemscope
-              itemprop="mainEntity"
-              itemtype="https://schema.org/Question"
+              itemprop="acceptedAnswer"
+              itemtype="https://schema.org/Answer"
             >
-              <div class="accordion__item__header">
-                <div class="accordion__item__header__title teaser__text">
-                  <span itemprop="name">{{ item.question }}</span>
-                  <IconCaret />
-                </div>
-              </div>
-              <div
-                class="accordion__item__content"
-                itemscope
-                itemprop="acceptedAnswer"
-                itemtype="https://schema.org/Answer"
-              >
-                <div v-html="item.answer" itemprop="text" class="wysiwyg"></div>
-              </div>
+              <div v-html="item.answer" itemprop="text" class="wysiwyg"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
 import { useLangString } from "~/components/composables/useLangString";
-const IconCaret = defineAsyncComponent(() => import('~/assets/svg/caret.svg'));
+const IconCaret = defineAsyncComponent(() => import("~/assets/svg/caret.svg"));
 
 export default {
   name: "Faq",

@@ -14,7 +14,9 @@
         v-bind:key="index + '111'"
       />
       <AnimationBox
-        v-else
+        v-else-if="
+          !(block.layout == 'faq' && router.currentRoute.value.fullPath.includes('/faqs'))
+        "
         v-bind:key="index + '222'"
         v-bind="animationBoxData(block.data)"
         :nextSectionSlant="nextSectionSlant(blocks, index)"
@@ -132,12 +134,18 @@
             :positionOnPage="index"
           />
           <Faq
-            v-else-if="block.layout === 'faq'"
+            v-else-if="
+              block.layout === 'faq' &&
+              !router.currentRoute.value.fullPath.includes('/faqs')
+            "
             :data="block.data"
             :positionOnPage="index"
           />
           <div
-            v-else-if="block.layout !== 'code-inserter'"
+            v-else-if="
+              block.layout !== 'code-inserter' &&
+              !router.currentRoute.value.fullPath.includes('/faqs')
+            "
             class="content-grid-container"
           >
             Layout:
@@ -161,6 +169,35 @@
       </AnimationBox>
     </template>
 
+    <section class="faq" itemscope itemtype="https://schema.org/FAQPage">
+      <template v-for="(faq, index) in faqs">
+        <AnimationBox
+          v-bind="animationBoxData(faq.data)"
+          :nextSectionSlant="nextSectionSlant(faqs, index)"
+        >
+          <ContentSection
+            v-bind="faq.section"
+            :data="faq.data"
+            :meta="metaInfo(index)"
+            :class="
+              faq.layout === 'testimonial' && faq.data.section_pin_label
+                ? 'section--pin-pad'
+                : ''
+            "
+          >
+            <Faq
+              v-if="
+                faq.layout === 'faq' &&
+                router.currentRoute.value.fullPath.includes('/faqs')
+              "
+              :data="faq.data"
+              :positionOnPage="index"
+            />
+          </ContentSection>
+        </AnimationBox>
+      </template>
+    </section>
+
     <ContentSection
       v-if="empty && loaded"
       angleTyp="0"
@@ -174,6 +211,8 @@
 </template>
 
 <script setup>
+const router = useRouter();
+
 import { computed, ref, defineProps } from "vue";
 const AnimationBox = defineAsyncComponent(() =>
   import("~/components/atoms/animationbox/index.vue")
@@ -257,7 +296,7 @@ const Faq = defineAsyncComponent(() => import("~/components/organisms/faq/index.
 const props = defineProps({
   flexible: Array | Boolean,
   type: String,
-  loaded: Boolean
+  loaded: Boolean,
 });
 
 const empty = computed(() => {
@@ -267,6 +306,9 @@ const empty = computed(() => {
 const loaded = computed(() => {
   return props.loaded;
 });
+
+const faqs = ref([]);
+
 const blocks = computed(() =>
   (props.flexible || []).map((block, index) => {
     const {
@@ -281,7 +323,7 @@ const blocks = computed(() =>
       section_padding_bottom,
     } = block;
 
-    return {
+    const value = {
       layout: acf_fc_layout,
       section: {
         bg: section_bg_color || "grey",
@@ -297,6 +339,12 @@ const blocks = computed(() =>
       },
       data: block,
     };
+
+    if (acf_fc_layout == "faq" && router.currentRoute.value.fullPath.includes("/faqs")) {
+      faqs.value.push(value);
+    }
+
+    return value;
   })
 );
 
