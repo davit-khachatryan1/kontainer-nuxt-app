@@ -105,8 +105,13 @@
                     </li>
                   </ol>
                   <div v-if="item.box_image_1 || item.box_image_2" class="first_line" />
-                  <div :class="[{ first_card: item.box_image_1 && item.box_image_2 }]">
-                    <div v-if="item.box_image_1">
+                  <div
+                    :class="[
+                      'image_card',
+                      { first_card: item.box_image_1 && item.box_image_2 },
+                    ]"
+                  >
+                    <div v-if="item.box_image_1" class="main_card">
                       <SmartImage
                         v-if="item?.box_image_1"
                         class="box_image"
@@ -144,6 +149,7 @@
                             : ['sidekick_inline']
                         "
                         nocrop
+                        @click="handleRedirect(item.box_page_link_1)"
                       />
                       <div class="card_info">
                         <span v-html="item.box_title_1" />
@@ -156,8 +162,8 @@
                       </div>
                     </div>
                   </div>
-                  <div>
-                    <div v-if="item.box_image_2">
+                  <div :class="['image_card']">
+                    <div v-if="item.box_image_2" class="main_card">
                       <SmartImage
                         v-if="item?.box_image_2"
                         class="box_image"
@@ -195,6 +201,7 @@
                             : ['sidekick_inline']
                         "
                         nocrop
+                        @click="handleRedirect(item.box_page_link_1)"
                       />
                       <div class="card_info">
                         <span v-html="item.box_title_2" />
@@ -595,9 +602,10 @@ function handleLangMenuClick(e) {
       transition: all 0.3s $easeInOut;
 
       ol {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+        display: grid;
+        grid-template-rows: repeat(4, 1fr);
+        grid-auto-flow: column;
+        column-gap: 60px;
       }
 
       .box_image {
@@ -625,7 +633,7 @@ function handleLangMenuClick(e) {
         row-gap: 8px;
         span {
           text-transform: none;
-          font-weight: 600;
+          font-weight: 500;
           @include responsive-font(1.26vw, 12px, 14px, 14px);
           line-height: 20px;
         }
@@ -680,7 +688,7 @@ function handleLangMenuClick(e) {
           height: 2px;
           background-color: $brand-green;
           position: absolute;
-          left: 20px;
+          left: 0;
           top: calc(50% - 1px);
         }
 
@@ -724,12 +732,24 @@ function handleLangMenuClick(e) {
     }
 
     .has-both {
+      transform: translateX(-22%);
       @include media("desktop-1600") {
-        transform: translateX(-22%);
+        transform: translateX(-30%);
       }
 
       @include media("desktop-1400") {
         transform: translateX(-36%);
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .first_line {
+          width: 100%;
+          height: 2px;
+          margin: 20px 0 40px 0;
+        }
+        .image_card {
+          width: 48%;
+          margin: 0;
+        }
       }
 
       @include media("desktop-1200") {
@@ -750,6 +770,7 @@ function handleLangMenuClick(e) {
           transform: rotate(45deg);
           z-index: 10;
           filter: drop-shadow(0 0 35px rgba(0, 0, 0, 0.15));
+          padding: 0 !important;
         }
       }
     }
