@@ -761,8 +761,6 @@ function handleLangMenuClick(e) {
       .link-hover {
         &::after {
           content: "";
-          height: 22px;
-          width: 22px;
           background-color: $white;
           position: absolute;
           bottom: -37px;
